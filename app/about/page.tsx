@@ -1,32 +1,67 @@
-import { ExperienceEntry } from "@/components/exp-entry";
+import type { Metadata } from "next";
 
-export default function ExperiencePage() {
+import { userInfo } from "@/config/site";
+
+export const metadata: Metadata = {
+  title: "About",
+};
+
+export default function About() {
+  const { experiences, skills } = userInfo;
+
   return (
-    <div>
-      <h1 className="mb-6 text-3xl font-bold">Experience</h1>
-      <p className="text-foreground/80 mb-12 text-base">
-        A brief overview of my journey in robotics, drone operations, and
-        innovative technology projects.
-      </p>
-      <div className="space-y-12">
-        <ExperienceEntry
-          title="Drone Operator and Emergency Response Specialist"
-          company="Coastal Rescue Team"
-          period="2021 - Present"
-          description="Conducted surveillance and rescue operations using advanced drones like the DJI Matrice 300 RTK. Managed over 150 flight hours and performed aerial deployment of life jackets to enhance emergency response efficiency."
-        />
-        <ExperienceEntry
-          title="Robotics Developer"
-          company="ROBORESCUE UMA, University of Málaga"
-          period="2020 - Present"
-          description="Collaborated on the design and development of an articulated mobile robot for emergency scenarios. Applied advanced robotics concepts to create innovative solutions for rescue operations."
-        />
-        <ExperienceEntry
-          title="Life Jacket Deployment System Designer"
-          company="Independent Project"
-          period="2021"
-          description="Designed, fabricated, and implemented a drone-based system to release life jackets rapidly in emergencies. This project improved rescue response times significantly and demonstrated the potential of integrating drone technology with life-saving operations."
-        />
+    <div className="min-h-screen px-4 py-24">
+      <div className="mx-auto max-w-3xl space-y-16">
+        <div className="space-y-4">
+          <h1 className="text-3xl font-light md:text-4xl">About</h1>
+          <p className="text-muted-foreground">
+            I&apos;m a senior robotics engineering student focused on developing
+            intelligent systems that solve complex real-world challenges. My
+            work combines mechanical engineering, computer vision, and drone
+            piloting.
+          </p>
+        </div>
+
+        <div className="space-y-6">
+          <h2 className="text-2xl font-light">Experience</h2>
+          <div className="relative space-y-8">
+            {/* Vertical line */}
+            <div className="absolute inset-y-2 left-0 w-px bg-border" />
+
+            {experiences.map((exp, index) => (
+              <div key={index} className="group relative cursor-pointer pl-8">
+                <div className="absolute left-[-4px] top-2 size-2 rounded-full bg-primary/50 ring-4 ring-background transition-all duration-300 group-hover:scale-150 group-hover:bg-primary" />
+
+                <div className="space-y-2 transition-all duration-300 group-hover:translate-x-2">
+                  <div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
+                    <h3 className="font-medium">{exp.title}</h3>
+                    <span className="text-sm text-muted-foreground">
+                      {exp.period}
+                    </span>
+                  </div>
+                  <p className="text-sm text-primary/80">{exp.company}</p>
+                  <p className="text-sm leading-relaxed text-muted-foreground">
+                    {exp.description}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="space-y-6">
+          <h2 className="text-2xl font-light">Technical Expertise</h2>
+          <div className="grid grid-cols-2 gap-4 md:grid-cols-3">
+            {skills.map((skill) => (
+              <div
+                key={skill}
+                className="rounded-lg border p-4 text-center text-sm transition-all duration-300 hover:scale-105 hover:border-primary hover:text-primary"
+              >
+                {skill}
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     </div>
   );
