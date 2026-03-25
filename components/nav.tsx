@@ -26,7 +26,7 @@ export function Navbar() {
         <div className="flex h-16 justify-between">
           <div className="flex items-center">
             <Link href="/" className="group relative text-xl font-semibold">
-              <span className="relative z-10 uppercase">⏎················AntonioMontero.dev⏎··············</span>
+              <span className="relative z-10 uppercase">Monty.bio</span>
               <span className="absolute inset-x-0 -bottom-1 h-0.5 origin-left scale-x-0 bg-primary transition-transform duration-300 group-hover:scale-x-100" />
             </Link>
           </div>
