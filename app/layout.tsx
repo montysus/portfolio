@@ -3,7 +3,6 @@ import "./styles/globals.css";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 
-import { Navbar } from "@/components/nav";
 import { ThemeProvider } from "@/components/providers";
 import { cn } from "@/lib/utils";
 
@@ -21,18 +20,20 @@ const geistMono = localFont({
 export const metadata: Metadata = {
   metadataBase: new URL("https://monty.bio"),
   title: {
-    default: "Antonio Montero",
-    template: "%s | Monty",
+    default: "Montyforge | Autonomous Systems Engineering",
+    template: "%s | Montyforge",
   },
-  description: "",
+  description:
+    "Autonomous systems engineering practice by Antonio Montero. Drones, robotics, control systems, and fielded mechatronic systems.",
   alternates: {
     canonical: "https://monty.bio",
   },
   openGraph: {
-    title: "Antonio Montero",
-    description: "",
+    title: "Montyforge | Autonomous Systems Engineering",
+    description:
+      "Drones, robotics, control systems, and fielded mechatronic systems by Antonio Montero.",
     url: "https://monty.bio",
-    siteName: "Antonio Montero",
+    siteName: "Montyforge",
     locale: "en_US",
     type: "website",
   },
@@ -56,8 +57,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Antonio Montero",
-    // description: "Minimalist code. Maximum impact.",
+    title: "Montyforge | Autonomous Systems Engineering",
   },
   // verification: {
   //   google: "Fyg64Q58kWDqARPWRbdy4uCuy8ENcCPHLITkRgRzyW4",
@@ -85,8 +85,7 @@ export default function RootLayout({
         )}
       >
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
-          <Navbar />
-          <main className="min-h-screen">{children}</main>
+          {children}
         </ThemeProvider>
       </body>
     </html>

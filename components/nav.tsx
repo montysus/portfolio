@@ -3,6 +3,7 @@
 import { useState } from "react";
 
 import { Menu, X } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -21,50 +22,56 @@ export function Navbar() {
   ];
 
   return (
-    <nav className="fixed z-50 w-full bg-background/80 backdrop-blur-sm">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="flex h-16 justify-between">
-          <div className="flex items-center">
-            <Link href="/" className="group relative text-xl font-semibold">
-              <span className="relative z-10 uppercase">Monty.bio</span>
-              <span className="absolute inset-x-0 -bottom-1 h-0.5 origin-left scale-x-0 bg-primary transition-transform duration-300 group-hover:scale-x-100" />
+    <nav className="fixed z-50 w-full border-b border-[#222222] bg-[#0a0a0a]/75 backdrop-blur-lg">
+      <div className="mx-auto max-w-7xl px-12 sm:px-6 lg:px-8">
+        <div className="flex h-20 items-center justify-between">
+          {/* Brand */}
+          <div className="flex items-center gap-3">
+            <Link href="/" className="group flex items-center gap-3">
+              <Image
+                src="/logo.png"
+                alt="MontyForge"
+                width={32}
+                height={32}
+                className="size-7 drop-shadow-lg"
+              />
+              <div className="flex flex-col leading-tight">
+                <span className="text-sm font-semibold text-[#f5f5f5]">
+                  MontyForge
+                </span>
+                <span className="font-mono text-[10px] tracking-wider text-[#999999]">
+                  by Antonio Montero
+                </span>
+              </div>
             </Link>
           </div>
 
           {/* Desktop Navigation */}
-          <div className="hidden items-center space-x-8 md:flex">
+          <div className="hidden items-center space-x-6 md:flex">
             {links.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
                 className={cn(
-                  "group relative py-2",
+                  "text-sm transition-colors duration-200",
                   pathname === link.href
-                    ? "font-medium text-primary"
-                    : "text-muted-foreground transition-colors duration-300 hover:text-primary",
+                    ? "font-medium text-[#f5f5f5]"
+                    : "text-[#999999] hover:text-[#f5f5f5]",
                 )}
               >
-                <span className="relative z-10">{link.label}</span>
-                <span
-                  className={cn(
-                    "absolute inset-x-0 -bottom-1 h-0.5 origin-left bg-primary transition-transform duration-300",
-                    pathname === link.href
-                      ? "scale-x-100"
-                      : "scale-x-0 group-hover:scale-x-100",
-                  )}
-                />
+                {link.label}
               </Link>
             ))}
-            <div className="relative">
-              <ThemeToggle />
-            </div>
+            <button className="border border-[#333333] px-4 py-2 text-sm text-[#f5f5f5] transition-all hover:bg-[#f5f5f5] hover:text-[#0a0a0a]">
+              Get in touch
+            </button>
           </div>
 
           {/* Mobile Navigation Button */}
-          <div className="flex items-center md:hidden">
+          <div className="flex items-center gap-4 md:hidden">
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="p-2 text-primary transition-transform duration-200 hover:scale-110 focus:outline-none"
+              className="p-2 text-[#f5f5f5] transition-transform duration-200 hover:scale-110 focus:outline-none"
               aria-label="Toggle menu"
             >
               {isOpen ? <X size={24} /> : <Menu size={24} />}
@@ -80,16 +87,16 @@ export function Navbar() {
           isOpen ? "max-h-64" : "max-h-0",
         )}
       >
-        <div className="space-y-1 bg-background/80 px-2 pb-3 pt-2 backdrop-blur-sm">
+        <div className="space-y-1 border-t border-[#222222] bg-[#0a0a0a]/80 px-12 pb-3 pt-2 backdrop-blur-sm">
           {links.map((link) => (
             <Link
               key={link.href}
               href={link.href}
               className={cn(
-                "block px-3 py-2 text-base transition-all duration-300",
+                "block px-3 py-2 text-sm transition-all duration-300",
                 pathname === link.href
-                  ? "translate-x-2 font-medium text-primary"
-                  : "text-muted-foreground hover:translate-x-2 hover:text-primary",
+                  ? "translate-x-2 font-medium text-[#f5f5f5]"
+                  : "text-[#999999] hover:translate-x-2 hover:text-[#f5f5f5]",
               )}
               onClick={() => setIsOpen(false)}
             >
