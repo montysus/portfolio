@@ -1,0 +1,758 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Anvil-III — Modular Release System | Montyforge</title>
+<meta name="description" content="Anvil-III: adaptive modular payload release mechanism for drones. 5 kg capacity, sub-100ms deployment. Developed for offshore resupply with Scandinavian Drone Company.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0a0a0a;
+    --bg-elev:#131313;
+    --fg:#f5f5f5;
+    --fg-dim:#999999;
+    --fg-faint:#666666;
+    --line:#222222;
+    --line-strong:#333333;
+    --accent:#e63329;
+  }
+  *{box-sizing:border-box}
+  html{color-scheme:dark;scroll-behavior:smooth}
+  body{
+    margin:0;background:var(--bg);color:var(--fg);
+    font-family:'Geist',system-ui,-apple-system,sans-serif;
+    font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;
+    overflow-x:hidden;position:relative;
+  }
+
+  /* ============ GLOBAL BACKGROUND ============ */
+  .site-bg{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+  .site-bg .grid{
+    position:absolute;inset:-5%;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px);
+    background-size:80px 80px;
+    mask-image:radial-gradient(ellipse 80% 70% at 50% 40%, black 40%, transparent 95%);
+    -webkit-mask-image:radial-gradient(ellipse 80% 70% at 50% 40%, black 40%, transparent 95%);
+  }
+  .site-bg .ghost{position:absolute;border-radius:50%;filter:blur(80px);will-change:transform}
+  .site-bg .ghost.a{width:70vw;height:70vw;top:-15%;right:-15%;background:radial-gradient(circle,rgba(230,51,41,0.09),transparent 65%);animation:drift-a 45s ease-in-out infinite}
+  .site-bg .ghost.b{width:65vw;height:65vw;bottom:-20%;left:-20%;background:radial-gradient(circle,rgba(230,51,41,0.06),transparent 65%);animation:drift-b 58s ease-in-out infinite}
+  .site-bg .ghost.c{width:55vw;height:55vw;top:40%;left:25%;background:radial-gradient(circle,rgba(230,51,41,0.04),transparent 65%);animation:drift-c 70s ease-in-out infinite}
+  @keyframes drift-a{0%{transform:translate(0,0)}20%{transform:translate(-35%,50%)}40%{transform:translate(-70%,15%)}60%{transform:translate(-45%,-35%)}80%{transform:translate(-10%,25%)}100%{transform:translate(0,0)}}
+  @keyframes drift-b{0%{transform:translate(0,0)}25%{transform:translate(55%,-25%)}50%{transform:translate(80%,40%)}75%{transform:translate(25%,65%)}100%{transform:translate(0,0)}}
+  @keyframes drift-c{0%{transform:translate(0,0)}30%{transform:translate(-55%,-50%)}60%{transform:translate(45%,-25%)}80%{transform:translate(20%,40%)}100%{transform:translate(0,0)}}
+  nav.top,section,footer,.proj-hero{position:relative;z-index:2}
+  @media(prefers-reduced-motion:reduce){.site-bg .ghost{animation:none}}
+  a{color:inherit;text-decoration:none}
+  img{max-width:100%;display:block}
+  ::selection{background:var(--fg);color:var(--bg)}
+  .mono{font-family:'Geist Mono',ui-monospace,monospace}
+
+  /* ============ NAV ============ */
+  nav.top{
+    position:fixed;top:0;left:0;right:0;z-index:100;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:20px 48px;background:rgba(10,10,10,0.75);
+    backdrop-filter:blur(16px);border-bottom:1px solid var(--line);
+  }
+  .brand{display:flex;align-items:flex-start;gap:14px}
+  .brand .mark{width:46px;height:46px;flex-shrink:0;display:flex;align-items:flex-start;justify-content:center;padding-top:1px}
+  .brand .mark img{width:100%;height:100%;object-fit:contain;display:block}
+  .brand .wordmark{display:flex;flex-direction:column;line-height:1.15;padding-top:2px}
+  .brand .wordmark b{font-weight:700;font-size:22px;letter-spacing:-0.02em;color:var(--fg)}
+  .brand .wordmark span{font-family:'Geist Mono',monospace;font-size:12px;color:var(--fg-dim);letter-spacing:0.03em;margin-top:3px}
+  .navlinks{display:flex;gap:4px;align-items:center}
+  .navlinks a{padding:10px 18px;font-size:14px;color:var(--fg-dim);transition:color .2s}
+  .navlinks a:hover{color:var(--fg)}
+  .navlinks a.cta{border:1px solid var(--line-strong);color:var(--fg);margin-left:12px}
+  .navlinks a.cta:hover{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+
+  /* ============ LABEL ============ */
+  .label{
+    font-family:'Geist Mono',monospace;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;
+    color:var(--fg-dim);display:inline-flex;align-items:center;gap:10px;margin-bottom:32px;
+  }
+  .label::before{
+    content:'';width:8px;height:8px;background:var(--fg);flex-shrink:0;
+    animation:label-sq-blink var(--sq-dur,1.8s) var(--sq-delay,0s) ease-in-out infinite;
+    box-shadow:0 0 6px rgba(245,245,245,0.9),0 0 14px rgba(245,245,245,0.5),0 0 28px rgba(245,245,245,0.2);
+  }
+  @keyframes label-sq-blink{
+    0%,30%{background:var(--fg);box-shadow:0 0 6px rgba(245,245,245,0.9),0 0 14px rgba(245,245,245,0.5),0 0 28px rgba(245,245,245,0.2)}
+    38%,62%{background:var(--accent);box-shadow:0 0 8px rgba(230,51,41,1),0 0 18px rgba(230,51,41,0.6),0 0 32px rgba(230,51,41,0.25)}
+    70%,100%{background:var(--fg);box-shadow:0 0 6px rgba(245,245,245,0.9),0 0 14px rgba(245,245,245,0.5),0 0 28px rgba(245,245,245,0.2)}
+  }
+
+  h1,h2,h3,h4,h5{font-family:'Geist',sans-serif;letter-spacing:-0.025em;margin:0;font-weight:600;text-wrap:balance}
+  h1{font-size:clamp(44px,7vw,88px);line-height:1.02;letter-spacing:-0.035em;font-weight:700}
+  h2{font-size:clamp(36px,5vw,64px);line-height:1.04}
+  h3{font-size:28px;line-height:1.15;font-weight:500}
+  h4{font-size:22px;line-height:1.2;font-weight:500}
+  p{color:var(--fg-dim);margin:0}
+
+  section{padding:120px 48px;position:relative}
+  .container{max-width:1200px;margin:0 auto}
+  .container-sm{max-width:860px;margin:0 auto}
+
+  /* ============ PROJECT HERO ============ */
+  .proj-hero{
+    position:relative;height:100vh;min-height:600px;max-height:900px;
+    overflow:hidden;display:flex;align-items:flex-end;
+  }
+  .proj-hero-img{
+    position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;
+    filter:brightness(0.65);transition:transform 8s ease;
+  }
+  .proj-hero:hover .proj-hero-img{transform:scale(1.02)}
+  .proj-hero-overlay{
+    position:absolute;inset:0;
+    background:linear-gradient(to top, rgba(10,10,10,0.92) 0%, rgba(10,10,10,0.45) 40%, rgba(10,10,10,0.1) 70%, transparent 100%);
+  }
+  .proj-hero-content{
+    position:relative;z-index:2;padding:0 48px 72px;width:100%;
+  }
+  .proj-hero-meta{
+    display:flex;align-items:center;gap:14px;flex-wrap:wrap;
+    font-family:'Geist Mono',monospace;font-size:12px;color:var(--fg-dim);margin-bottom:28px;
+  }
+  .proj-hero-meta .live{width:7px;height:7px;background:var(--accent);border-radius:50%;box-shadow:0 0 10px var(--accent);animation:live-pulse 2s ease-in-out infinite}
+  @keyframes live-pulse{0%,100%{opacity:1}50%{opacity:0.4}}
+  .proj-hero-meta .sep{width:24px;height:1px;background:var(--line-strong)}
+  .proj-hero-content h1{
+    font-size:clamp(40px,6.5vw,80px);font-weight:700;letter-spacing:-0.035em;
+    line-height:1.0;max-width:900px;margin-bottom:24px;
+  }
+  .proj-hero-content h1 .light{font-weight:300;color:var(--fg-dim)}
+  .proj-hero-content .tagline{
+    font-size:18px;color:var(--fg-dim);max-width:560px;line-height:1.55;
+  }
+  .proj-hero-stats{
+    margin-top:40px;padding-top:40px;border-top:2px solid rgba(245,245,245,0.12);
+    display:flex;gap:64px;flex-wrap:wrap;
+  }
+  .proj-hero-stats .stat .k{
+    font-family:'Geist Mono',monospace;font-size:10px;color:rgba(245,245,245,0.4);
+    letter-spacing:0.1em;text-transform:uppercase;margin-bottom:6px;
+  }
+  .proj-hero-stats .stat .v{font-size:18px;font-weight:500;letter-spacing:-0.01em}
+  .proj-hero-stats .badge-stat{
+    display:inline-flex;align-items:center;gap:8px;
+    font-family:'Geist Mono',monospace;font-size:10px;letter-spacing:0.08em;
+    color:var(--accent);border:1px solid rgba(230,51,41,0.5);padding:6px 14px;
+    background:rgba(230,51,41,0.08);align-self:flex-end;margin-left:auto;
+  }
+  .proj-hero-stats .badge-stat::before{
+    content:'';width:6px;height:6px;background:var(--accent);border-radius:50%;
+    box-shadow:0 0 8px var(--accent);animation:live-pulse 1.8s ease-in-out infinite;
+  }
+
+  /* ============ BACK LINK ============ */
+  .back-bar{
+    padding:20px 48px;border-bottom:2px solid var(--line-strong);
+    display:flex;align-items:center;justify-content:space-between;
+    position:relative;z-index:2;background:var(--bg);
+  }
+  .back-bar a{
+    font-family:'Geist Mono',monospace;font-size:12px;color:var(--fg-dim);
+    letter-spacing:0.06em;display:inline-flex;align-items:center;gap:10px;
+    transition:color .2s;
+  }
+  .back-bar a:hover{color:var(--fg)}
+  .back-bar .crumb{font-family:'Geist Mono',monospace;font-size:11px;color:var(--fg-faint);letter-spacing:0.08em}
+
+  /* ============ PROJECT OVERVIEW ============ */
+  .proj-overview{padding:120px 48px;border-bottom:2px solid var(--line-strong)}
+  .proj-overview-grid{display:grid;grid-template-columns:1fr 1.6fr;gap:100px;align-items:start}
+  .proj-overview .sidebar .k{
+    font-family:'Geist Mono',monospace;font-size:10px;color:var(--fg-faint);
+    letter-spacing:0.1em;text-transform:uppercase;margin-bottom:8px;
+  }
+  .proj-overview .sidebar .v{font-size:15px;color:var(--fg);margin-bottom:32px}
+  .proj-overview .sidebar .v:last-of-type{margin-bottom:0}
+  .proj-overview .sidebar hr{border:none;border-top:2px solid var(--line-strong);margin:36px 0}
+  .proj-overview .content h2{margin-bottom:32px;font-size:clamp(30px,3.5vw,48px)}
+  .proj-overview .content p{
+    font-size:17px;line-height:1.7;color:var(--fg-dim);margin-bottom:22px;max-width:640px;
+  }
+  .proj-overview .content p strong{color:var(--fg);font-weight:500}
+  .proj-overview .content p:last-child{margin-bottom:0}
+
+  /* ============ GALLERY ============ */
+  .gallery{padding:0;background:var(--bg);position:relative;z-index:2}
+  .gallery-hero{
+    width:100%;aspect-ratio:21/9;overflow:hidden;position:relative;
+    border-top:2px solid var(--line-strong);border-bottom:2px solid var(--line-strong);
+  }
+  .gallery-hero img{width:100%;height:100%;object-fit:cover;display:block;transition:transform 8s ease}
+  .gallery-hero:hover img{transform:scale(1.015)}
+  .gallery-hero .caption{
+    position:absolute;bottom:24px;right:32px;
+    font-family:'Geist Mono',monospace;font-size:11px;color:rgba(245,245,245,0.45);
+    letter-spacing:0.08em;text-transform:uppercase;
+  }
+  .gallery-hero .num{
+    position:absolute;top:24px;left:32px;
+    font-family:'Geist Mono',monospace;font-size:11px;color:rgba(245,245,245,0.35);
+    letter-spacing:0.08em;
+  }
+
+  .gallery-grid{
+    display:grid;grid-template-columns:1fr 1fr;
+    border-bottom:2px solid var(--line-strong);
+  }
+  .gallery-cell{
+    position:relative;overflow:hidden;aspect-ratio:16/9;
+    border-right:2px solid var(--line-strong);cursor:pointer;
+  }
+  .gallery-cell:nth-child(2n){border-right:none}
+  .gallery-cell img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s ease}
+  .gallery-cell:hover img{transform:scale(1.04)}
+  .gallery-cell .caption{
+    position:absolute;bottom:0;left:0;right:0;padding:12px 20px 14px;
+    background:linear-gradient(to top, rgba(10,10,10,0.85) 0%, transparent 100%);
+    font-family:'Geist Mono',monospace;font-size:10px;color:rgba(245,245,245,0.5);
+    letter-spacing:0.08em;text-transform:uppercase;
+    opacity:0;transition:opacity .3s;
+  }
+  .gallery-cell:hover .caption{opacity:1}
+  .gallery-cell .num{
+    position:absolute;top:14px;left:18px;
+    font-family:'Geist Mono',monospace;font-size:10px;color:rgba(245,245,245,0.3);
+    letter-spacing:0.08em;
+  }
+
+  /* Lightbox */
+  .lightbox{
+    position:fixed;inset:0;z-index:999;background:rgba(0,0,0,0.92);
+    display:flex;align-items:center;justify-content:center;
+    opacity:0;pointer-events:none;transition:opacity .3s;
+  }
+  .lightbox.open{opacity:1;pointer-events:all}
+  .lightbox img{max-width:92vw;max-height:90vh;object-fit:contain;display:block}
+  .lightbox .lb-close{
+    position:absolute;top:24px;right:32px;
+    font-family:'Geist Mono',monospace;font-size:13px;color:var(--fg-dim);
+    cursor:pointer;letter-spacing:0.08em;transition:color .2s;
+    background:none;border:none;padding:8px;
+  }
+  .lightbox .lb-close:hover{color:var(--fg)}
+  .lightbox .lb-nav{
+    position:absolute;top:50%;transform:translateY(-50%);
+    font-family:'Geist Mono',monospace;font-size:13px;color:var(--fg-dim);
+    cursor:pointer;background:none;border:none;padding:16px;
+    transition:color .2s;letter-spacing:0.06em;
+  }
+  .lightbox .lb-nav:hover{color:var(--fg)}
+  .lightbox .lb-prev{left:24px}
+  .lightbox .lb-next{right:24px}
+  .lightbox .lb-counter{
+    position:absolute;bottom:28px;left:50%;transform:translateX(-50%);
+    font-family:'Geist Mono',monospace;font-size:11px;color:var(--fg-faint);letter-spacing:0.1em;
+  }
+
+  /* ============ SPECS ============ */
+  .specs{padding:120px 48px;border-bottom:2px solid var(--line-strong)}
+  .specs-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border:2px solid var(--line-strong);margin-top:64px}
+  .spec-cell{
+    padding:36px 32px;border-right:2px solid var(--line-strong);
+    display:flex;flex-direction:column;
+  }
+  .spec-cell:last-child{border-right:none}
+  .spec-cell .k{
+    font-family:'Geist Mono',monospace;font-size:10px;color:var(--fg-faint);
+    letter-spacing:0.1em;text-transform:uppercase;margin-bottom:16px;
+  }
+  .spec-cell .num{
+    font-size:clamp(32px,4vw,52px);font-weight:700;letter-spacing:-0.04em;
+    line-height:1;margin-bottom:8px;color:var(--fg);
+  }
+  .spec-cell .unit{
+    font-family:'Geist Mono',monospace;font-size:11px;color:var(--fg-faint);
+    letter-spacing:0.06em;text-transform:uppercase;
+  }
+  .spec-cell .spec-val{font-size:16px;color:var(--fg);font-weight:500;margin-bottom:6px}
+  .spec-cell .spec-sub{font-size:13px;color:var(--fg-faint)}
+
+  .tech-table{margin-top:64px;max-width:780px}
+  .tech-table .tl{
+    font-family:'Geist Mono',monospace;font-size:11px;color:var(--fg-faint);
+    letter-spacing:0.12em;text-transform:uppercase;margin-bottom:24px;
+  }
+  .tech-row{
+    display:flex;justify-content:space-between;align-items:baseline;
+    padding:16px 0;border-bottom:2px solid var(--line-strong);gap:40px;
+  }
+  .tech-row:first-of-type{border-top:2px solid var(--line-strong)}
+  .tech-row .tk{font-family:'Geist Mono',monospace;font-size:12px;color:var(--fg-faint);letter-spacing:0.06em;text-transform:uppercase;white-space:nowrap}
+  .tech-row .tv{font-size:15px;color:var(--fg);text-align:right}
+
+  /* ============ CONTEXT ============ */
+  .proj-context{padding:160px 48px;background:var(--bg-elev);border-top:2px solid var(--line-strong);border-bottom:2px solid var(--line-strong)}
+  .proj-context-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start}
+  .proj-context h2{font-size:clamp(28px,3.5vw,44px);margin-bottom:32px;font-weight:400;color:var(--fg-dim);line-height:1.2}
+  .proj-context h2 strong{color:var(--fg);font-weight:600}
+  .proj-context p{font-size:16px;line-height:1.7;color:var(--fg-dim);margin-bottom:20px}
+  .proj-context p:last-child{margin-bottom:0}
+  .proj-context p strong{color:var(--fg);font-weight:500}
+
+  .timeline{margin-top:0}
+  .timeline-item{
+    display:flex;gap:24px;padding:24px 0;
+    border-bottom:2px solid var(--line-strong);
+  }
+  .timeline-item:first-child{border-top:2px solid var(--line-strong)}
+  .timeline-item .ti-date{
+    font-family:'Geist Mono',monospace;font-size:11px;color:var(--fg-faint);
+    letter-spacing:0.06em;text-transform:uppercase;white-space:nowrap;padding-top:2px;min-width:80px;
+  }
+  .timeline-item .ti-body .ti-title{font-size:15px;font-weight:500;color:var(--fg);margin-bottom:4px}
+  .timeline-item .ti-body .ti-sub{font-size:13px;color:var(--fg-dim)}
+
+  /* ============ RELATED / NEXT ============ */
+  .proj-footer{padding:80px 48px;border-top:2px solid var(--line-strong)}
+  .proj-footer-inner{
+    display:flex;justify-content:space-between;align-items:center;
+    max-width:1200px;margin:0 auto;flex-wrap:wrap;gap:32px;
+  }
+  .proj-footer .back-link{
+    display:inline-flex;align-items:center;gap:12px;
+    font-family:'Geist Mono',monospace;font-size:13px;color:var(--fg-dim);
+    transition:color .2s;
+  }
+  .proj-footer .back-link:hover{color:var(--fg)}
+  .proj-footer .back-link .arr{transition:transform .3s}
+  .proj-footer .back-link:hover .arr{transform:translateX(-4px)}
+  .proj-footer .next-info{text-align:right}
+  .proj-footer .next-info .nk{font-family:'Geist Mono',monospace;font-size:11px;color:var(--fg-faint);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:6px}
+  .proj-footer .next-info .nv{font-size:20px;font-weight:500;color:var(--fg-dim)}
+
+  /* ============ FOOTER ============ */
+  footer{
+    padding:60px 48px 40px;border-top:2px solid var(--line-strong);
+    display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;background:var(--bg);
+    position:relative;z-index:2;
+  }
+  footer h6{font-family:'Geist Mono',monospace;font-size:11px;color:var(--fg-faint);letter-spacing:0.1em;text-transform:uppercase;margin:0 0 16px;font-weight:500}
+  footer a{display:block;padding:6px 0;color:var(--fg-dim);font-size:14px;transition:color .2s}
+  footer a:hover{color:var(--fg)}
+  footer .about-foot p{font-size:14px;color:var(--fg-dim);max-width:320px;line-height:1.6;margin:12px 0 0}
+  .foot-bottom{
+    grid-column:1/-1;padding-top:40px;margin-top:32px;border-top:1px solid var(--line);
+    display:flex;justify-content:space-between;
+    font-family:'Geist Mono',monospace;font-size:11px;color:var(--fg-faint);letter-spacing:0.05em;
+  }
+
+  /* ============ REVEAL ============ */
+  .reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease-out,transform .7s ease-out}
+  .reveal.visible{opacity:1;transform:translateY(0)}
+
+  @media(prefers-reduced-motion:reduce){*,.reveal{transition:none !important;animation:none !important}.reveal{opacity:1 !important;transform:none !important}}
+
+  /* ============ RESPONSIVE ============ */
+  @media(max-width:900px){
+    nav.top{padding:14px 20px}
+    .navlinks a:not(.cta){display:none}
+    .proj-hero-content{padding:0 20px 48px}
+    .proj-hero-stats{gap:32px}
+    .proj-hero-stats .badge-stat{margin-left:0;margin-top:16px}
+    .back-bar{padding:16px 20px}
+    section{padding:80px 20px}
+    .proj-overview{padding:80px 20px}
+    .proj-overview-grid{grid-template-columns:1fr;gap:48px}
+    .gallery-grid{grid-template-columns:1fr}
+    .gallery-cell{border-right:none;border-bottom:2px solid var(--line-strong)}
+    .gallery-cell:nth-child(2n){border-right:none}
+    .specs{padding:80px 20px}
+    .specs-grid{grid-template-columns:repeat(2,1fr)}
+    .spec-cell:nth-child(2){border-right:none}
+    .spec-cell:nth-child(3){border-top:2px solid var(--line-strong);border-right:2px solid var(--line-strong)}
+    .spec-cell:last-child{border-top:2px solid var(--line-strong)}
+    .proj-context{padding:80px 20px}
+    .proj-context-grid{grid-template-columns:1fr;gap:48px}
+    .proj-footer{padding:60px 20px}
+    footer{grid-template-columns:1fr 1fr;gap:32px;padding:48px 20px 32px}
+    .foot-bottom{flex-direction:column;gap:12px}
+    .brand .wordmark{display:none}
+    .gallery-hero{aspect-ratio:16/9}
+  }
+</style>
+</head>
+<body>
+
+<!-- GLOBAL BACKGROUND -->
+<div class="site-bg" aria-hidden="true">
+  <div class="ghost a"></div><div class="ghost b"></div><div class="ghost c"></div>
+  <div class="grid"></div>
+</div>
+
+<!-- NAV -->
+<nav class="top">
+  <a href="index.html" class="brand">
+    <div class="mark"><img src="assets/montyforge-mark-white.png" alt="MF"></div>
+    <div class="wordmark"><b>Montyforge</b><span>by Antonio Montero</span></div>
+  </a>
+  <div class="navlinks">
+    <a href="index.html#portfolio">Portfolio</a>
+    <a href="index.html#about">About</a>
+    <a href="index.html#contact">Contact</a>
+    <a href="index.html#contact" class="cta">Get in touch →</a>
+  </div>
+</nav>
+
+<!-- PROJECT HERO -->
+<div class="proj-hero">
+  <img class="proj-hero-img" src="assets/anvil3-r2.jpg" alt="Anvil-III over North Sea oil platform"
+       onerror="this.src='assets/anvil3.PNG'">
+  <div class="proj-hero-overlay"></div>
+  <div class="proj-hero-content">
+    <div class="proj-hero-meta">
+      <span class="live"></span>
+      <span>Autonomous Systems</span>
+      <span class="sep" style="width:24px;height:1px;background:rgba(245,245,245,0.2);display:inline-block"></span>
+      <span>Stavanger · North Sea</span>
+      <span class="sep" style="width:24px;height:1px;background:rgba(245,245,245,0.2);display:inline-block"></span>
+      <span class="mono">PROJECT / 01 — 04</span>
+    </div>
+    <h1>Anvil-III<br><span class="light">Modular Release System</span></h1>
+    <p class="tagline">Adaptive payload release mechanism for drones. Engineered for offshore resupply, emergency deployment, and maritime operations in the North Sea.</p>
+    <div class="proj-hero-stats">
+      <div class="stat"><div class="k">Payload</div><div class="v">5 kg</div></div>
+      <div class="stat"><div class="k">Deploy time</div><div class="v">&lt;100 ms</div></div>
+      <div class="stat"><div class="k">Partner</div><div class="v">SDC</div></div>
+      <div class="stat"><div class="k">Year</div><div class="v">2026</div></div>
+      <div class="badge-stat">IN DEVELOPMENT</div>
+    </div>
+  </div>
+</div>
+
+<!-- BACK BAR -->
+<div class="back-bar">
+  <a href="index.html#portfolio">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8L10 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    Back to portfolio
+  </a>
+  <span class="crumb">MONTYFORGE / PORTFOLIO / ANVIL-III</span>
+</div>
+
+<!-- PROJECT OVERVIEW -->
+<section class="proj-overview">
+  <div class="container">
+    <div class="proj-overview-grid">
+
+      <!-- Sidebar -->
+      <div class="sidebar reveal">
+        <div class="label" style="margin-bottom:40px">Project details</div>
+
+        <div class="k">Category</div>
+        <div class="v">Autonomous Drone Systems</div>
+
+        <div class="k">Status</div>
+        <div class="v" style="color:var(--accent);font-family:'Geist Mono',monospace;font-size:13px;letter-spacing:0.05em">IN DEVELOPMENT</div>
+
+        <div class="k">Year</div>
+        <div class="v">2026</div>
+
+        <div class="k">Partner</div>
+        <div class="v">Scandinavian Drone Company (SDC)</div>
+
+        <div class="k">Application</div>
+        <div class="v">Offshore resupply · Maritime ops</div>
+
+        <hr>
+
+        <div class="k">Stack</div>
+        <div class="v">PX4 · MAVLink · C++ · Fusion 360</div>
+
+        <div class="k">Manufactured</div>
+        <div class="v">Bambu Lab · custom hardware</div>
+      </div>
+
+      <!-- Content -->
+      <div class="content reveal">
+        <h2>A release mechanism built for the real world — not the test bench.</h2>
+        <p>The North Sea is one of the most demanding operating environments for autonomous systems. Platforms are remote, weather is hostile, and supply chains are expensive. <strong>Anvil-III is a modular payload release system</strong> designed to let drones deliver cargo to offshore installations where conventional logistics are too costly or too slow.</p>
+        <p>The core problem: existing drone release mechanisms are either too rigid (fixed payload geometry), too slow (manual trigger latency), or not reliable enough under the vibration and temperature extremes of maritime operations. Anvil-III solves all three.</p>
+        <p>The mechanism accepts any payload shape up to <strong>5 kilograms</strong> through an adaptive clamping geometry. Release is triggered via MAVLink command and executes in under 100 milliseconds — fast enough for precision delivery even under crosswind conditions. The system has been developed in collaboration with <strong>Scandinavian Drone Company</strong> for integration with their offshore drone platform.</p>
+        <p>Currently in active development and field testing. First operational deployments scheduled for North Sea resupply runs in 2026.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<div class="gallery">
+
+  <!-- Gallery Hero — full-width panoramic -->
+  <div class="gallery-hero">
+    <img src="assets/anvil3-r4.jpg" alt="Anvil-III operational render — fire background"
+         onerror="this.src='assets/anvil3.PNG'">
+    <div class="num">02 / 04</div>
+    <div class="caption">Operational scenario · North Sea</div>
+  </div>
+
+  <!-- 2-column grid -->
+  <div class="gallery-grid">
+    <div class="gallery-cell" data-img="assets/anvil3-r1.jpg" data-idx="2">
+      <img src="assets/anvil3-r1.jpg" alt="Anvil-III underside view"
+           onerror="this.src='assets/anvil3.PNG'">
+      <div class="num">03 / 04</div>
+      <div class="caption">Underside view · payload bay</div>
+    </div>
+    <div class="gallery-cell" data-img="assets/anvil3-r3.jpg" data-idx="3">
+      <img src="assets/anvil3-r3.jpg" alt="Anvil-III mechanism detail"
+           onerror="this.src='assets/anvil3.PNG'">
+      <div class="num">04 / 04</div>
+      <div class="caption">Release mechanism · detail</div>
+    </div>
+  </div>
+</div>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true">
+  <button class="lb-close" id="lb-close">ESC / CLOSE</button>
+  <button class="lb-nav lb-prev" id="lb-prev">← PREV</button>
+  <img id="lb-img" src="" alt="Gallery image">
+  <button class="lb-nav lb-next" id="lb-next">NEXT →</button>
+  <div class="lb-counter" id="lb-counter"></div>
+</div>
+
+<!-- SPECS -->
+<section class="specs">
+  <div class="container">
+    <div class="label">Technical specifications</div>
+    <h2 class="reveal">Engineered to spec,<br>proven in the field.</h2>
+
+    <div class="specs-grid reveal">
+      <div class="spec-cell">
+        <div class="k">Payload capacity</div>
+        <div class="num">5</div>
+        <div class="unit">kilograms</div>
+      </div>
+      <div class="spec-cell">
+        <div class="k">Deploy latency</div>
+        <div class="num">&lt;100</div>
+        <div class="unit">milliseconds</div>
+      </div>
+      <div class="spec-cell">
+        <div class="k">Payload geometry</div>
+        <div class="spec-val">Adaptive clamping</div>
+        <div class="spec-sub">Any payload shape</div>
+      </div>
+      <div class="spec-cell">
+        <div class="k">Interface</div>
+        <div class="spec-val">MAVLink / PWM</div>
+        <div class="spec-sub">PX4 + ArduPilot compatible</div>
+      </div>
+    </div>
+
+    <div class="tech-table reveal">
+      <div class="tl">Full spec sheet</div>
+
+      <div class="tech-row">
+        <span class="tk">Trigger protocol</span>
+        <span class="tv">MAVLink DO_SET_SERVO / PWM signal</span>
+      </div>
+      <div class="tech-row">
+        <span class="tk">Operating temperature</span>
+        <span class="tv">−20 °C to +55 °C</span>
+      </div>
+      <div class="tech-row">
+        <span class="tk">Ingress protection</span>
+        <span class="tv">IP54 rated (salt spray resistant)</span>
+      </div>
+      <div class="tech-row">
+        <span class="tk">Actuation</span>
+        <span class="tv">High-torque servo + spring assist</span>
+      </div>
+      <div class="tech-row">
+        <span class="tk">System weight</span>
+        <span class="tv">~320 g (mechanism only)</span>
+      </div>
+      <div class="tech-row">
+        <span class="tk">Mounting standard</span>
+        <span class="tv">Universal drone belly plate · M3/M4</span>
+      </div>
+      <div class="tech-row">
+        <span class="tk">Firmware</span>
+        <span class="tv">PX4 v1.14 / ArduCopter 4.x</span>
+      </div>
+      <div class="tech-row">
+        <span class="tk">Manufacture</span>
+        <span class="tv">FDM (ASA / PETG-CF) + CNC aluminium</span>
+      </div>
+      <div class="tech-row">
+        <span class="tk">Design software</span>
+        <span class="tv">Autodesk Fusion 360</span>
+      </div>
+      <div class="tech-row">
+        <span class="tk">Status</span>
+        <span class="tv" style="color:var(--accent);font-family:'Geist Mono',monospace;font-size:12px;letter-spacing:0.05em">IN DEVELOPMENT · 2026</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTEXT & TIMELINE -->
+<section class="proj-context">
+  <div class="container">
+    <div class="proj-context-grid">
+      <div class="reveal">
+        <div class="label">Background</div>
+        <h2>Offshore logistics is a<br><strong>billion-dollar problem</strong> with a drone-shaped solution.</h2>
+        <p>Each vessel callout to deliver parts, tools, or medical supplies to an offshore platform costs thousands of euros. The North Sea fleet makes hundreds of these callouts per year. Drone delivery eliminates most of them — but only if the release system is reliable enough to trust with critical cargo over open water.</p>
+        <p>Anvil-III was designed from the ground up for this environment. Where existing mechanisms fail due to corrosion, icing, or payload incompatibility, Anvil-III uses an adaptive geometry that grips any shape and a sealed, thermally stable actuation system that works in subzero conditions.</p>
+        <p>Development is ongoing in partnership with <strong>Scandinavian Drone Company</strong>, who operate an approved BVLOS (Beyond Visual Line of Sight) platform over the North Sea. First live operational deployments are scheduled for 2026.</p>
+      </div>
+      <div class="reveal">
+        <div class="label">Development timeline</div>
+        <div class="timeline">
+          <div class="timeline-item">
+            <span class="ti-date">Q1 2025</span>
+            <div class="ti-body">
+              <div class="ti-title">Concept & requirements definition</div>
+              <div class="ti-sub">Offshore logistics analysis · payload envelope study</div>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <span class="ti-date">Q2 2025</span>
+            <div class="ti-body">
+              <div class="ti-title">Mechanism design — Anvil-I / II</div>
+              <div class="ti-sub">First two iterations · fixed geometry · benchtop testing</div>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <span class="ti-date">Q3 2025</span>
+            <div class="ti-body">
+              <div class="ti-title">Adaptive clamping geometry</div>
+              <div class="ti-sub">Anvil-III concept · FEA analysis · load path validation</div>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <span class="ti-date">Q4 2025</span>
+            <div class="ti-body">
+              <div class="ti-title">MAVLink integration & environmental sealing</div>
+              <div class="ti-sub">PX4 plugin · IP54 enclosure · salt spray chamber tests</div>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <span class="ti-date">2026</span>
+            <div class="ti-body">
+              <div class="ti-title">Field deployment with SDC</div>
+              <div class="ti-sub">North Sea operational trials · ongoing iteration</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECT FOOTER / NEXT -->
+<div class="proj-footer">
+  <div class="proj-footer-inner">
+    <a href="index.html#portfolio" class="back-link">
+      <span class="arr">←</span>
+      Back to all projects
+    </a>
+    <div class="next-info">
+      <div class="nk">Next project</div>
+      <div class="nv">Life Vest Deployment System →</div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="about-foot">
+    <div class="brand">
+      <div class="mark"><img src="assets/montyforge-mark-white.png" alt="MF"></div>
+      <div class="wordmark"><b>Montyforge</b><span>by Antonio Montero</span></div>
+    </div>
+    <p>Autonomous systems engineering practice. Drones, robotics, control systems. Real problems — real solutions.</p>
+  </div>
+  <div><h6>Work</h6><a href="index.html#portfolio">Portfolio</a><a href="#">Case studies</a><a href="#">Services</a></div>
+  <div><h6>About</h6><a href="index.html#about">Who I am</a><a href="#">Background</a><a href="#">Writing</a></div>
+  <div><h6>Connect</h6><a href="mailto:antonio@montyforge.com">Email</a><a href="#">Instagram</a><a href="#">LinkedIn</a></div>
+  <div class="foot-bottom">
+    <span>© 2026 Montyforge · Antonio Montero · Stavanger, Norway</span>
+    <span>v1.0 · 05.2026</span>
+  </div>
+</footer>
+
+<script>
+  // Scroll reveal
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e) => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
+
+  // Label blink async
+  (function () {
+    const durations = [1.9, 2.6, 1.5, 3.1, 2.2];
+    const delays    = [0, 0.6, 1.15, 0.35, 0.9];
+    document.querySelectorAll('.label').forEach((el, i) => {
+      el.style.setProperty('--sq-dur',   durations[i % durations.length] + 's');
+      el.style.setProperty('--sq-delay', delays[i % delays.length] + 's');
+    });
+  })();
+
+  // Lightbox
+  (function () {
+    const lb     = document.getElementById('lightbox');
+    const lbImg  = document.getElementById('lb-img');
+    const lbCtr  = document.getElementById('lb-counter');
+    const lbClose= document.getElementById('lb-close');
+    const lbPrev = document.getElementById('lb-prev');
+    const lbNext = document.getElementById('lb-next');
+
+    // All gallery images in order
+    const images = [
+      { src: 'assets/anvil3-r2.jpg', caption: '01 / 04 — Hero render' },
+      { src: 'assets/anvil3-r4.jpg', caption: '02 / 04 — Operational scenario' },
+      { src: 'assets/anvil3-r1.jpg', caption: '03 / 04 — Underside view' },
+      { src: 'assets/anvil3-r3.jpg', caption: '04 / 04 — Mechanism detail' },
+    ];
+    let current = 0;
+
+    function show(idx) {
+      current = (idx + images.length) % images.length;
+      lbImg.src = images[current].src;
+      lbCtr.textContent = images[current].caption;
+    }
+
+    function open(idx) { show(idx); lb.classList.add('open'); document.body.style.overflow = 'hidden'; }
+    function close()   { lb.classList.remove('open'); document.body.style.overflow = ''; }
+
+    // Gallery cells → lightbox (shift index by 2 since hero and r4 come first)
+    document.querySelectorAll('.gallery-cell').forEach((cell) => {
+      cell.addEventListener('click', () => {
+        const idx = parseInt(cell.dataset.idx, 10);
+        open(idx);
+      });
+    });
+
+    // Hero image → lightbox (show r4 = index 1)
+    document.querySelector('.gallery-hero img') && document.querySelector('.gallery-hero').addEventListener('click', () => open(1));
+
+    lbClose.addEventListener('click', close);
+    lbPrev.addEventListener('click', () => show(current - 1));
+    lbNext.addEventListener('click', () => show(current + 1));
+
+    lb.addEventListener('click', (e) => { if (e.target === lb) close(); });
+    document.addEventListener('keydown', (e) => {
+      if (!lb.classList.contains('open')) return;
+      if (e.key === 'Escape') close();
+      if (e.key === 'ArrowLeft') show(current - 1);
+      if (e.key === 'ArrowRight') show(current + 1);
+    });
+  })();
+</script>
+</body>
+</html>

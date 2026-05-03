@@ -1,0 +1,453 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Life Vest Deployment System — Montyforge</title>
+<meta name="description" content="Sistema de despliegue de chaleco salvavidas desde dron. Desarrollado con AEROMEDIA. Pioneer en Fuengirola, cubierto por Cuatro, Telecinco, COPE y Euronews.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0a0a0a;--bg-elev:#131313;--fg:#f5f5f5;--fg-dim:#999;--fg-faint:#666;
+  --line:#222;--line-strong:#333;--accent:#e63329;
+}
+*{box-sizing:border-box}
+html{color-scheme:dark;scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:'Geist',system-ui,sans-serif;font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+img,video{max-width:100%;display:block}
+.mono{font-family:'Geist Mono',monospace}
+
+/* NAV */
+nav.top{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:20px 48px;background:rgba(10,10,10,0.85);
+  backdrop-filter:blur(16px);border-bottom:1px solid var(--line);
+}
+.brand{display:flex;align-items:center;gap:12px}
+.brand .mark{width:34px;height:34px}
+.brand .mark img{width:100%;height:100%;object-fit:contain}
+.brand b{font-weight:700;font-size:20px;letter-spacing:-0.02em}
+.navlinks{display:flex;gap:4px;align-items:center}
+.navlinks a{padding:10px 18px;font-size:14px;color:var(--fg-dim);transition:color .2s}
+.navlinks a:hover{color:var(--fg)}
+.navlinks a.cta{border:1px solid var(--line-strong);color:var(--fg);margin-left:12px}
+.navlinks a.cta:hover{background:var(--fg);color:var(--bg)}
+
+/* HERO */
+.proj-hero{
+  min-height:100vh;display:flex;flex-direction:column;justify-content:flex-end;
+  position:relative;overflow:hidden;
+}
+.hero-bg{position:absolute;inset:0}
+.hero-bg video{width:100%;height:100%;object-fit:cover;display:block}
+.hero-bg::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(to bottom,rgba(10,10,10,0.25) 0%,rgba(10,10,10,0.05) 40%,rgba(10,10,10,0.82) 78%,var(--bg) 100%);
+}
+.hero-content{
+  position:relative;z-index:2;padding:80px 48px 72px;max-width:1200px;margin:0 auto;width:100%;
+}
+.hero-meta{
+  font-family:'Geist Mono',monospace;font-size:12px;color:var(--fg-dim);
+  display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:20px;
+}
+.hero-meta .sep{width:20px;height:1px;background:var(--line-strong);display:inline-block}
+.badge-pill{
+  display:inline-flex;align-items:center;gap:8px;
+  font-family:'Geist Mono',monospace;font-size:10px;
+  border:1px solid rgba(245,245,245,0.22);padding:5px 12px;
+  background:rgba(245,245,245,0.06);letter-spacing:0.06em;color:var(--fg-dim);
+  margin-bottom:18px;
+}
+.badge-pill::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--fg-dim);box-shadow:0 0 6px var(--fg-dim)}
+.proj-hero h1{
+  font-size:clamp(42px,6.5vw,86px);font-weight:700;letter-spacing:-0.035em;line-height:1.02;
+  margin:0 0 22px;max-width:820px;
+}
+.hero-sub{font-size:18px;color:var(--fg-dim);max-width:560px;line-height:1.6}
+
+/* SECTIONS */
+section{padding:100px 48px;position:relative;z-index:2}
+.container{max-width:1200px;margin:0 auto}
+.container-sm{max-width:860px;margin:0 auto}
+.sec-label{
+  font-family:'Geist Mono',monospace;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;
+  color:var(--fg-dim);display:inline-flex;align-items:center;gap:10px;margin-bottom:32px;
+}
+.sec-label::before{
+  content:'';width:8px;height:8px;background:var(--accent);flex-shrink:0;
+  box-shadow:0 0 8px var(--accent),0 0 20px rgba(230,51,41,0.5);
+}
+h2{font-size:clamp(32px,4.5vw,56px);line-height:1.05;letter-spacing:-0.025em;font-weight:600;margin:0}
+h3{font-size:20px;font-weight:500;letter-spacing:-0.015em;margin:0 0 10px}
+p{color:var(--fg-dim);margin:0}
+
+/* INTRO GRID */
+.border-top{border-top:2px solid var(--line-strong)}
+.intro-grid{display:grid;grid-template-columns:320px 1fr;gap:80px;align-items:start}
+.stats-card{border:1px solid var(--line-strong);background:var(--bg-elev)}
+.stat-row{padding:18px 24px;border-bottom:1px solid var(--line);display:flex;flex-direction:column;gap:3px}
+.stat-row:last-child{border-bottom:none}
+.stat-row .k{font-family:'Geist Mono',monospace;font-size:10px;color:var(--fg-faint);letter-spacing:0.1em;text-transform:uppercase}
+.stat-row .v{font-size:15px;color:var(--fg);font-weight:500}
+.intro-text h2{margin-bottom:28px}
+.intro-text p{font-size:17px;line-height:1.65;margin-bottom:18px}
+.intro-text p strong{color:var(--fg);font-weight:500}
+
+/* RENDER SECTION */
+.render-section{padding:0;border-top:2px solid var(--line-strong);border-bottom:2px solid var(--line-strong);background:var(--bg-elev)}
+.render-wrap{max-width:1000px;margin:0 auto;padding:60px 48px;display:flex;align-items:center;justify-content:center}
+.render-wrap img{width:100%;max-width:800px;filter:drop-shadow(0 30px 80px rgba(230,51,41,0.18)) drop-shadow(0 0 120px rgba(230,51,41,0.08))}
+
+/* IMPACT NUMBERS */
+.numbers-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border:1px solid var(--line-strong);margin-top:56px}
+.num-cell{padding:36px 28px;border-right:1px solid var(--line-strong);text-align:center}
+.num-cell:last-child{border-right:none}
+.num-cell .big{font-size:clamp(34px,4vw,54px);font-weight:700;letter-spacing:-0.03em;color:var(--fg);display:block;margin-bottom:8px;line-height:1}
+.num-cell .label{font-family:'Geist Mono',monospace;font-size:10px;color:var(--fg-faint);letter-spacing:0.1em;text-transform:uppercase;line-height:1.4}
+
+/* VIDEO EMBEDS */
+.videos-section{border-top:2px solid var(--line-strong)}
+.videos-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:56px}
+.video-card{background:var(--bg-elev);border:1px solid var(--line-strong);overflow:hidden}
+.video-card iframe{width:100%;aspect-ratio:16/9;display:block;border:none}
+.video-card .vc-info{padding:18px 20px;border-top:1px solid var(--line)}
+.video-card .vc-source{font-family:'Geist Mono',monospace;font-size:10px;color:var(--fg-faint);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:6px}
+.video-card .vc-title{font-size:14px;color:var(--fg);font-weight:500;line-height:1.4}
+
+/* MEDIA COVERAGE */
+.coverage-section{border-top:2px solid var(--line-strong)}
+.coverage-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:1px solid var(--line-strong);margin-top:56px}
+.cov-item{padding:28px;border-right:1px solid var(--line-strong);display:flex;flex-direction:column;gap:12px;transition:background .2s}
+.cov-item:last-child{border-right:none}
+.cov-item:hover{background:rgba(245,245,245,0.03)}
+.cov-source{font-family:'Geist Mono',monospace;font-size:10px;color:var(--fg-faint);letter-spacing:0.1em;text-transform:uppercase}
+.cov-date{font-family:'Geist Mono',monospace;font-size:10px;color:var(--fg-faint)}
+.cov-headline{font-size:15px;font-weight:500;line-height:1.4;color:var(--fg)}
+.cov-desc{font-size:13px;color:var(--fg-dim);line-height:1.55;flex:1}
+.cov-link{
+  font-family:'Geist Mono',monospace;font-size:11px;color:var(--fg-dim);
+  display:inline-flex;align-items:center;gap:6px;padding-bottom:2px;
+  border-bottom:1px solid var(--line-strong);transition:all .25s;width:fit-content;margin-top:4px;
+}
+.cov-link:hover{color:var(--fg);border-color:var(--fg)}
+
+/* HOW IT WORKS */
+.how-section{border-top:2px solid var(--line-strong)}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border:1px solid var(--line-strong);margin-top:56px}
+.step{padding:30px 26px;border-right:1px solid var(--line-strong)}
+.step:last-child{border-right:none}
+.step-num{font-family:'Geist Mono',monospace;font-size:11px;color:var(--fg-faint);letter-spacing:0.1em;margin-bottom:20px}
+.step h3{font-size:17px;margin-bottom:10px}
+.step p{font-size:14px;line-height:1.55}
+
+/* QUOTE */
+.quote-section{border-top:2px solid var(--line-strong);border-bottom:2px solid var(--line-strong);background:var(--bg-elev)}
+.blockquote{
+  font-size:clamp(20px,2.8vw,34px);font-weight:400;line-height:1.35;letter-spacing:-0.02em;
+  color:var(--fg-dim);max-width:880px;margin:0 auto;padding:80px 0;text-align:center;
+}
+.blockquote strong{color:var(--fg);font-weight:500}
+.blockquote cite{display:block;margin-top:24px;font-family:'Geist Mono',monospace;font-size:11px;color:var(--fg-faint);letter-spacing:0.08em;font-style:normal;text-transform:uppercase}
+
+/* BACK/NEXT */
+.proj-nav{
+  padding:56px 48px;border-top:2px solid var(--line-strong);
+  display:flex;justify-content:space-between;align-items:center;
+}
+.back-btn,.next-btn{
+  font-family:'Geist Mono',monospace;font-size:12px;color:var(--fg-dim);
+  display:inline-flex;align-items:center;gap:10px;padding-bottom:3px;
+  border-bottom:1px solid var(--line-strong);transition:all .25s;
+}
+.back-btn:hover,.next-btn:hover{color:var(--fg);border-color:var(--fg)}
+.next-wrap{text-align:right}
+.next-label{font-family:'Geist Mono',monospace;font-size:10px;color:var(--fg-faint);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:8px}
+
+/* FOOTER */
+footer{
+  padding:36px 48px;border-top:1px solid var(--line);
+  display:flex;justify-content:space-between;align-items:center;
+  font-family:'Geist Mono',monospace;font-size:11px;color:var(--fg-faint);
+}
+footer a{color:var(--fg-dim);transition:color .2s}
+footer a:hover{color:var(--fg)}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  nav.top{padding:14px 20px}
+  .navlinks a:not(.cta){display:none}
+  section{padding:60px 20px}
+  .hero-content{padding:60px 20px 52px}
+  .intro-grid{grid-template-columns:1fr;gap:40px}
+  .render-wrap{padding:40px 20px}
+  .numbers-grid{grid-template-columns:1fr 1fr}
+  .num-cell{border-bottom:1px solid var(--line-strong)}
+  .videos-grid{grid-template-columns:1fr}
+  .coverage-grid{grid-template-columns:1fr}
+  .cov-item{border-right:none;border-bottom:1px solid var(--line-strong)}
+  .cov-item:last-child{border-bottom:none}
+  .steps{grid-template-columns:1fr 1fr}
+  .step{border-bottom:1px solid var(--line-strong)}
+  .proj-nav{flex-direction:column;gap:28px;text-align:center}
+  .next-wrap{text-align:center}
+  footer{flex-direction:column;gap:12px;text-align:center}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="top">
+  <a href="index.html" class="brand">
+    <div class="mark"><img src="assets/montyforge-mark-white.png" alt="MF"></div>
+    <b>Montyforge</b>
+  </a>
+  <div class="navlinks">
+    <a href="index.html#portfolio">Portfolio</a>
+    <a href="index.html#about">About</a>
+    <a href="index.html#contact">Contact</a>
+    <a href="index.html#contact" class="cta">Get in touch →</a>
+  </div>
+</nav>
+
+<!-- HERO — video original format (contain) -->
+<section class="proj-hero">
+  <div class="hero-bg">
+    <video autoplay muted loop playsinline>
+      <source src="assets/chaleco-video.mp4" type="video/mp4">
+    </video>
+  </div>
+  <div class="hero-content">
+    <div class="hero-meta">
+      <span class="mono">02 / 02</span>
+      <span class="sep"></span>
+      <span>Systems · 2017 – present</span>
+      <span class="sep"></span>
+      <span>Fuengirola · Málaga · Costa del Sol</span>
+    </div>
+    <div class="badge-pill">ON USE</div>
+    <h1>Life Vest<br>Deployment System</h1>
+    <p class="hero-sub">Aerial deployment of inflatable life vests from drone platforms — cutting maritime rescue response time from minutes to seconds. Covered by Cuatro, Telecinco, COPE and Euronews.</p>
+  </div>
+</section>
+
+<!-- INTRO -->
+<section class="border-top">
+  <div class="container">
+    <div class="intro-grid">
+      <div class="stats-card">
+        <div class="stat-row"><span class="k">Partner</span><span class="v">AEROMEDIA</span></div>
+        <div class="stat-row"><span class="k">Location</span><span class="v">Fuengirola, Málaga</span></div>
+        <div class="stat-row"><span class="k">Deployed since</span><span class="v">2017 — Pioneer in Spain</span></div>
+        <div class="stat-row"><span class="k">Drones active</span><span class="v">4 units, full coastline</span></div>
+        <div class="stat-row"><span class="k">Response time</span><span class="v">Airborne in 10 seconds</span></div>
+        <div class="stat-row"><span class="k">2024 missions</span><span class="v">2,600+ (Jun–Jul alone)</span></div>
+        <div class="stat-row"><span class="k">Drowning victims</span><span class="v">0 in Fuengirola</span></div>
+        <div class="stat-row"><span class="k">TV coverage</span><span class="v">Cuatro · Telecinco · COPE</span></div>
+      </div>
+
+      <div class="intro-text">
+        <div class="sec-label">Project overview</div>
+        <h2>When seconds are the difference between life and death.</h2>
+        <p style="margin-top:28px">Developed in collaboration with <strong>AEROMEDIA</strong>, this system deploys an inflatable life vest from a drone directly to a swimmer in distress — before a human lifeguard could physically reach them.</p>
+        <p>Traditional rescue requires a lifeguard to swim out, which in rough surf can take 3–5 critical minutes. This system puts a flotation device in the hands of a drowning person in under 10 seconds of flight, at ranges up to 800 m offshore.</p>
+        <p>Fuengirola has been a <strong>pioneer in Spain</strong> since 2017 — the first municipality on the Costa del Sol to deploy aerial drone rescue. Eight years later, it remains a national reference point. AEROMEDIA has operated the service continuously, logging over 2,600 missions in a single summer month, with <strong>zero drowning fatalities</strong> on Fuengirola beaches.</p>
+        <p>The system attracted national television coverage, with reports on <strong>Cuatro</strong> and <strong>Telecinco</strong> in August 2025, plus radio coverage on <strong>COPE</strong> and international reporting by <strong>Euronews</strong>.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RENDER -->
+<div class="render-section">
+  <div class="render-wrap">
+    <img src="assets/lifevest-render.png" alt="Life Vest Deployment System render" loading="lazy">
+  </div>
+</div>
+
+<!-- IMPACT NUMBERS -->
+<section class="border-top">
+  <div class="container">
+    <div class="sec-label">By the numbers</div>
+    <h2>Eight years of operation.<br>Zero drowning fatalities.</h2>
+    <div class="numbers-grid">
+      <div class="num-cell">
+        <span class="big">10s</span>
+        <span class="label">Airborne from alert</span>
+      </div>
+      <div class="num-cell">
+        <span class="big">2,600+</span>
+        <span class="label">Missions in 2 months (2024)</span>
+      </div>
+      <div class="num-cell">
+        <span class="big">573</span>
+        <span class="label">Interventions in July 2025</span>
+      </div>
+      <div class="num-cell">
+        <span class="big">0</span>
+        <span class="label">Drowning fatalities in Fuengirola</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VIDEOS -->
+<section class="videos-section">
+  <div class="container">
+    <div class="sec-label">In the media</div>
+    <h2>Watch the system<br>in action.</h2>
+    <div class="videos-grid">
+      <div class="video-card">
+        <iframe src="https://www.youtube.com/embed/fWiw5qMF-Jo" title="Euronews — Lifeguard drone saved a drowning 14-year-old in Spain" allowfullscreen loading="lazy"></iframe>
+        <div class="vc-info">
+          <div class="vc-source">Euronews · 2022</div>
+          <div class="vc-title">'Lifeguard' drone saved a drowning 14-year-old on a beach in Spain by dropping a life vest</div>
+        </div>
+      </div>
+      <div class="video-card">
+        <iframe src="https://www.youtube.com/embed/pN7Tf6o5eXY" title="Drone Drops Lifejacket to Teen on Spanish Beach" allowfullscreen loading="lazy"></iframe>
+        <div class="vc-info">
+          <div class="vc-source">Reuters / International · 2022</div>
+          <div class="vc-title">Watch: Drone drops life jacket to teen struggling to stay afloat on Spanish beach</div>
+        </div>
+      </div>
+      <div class="video-card">
+        <iframe src="https://www.youtube.com/embed/p_CAtrn7-wY" title="Dron lanza salvavidas playa Sagunto España" allowfullscreen loading="lazy"></iframe>
+        <div class="vc-info">
+          <div class="vc-source">Spanish media · 2022</div>
+          <div class="vc-title">Un dron lanza un salvavidas y evita que un niño de 14 años se ahogue en una playa de Sagunto</div>
+        </div>
+      </div>
+      <div class="video-card" style="display:flex;flex-direction:column">
+        <div style="flex:1;background:#0e0e0e;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 32px;gap:16px;aspect-ratio:16/9">
+          <div style="font-family:'Geist Mono',monospace;font-size:10px;color:#555;letter-spacing:0.1em;text-transform:uppercase">Live stats — July 2025</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);width:100%;max-width:320px">
+            <div style="background:var(--bg-elev);padding:16px;text-align:center"><span style="display:block;font-size:28px;font-weight:700;letter-spacing:-0.03em;color:var(--fg)">91h</span><span style="font-family:'Geist Mono',monospace;font-size:9px;color:var(--fg-faint);text-transform:uppercase">Flight hours</span></div>
+            <div style="background:var(--bg-elev);padding:16px;text-align:center"><span style="display:block;font-size:28px;font-weight:700;letter-spacing:-0.03em;color:var(--fg)">573</span><span style="font-family:'Geist Mono',monospace;font-size:9px;color:var(--fg-faint);text-transform:uppercase">Interventions</span></div>
+            <div style="background:var(--bg-elev);padding:16px;text-align:center"><span style="display:block;font-size:28px;font-weight:700;letter-spacing:-0.03em;color:var(--accent)">6</span><span style="font-family:'Geist Mono',monospace;font-size:9px;color:var(--fg-faint);text-transform:uppercase">Rescues</span></div>
+            <div style="background:var(--bg-elev);padding:16px;text-align:center"><span style="display:block;font-size:28px;font-weight:700;letter-spacing:-0.03em;color:var(--fg)">4</span><span style="font-family:'Geist Mono',monospace;font-size:9px;color:var(--fg-faint);text-transform:uppercase">Active drones</span></div>
+          </div>
+        </div>
+        <div class="vc-info">
+          <div class="vc-source">Ayuntamiento de Fuengirola · 2025</div>
+          <div class="vc-title">Operational data from the 2025 summer season — Fuengirola beach surveillance program</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MEDIA COVERAGE -->
+<section class="coverage-section">
+  <div class="container">
+    <div class="sec-label">Press coverage</div>
+    <h2>Covered by national and<br>international media.</h2>
+    <div class="coverage-grid">
+      <div class="cov-item">
+        <span class="cov-source">Cuatro TV</span>
+        <span class="cov-date">7 agosto 2025</span>
+        <span class="cov-headline">"Fuengirola, pionera en usar drones para vigilar las playas: salvan a seis personas en tan solo 15 días"</span>
+        <p class="cov-desc">Cuatro TV covered the system with reporter Patricia Palacios. The report highlighted how Fuengirola's drone fleet achieved six rescues in 15 days during summer 2025, with zero drowning fatalities.</p>
+        <a href="https://www.cuatro.com/noticias/sociedad/20250807/fuengirola-pionera-usar-drones-vigilar-playas-rescates_18_016320147.html" target="_blank" rel="noopener" class="cov-link">Read on Cuatro.com →</a>
+      </div>
+      <div class="cov-item">
+        <span class="cov-source">Telecinco</span>
+        <span class="cov-date">7 agosto 2025</span>
+        <span class="cov-headline">"Evitar ahogamientos con drones es posible: así funciona el servicio en las playas de Fuengirola"</span>
+        <p class="cov-desc">Telecinco reported on how the drone surveillance system works as a life-saving complement to traditional lifeguard services, emphasizing the system's rapid deployment capability.</p>
+        <a href="https://www.telecinco.es/noticias/andalucia/20250807/evitar-ahogamientos-servicio-drones-playas-fuengirola-salvavidas_18_016319002.html" target="_blank" rel="noopener" class="cov-link">Read on Telecinco.es →</a>
+      </div>
+      <div class="cov-item">
+        <span class="cov-source">Euronews</span>
+        <span class="cov-date">25 julio 2022</span>
+        <span class="cov-headline">'Lifeguard' drone saved a drowning 14-year-old on a beach in Spain by dropping a life vest</span>
+        <p class="cov-desc">International coverage of a live rescue in Valencia where a drone operator deployed a life vest to a drowning teenager. The boy was hospitalised, given oxygen, and released after 24 hours.</p>
+        <a href="https://www.euronews.com/next/2022/07/25/lifeguard-drone-saved-a-drowning-14-year-old-on-a-beach-in-spain-by-dropping-a-life-vest" target="_blank" rel="noopener" class="cov-link">Read on Euronews.com →</a>
+      </div>
+      <div class="cov-item">
+        <span class="cov-source">COPE Radio</span>
+        <span class="cov-date">19 agosto 2023</span>
+        <span class="cov-headline">"Fuengirola instaura un servicio de aerovigilancia de sus playas con drones pionero en Andalucía"</span>
+        <p class="cov-desc">COPE covered the expansion of the drone program as a first-of-its-kind initiative in Andalucía, interviewing local authorities about the safety improvements achieved.</p>
+        <a href="https://www.cope.es/actualidad/espana/noticias/fuengirola-instaura-servicio-aerovigilancia-sus-playas-con-drones-pionero-andalucia-20230819_2860985" target="_blank" rel="noopener" class="cov-link">Read on COPE.es →</a>
+      </div>
+      <div class="cov-item">
+        <span class="cov-source">Área Costa del Sol</span>
+        <span class="cov-date">Verano 2025</span>
+        <span class="cov-headline">"Así funciona el servicio de drones que vigila el litoral de Fuengirola: clave en seis rescates"</span>
+        <p class="cov-desc">Detailed breakdown of how the system operates on Fuengirola's coastline, including response procedures, equipment specs, and statistics from the 2025 summer season.</p>
+        <a href="https://www.areacostadelsol.com/fuengirola/asi-funciona-el-servicio-de-drones-que-vigila-el-litoral-de-fuengirola-clave-en-seis-rescates-durante-el-verano/" target="_blank" rel="noopener" class="cov-link">Read article →</a>
+      </div>
+      <div class="cov-item">
+        <span class="cov-source">Ayuntamiento de Fuengirola</span>
+        <span class="cov-date">2024</span>
+        <span class="cov-headline">"El servicio de aerovigilancia con drones realizó más de 2.600 misiones entre junio y julio"</span>
+        <p class="cov-desc">Official municipal report: 2,600+ missions, 361 flight hours, and 4 rescues in a single two-month period. 54 lifeguards supported by 4 aerial units covering all municipal beaches.</p>
+        <a href="https://www.fuengirola.es/el-servicio-de-aerovigilancia-con-drones-de-las-playas-de-fuengirola-realizo-mas-de-2-600-misiones-entre-junio-y-julio/" target="_blank" rel="noopener" class="cov-link">Official report →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how-section">
+  <div class="container">
+    <div class="sec-label">How it works</div>
+    <h2>From alert to rescue<br>in under 30 seconds.</h2>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">01 / DETECT</div>
+        <h3>Swimmer spotted</h3>
+        <p>Drone operators monitor the full coastline via HD camera feeds. A swimmer in distress is identified visually or flagged by lifeguards on the ground.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">02 / LAUNCH</div>
+        <h3>Airborne in 10 seconds</h3>
+        <p>The drone activates and is airborne within 10 seconds. Four units cover all Fuengirola beaches simultaneously, 11:00–20:00 every summer day.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">03 / INTERCEPT</div>
+        <h3>On-site at speed</h3>
+        <p>Flying at speed towards the GPS-confirmed position, the drone reaches a person 200–800 m offshore in seconds — before a lifeguard could physically arrive.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">04 / DEPLOY</div>
+        <h3>Vest released</h3>
+        <p>A single command releases the self-inflating life vest. It inflates in 2 seconds on water contact, keeping the swimmer afloat until the rescue team arrives by jet ski.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- QUOTE -->
+<section class="quote-section">
+  <div class="container-sm">
+    <blockquote class="blockquote">
+      "Fuengirola fue de las primeras en incorporar los drones para la seguridad en las playas, y <strong>ocho años después sigue siendo un referente de innovación</strong> a nivel nacional."
+      <cite>— Ana María Mula, Alcaldesa de Fuengirola</cite>
+    </blockquote>
+  </div>
+</section>
+
+<!-- BACK / NEXT -->
+<div class="proj-nav">
+  <a href="index.html#portfolio" class="back-btn">← Back to portfolio</a>
+  <div class="next-wrap">
+    <div class="next-label">Next project</div>
+    <a href="anvil3.html" class="next-btn">Anvil-III Modular Release System →</a>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <span>© 2026 Montyforge · Antonio Montero · Stavanger, Norway</span>
+  <a href="mailto:contact@montyforge.com">contact@montyforge.com</a>
+</footer>
+
+</body>
+</html>
