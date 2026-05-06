@@ -456,7 +456,7 @@
   .reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease-out,transform .7s ease-out}
   .reveal.visible{opacity:1;transform:translateY(0)}
 
-  @media(prefers-reduced-motion:reduce){*,.proj,.reveal{transition:none !important;animation:none !important}.proj,.reveal{opacity:1 !important;transform:none !important}.hero-meta .live{animation:hero-live-blink 1.4s steps(1,end) infinite !important}.tools-strip-wrap{animation:tools-scroll 35s linear infinite !important}}
+  @media(prefers-reduced-motion:reduce){*,.proj,.reveal{transition:none !important;animation:none !important}.proj,.reveal{opacity:1 !important;transform:none !important}.hero-meta .live{animation:hero-live-blink 1.4s steps(1,end) infinite !important}.tools-strip-wrap{animation:tools-scroll 18s linear infinite !important}}
 
   /* ============ responsive ============ */
   @media(max-width:900px){
@@ -492,12 +492,14 @@
   }
   .tools-strip-wrap{
     display:flex;width:max-content;
-    animation:tools-scroll 35s linear infinite;
+    animation:tools-scroll 18s linear infinite;
   }
   .tools-strip-wrap:hover{animation-play-state:paused}
+  /* 3 copies of the list, scroll one full copy worth (33.333%) per cycle.
+     Container width = 3W, scrolling by W = exactly one list, seamless loop. */
   @keyframes tools-scroll{
     from{transform:translateX(0)}
-    to{transform:translateX(-50%)}
+    to{transform:translateX(-33.3333%)}
   }
   .tools-strip .tool-item{
     flex:0 0 auto;width:130px;height:88px;
@@ -638,11 +640,11 @@
       <a class="proj reveal" href="anvil3.html">
         <div class="proj-media" data-slides>
           <span class="proj-num-big">01</span>
-          <img class="card-slide active" src="assets/anvil3-r4.png" alt="Anvil-III with fire backdrop">
-          <img class="card-slide" src="assets/anvil3-r2.png" alt="Anvil-III oil rig" loading="lazy">
-          <img class="card-slide" src="assets/anvil3-r3.png" alt="Anvil-III mechanism" loading="lazy">
-          <img class="card-slide" src="assets/anvil3-r1.png" alt="Anvil-III alternate" loading="lazy">
-          <img class="card-slide" src="assets/anvil3-r5.png" alt="Anvil-III alternate angle" loading="lazy">
+          <img class="card-slide active" src="assets/anvil3-r4.png?v=2" alt="Anvil-III with fire backdrop">
+          <img class="card-slide" src="assets/anvil3-r2.png?v=2" alt="Anvil-III oil rig" loading="lazy">
+          <img class="card-slide" src="assets/anvil3-r3.png?v=2" alt="Anvil-III mechanism" loading="lazy">
+          <img class="card-slide" src="assets/anvil3-r1.png?v=2" alt="Anvil-III alternate" loading="lazy">
+          <img class="card-slide" src="assets/anvil3-r5.png?v=2" alt="Anvil-III alternate angle" loading="lazy">
         </div>
         <div class="proj-info">
           <div class="proj-info-head">
@@ -874,6 +876,9 @@
       return a;
     }
     const frag = document.createDocumentFragment();
+    // Render the list 3 times so the -50% loop has overflow on both sides
+    // and never shows a gap regardless of viewport width.
+    tools.forEach(t => frag.appendChild(render(t)));
     tools.forEach(t => frag.appendChild(render(t)));
     tools.forEach(t => frag.appendChild(render(t)));
     wrap.appendChild(frag);
