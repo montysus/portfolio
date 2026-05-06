@@ -196,84 +196,137 @@
   .intro h2 em{font-style:normal;color:var(--fg)}
 
   /* ============ FEATURED WORK ============ */
-  .work-head{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:60px;flex-wrap:wrap;gap:20px}
-  .work-head h2{max-width:540px}
-  .work-head .meta{font-family:'Geist Mono',monospace;font-size:12px;color:var(--fg-dim);text-align:right}
+  #portfolio{
+    padding:140px 0 120px;
+    border-top:2px solid var(--line-strong);
+    border-bottom:2px solid var(--line-strong);
+    background:linear-gradient(180deg,var(--bg) 0%,#080808 100%);
+  }
+  #portfolio > .container{padding:0 48px}
+  .work-head{
+    display:flex;justify-content:space-between;align-items:flex-end;
+    margin-bottom:96px;flex-wrap:wrap;gap:32px;
+    padding-bottom:40px;border-bottom:2px solid var(--line-strong);
+  }
+  .work-head h2{
+    font-size:clamp(48px,7vw,96px);line-height:0.98;letter-spacing:-0.04em;
+    max-width:none;font-weight:700;
+  }
+  .work-head .meta{
+    font-family:'Geist Mono',monospace;font-size:13px;color:var(--fg-dim);
+    letter-spacing:0.04em;text-align:right;line-height:1.7;
+  }
 
-  .work-grid{display:grid;grid-template-columns:1fr 1fr;gap:28px}
+  .work-grid{display:flex;flex-direction:column;gap:120px}
   .proj{
-    display:flex;flex-direction:column;cursor:pointer;
-    opacity:0;transform:translateY(24px);
-    transition:opacity .7s ease-out,transform .7s ease-out,box-shadow .4s ease,border-color .35s;
-    text-decoration:none;color:inherit;
-    border:1px solid var(--line-strong);
-    background:var(--bg-elev);
-    overflow:hidden;
+    display:grid;grid-template-columns:1.45fr 1fr;gap:64px;align-items:center;
+    cursor:pointer;text-decoration:none;color:inherit;position:relative;
+    opacity:0;transform:translateY(40px);
+    transition:opacity .8s ease-out,transform .8s ease-out;
   }
   .proj.visible{opacity:1;transform:translateY(0)}
-  .proj:hover{
-    box-shadow:0 20px 80px rgba(0,0,0,0.65);
-    border-color:rgba(245,245,245,0.22);
-  }
+  .proj:nth-child(even){grid-template-columns:1fr 1.45fr}
+  .proj:nth-child(even) .proj-media{order:2}
+  .proj:nth-child(even) .proj-info{order:1}
 
   .proj-media{
-    width:100%;aspect-ratio:3/2;
-    position:relative;overflow:hidden;
-    background:#111;
+    position:relative;aspect-ratio:4/3;overflow:hidden;
+    background:linear-gradient(135deg,#181818 0%,#0d0d0d 100%);
+    border:2px solid var(--line-strong);
+    transition:border-color .4s ease,box-shadow .4s ease,transform .5s ease;
+  }
+  .proj:hover .proj-media{
+    border-color:rgba(245,245,245,0.3);
+    box-shadow:0 30px 90px rgba(0,0,0,0.75),0 0 60px rgba(230,51,41,0.08);
+    transform:translateY(-4px);
+  }
+  .proj-media::before{
+    content:'';position:absolute;inset:0;z-index:1;pointer-events:none;
+    background:radial-gradient(ellipse 70% 70% at 50% 50%,transparent 50%,rgba(0,0,0,0.4) 100%);
   }
   .proj-media::after{
-    content:'VIEW PROJECT 92';
-    position:absolute;inset:0;z-index:2;
-    background:rgba(0,0,0,0.52);
-    display:flex;align-items:center;justify-content:center;
-    font-family:'Geist Mono',monospace;font-size:12px;letter-spacing:0.2em;
-    color:var(--fg);opacity:0;transition:opacity .4s ease;
+    content:'OPEN PROJECT  \2192';
+    position:absolute;left:24px;bottom:24px;z-index:3;
+    font-family:'Geist Mono',monospace;font-size:11px;letter-spacing:0.18em;
+    color:var(--fg);padding:10px 16px;background:rgba(10,10,10,0.85);
+    border:1px solid rgba(245,245,245,0.18);
+    opacity:0;transform:translateY(8px);
+    transition:opacity .35s ease,transform .35s ease;
   }
-  .proj:hover .proj-media::after{opacity:1}
-
+  .proj:hover .proj-media::after{opacity:1;transform:translateY(0)}
   .proj-media img,.proj-media video{
     position:absolute;inset:0;width:100%;height:100%;
-    object-fit:contain;display:block;transition:transform .9s ease;
+    object-fit:cover;display:block;transition:transform 1.2s ease;
   }
-  .proj:hover .proj-media img{transform:scale(1.04)}
-  .proj:hover .proj-media video{transform:scale(1.03)}
+  .proj:hover .proj-media img,.proj:hover .proj-media video{transform:scale(1.05)}
+  .proj-num-big{
+    position:absolute;top:-18px;right:-12px;z-index:4;
+    font-family:'Geist Mono',monospace;font-weight:700;
+    font-size:clamp(64px,8vw,120px);line-height:1;
+    color:transparent;-webkit-text-stroke:1.5px rgba(245,245,245,0.18);
+    letter-spacing:-0.04em;pointer-events:none;
+    transition:color .5s ease,-webkit-text-stroke-color .5s ease;
+  }
+  .proj:hover .proj-num-big{color:rgba(230,51,41,0.16);-webkit-text-stroke-color:rgba(230,51,41,0.45)}
+  .proj:nth-child(even) .proj-num-big{right:auto;left:-12px}
 
-  .proj-info{
-    display:flex;flex-direction:column;gap:10px;
-    padding:20px 24px 24px;
-    border-top:1px solid var(--line);
-  }
-  .proj-info-head{
-    display:flex;align-items:center;justify-content:space-between;
-    margin-bottom:2px;
-  }
+  .proj-info{display:flex;flex-direction:column;gap:18px}
+  .proj-info-head{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:8px}
   .proj .proj-num{
-    font-family:'Geist Mono',monospace;font-size:11px;color:var(--fg-faint);
-    letter-spacing:0.1em;
+    font-family:'Geist Mono',monospace;font-size:12px;color:var(--fg-faint);
+    letter-spacing:0.12em;
+  }
+  .proj-info-head .div{width:24px;height:1px;background:var(--line-strong)}
+  .proj .cat{
+    font-family:'Geist Mono',monospace;font-size:12px;color:var(--fg-dim);
+    text-transform:uppercase;letter-spacing:0.1em;
   }
   .proj .title{
-    font-size:clamp(18px,2vw,26px);font-weight:600;
-    letter-spacing:-0.025em;line-height:1.1;
+    font-size:clamp(34px,4vw,60px);font-weight:700;
+    letter-spacing:-0.035em;line-height:1.0;color:var(--fg);
   }
+  .proj .desc{font-size:17px;color:var(--fg-dim);line-height:1.6;max-width:480px;margin-top:6px}
+  .proj .desc strong{color:var(--fg);font-weight:500}
   .proj .badge{
     display:inline-flex;align-items:center;gap:8px;
-    font-family:'Geist Mono',monospace;font-size:10px;
-    border:1px solid rgba(230,51,41,0.4);padding:5px 12px;
-    background:rgba(230,51,41,0.06);letter-spacing:0.06em;
+    font-family:'Geist Mono',monospace;font-size:11px;
+    border:1px solid rgba(230,51,41,0.5);padding:6px 14px;
+    background:rgba(230,51,41,0.08);letter-spacing:0.08em;
     color:var(--accent);width:fit-content;
   }
-  .proj .badge::before{content:'';width:5px;height:5px;background:var(--accent);border-radius:50%;box-shadow:0 0 6px var(--accent)}
-  .proj .badge.on-use{color:var(--fg-dim);border-color:rgba(245,245,245,0.2);background:rgba(245,245,245,0.04)}
-  .proj .badge.on-use::before{background:var(--fg-dim);box-shadow:none}
-  .proj .cat{font-family:'Geist Mono',monospace;font-size:11px;color:var(--fg-faint);text-transform:uppercase;letter-spacing:0.08em}
-  .proj .desc{font-size:14px;color:var(--fg-dim);line-height:1.55;flex:1}
-  .proj .readmore{
-    font-family:'Geist Mono',monospace;font-size:12px;color:var(--fg);
-    display:inline-flex;align-items:center;gap:8px;padding-bottom:4px;
-    border-bottom:1px solid var(--line-strong);transition:border-color .3s;
-    width:fit-content;margin-top:8px;
+  .proj .badge::before{content:'';width:6px;height:6px;background:var(--accent);border-radius:50%;box-shadow:0 0 8px var(--accent);animation:proj-live-pulse 2s ease-in-out infinite}
+  .proj .badge.on-use{color:var(--fg-dim);border-color:rgba(245,245,245,0.22);background:rgba(245,245,245,0.05)}
+  .proj .badge.on-use::before{background:var(--fg-dim);box-shadow:none;animation:none}
+  @keyframes proj-live-pulse{0%,100%{opacity:1}50%{opacity:0.4}}
+  .proj-stats{
+    display:grid;grid-template-columns:repeat(3,auto);gap:32px;
+    margin-top:14px;padding:18px 0;
+    border-top:2px solid var(--line-strong);border-bottom:2px solid var(--line-strong);
   }
-  .proj:hover .readmore{border-color:var(--fg)}
+  .proj-stats .ps{display:flex;flex-direction:column;gap:4px}
+  .proj-stats .ps .pk{
+    font-family:'Geist Mono',monospace;font-size:10px;color:var(--fg-faint);
+    letter-spacing:0.1em;text-transform:uppercase;
+  }
+  .proj-stats .ps .pv{font-size:16px;color:var(--fg);font-weight:500;letter-spacing:-0.01em}
+  .proj .readmore{
+    font-family:'Geist Mono',monospace;font-size:13px;color:var(--fg);
+    display:inline-flex;align-items:center;gap:10px;padding:14px 22px;
+    border:1px solid var(--line-strong);width:fit-content;margin-top:10px;
+    transition:background .25s ease,border-color .25s ease,color .25s ease;
+    letter-spacing:0.06em;
+  }
+  .proj:hover .readmore{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+  .proj .readmore .arr{transition:transform .3s ease}
+  .proj:hover .readmore .arr{transform:translateX(4px)}
+  @media(max-width:900px){
+    .proj,.proj:nth-child(even){grid-template-columns:1fr;gap:32px}
+    .proj:nth-child(even) .proj-media{order:0}
+    .proj:nth-child(even) .proj-info{order:0}
+    .proj-num-big{font-size:64px;top:-8px;right:-4px}
+    .proj:nth-child(even) .proj-num-big{left:-4px}
+    .work-grid{gap:80px}
+  }
 
   /* ============ MANIFESTO ============ */
   .manifesto{padding:120px 48px;border-top:2px solid var(--line-strong);border-bottom:2px solid var(--line-strong)}
@@ -581,6 +634,7 @@
       <!-- Project 01 — Anvil-III -->
       <a class="proj reveal" href="anvil3.html">
         <div class="proj-media" data-slides>
+          <span class="proj-num-big">01</span>
           <img class="card-slide active" src="assets/anvil3-r1.png" alt="Anvil-III oil rig">
           <img class="card-slide" src="assets/anvil3-r2.png" alt="Anvil-III oil rig 2" loading="lazy">
           <img class="card-slide" src="assets/anvil3-r3.png" alt="Anvil-III oil rig 3" loading="lazy">
@@ -589,32 +643,45 @@
         </div>
         <div class="proj-info">
           <div class="proj-info-head">
-            <span class="proj-num">01 / 02</span>
+            <span class="proj-num">PROJECT 01 / 02</span>
+            <span class="div"></span>
             <span class="badge">IN DEVELOPMENT</span>
           </div>
-          <div class="title">Modular Release System — Anvil-III</div>
           <div class="cat">Autonomous Drone Systems · 2026</div>
-          <p class="desc">Adaptive payload release mechanism for drones. 5&nbsp;kg capacity, any payload shape, &lt;100&nbsp;ms deployment. Fielded with Scandinavian Drone Company for offshore resupply in the North Sea.</p>
-          <span class="readmore">View project →</span>
+          <h3 class="title">Modular Release System — Anvil-III</h3>
+          <p class="desc">Adaptive payload release mechanism for drones. <strong>5&nbsp;kg capacity</strong>, any payload shape, <strong>&lt;100&nbsp;ms</strong> deployment. Fielded with Scandinavian Drone Company for offshore resupply in the North Sea.</p>
+          <div class="proj-stats">
+            <div class="ps"><span class="pk">Payload</span><span class="pv">5 kg</span></div>
+            <div class="ps"><span class="pk">Deploy</span><span class="pv">&lt;100 ms</span></div>
+            <div class="ps"><span class="pk">Partner</span><span class="pv">SDC · North Sea</span></div>
+          </div>
+          <span class="readmore">View project <span class="arr">→</span></span>
         </div>
       </a>
 
       <!-- Project 02 — Life Vest -->
       <a class="proj reveal" href="lifevest.html">
         <div class="proj-media">
-          <video class="card-slide active" autoplay muted loop playsinline style="object-fit:contain">
+          <span class="proj-num-big">02</span>
+          <video class="card-slide active" autoplay muted loop playsinline style="object-fit:cover">
             <source src="assets/chaleco-video.mp4" type="video/mp4">
           </video>
         </div>
         <div class="proj-info">
           <div class="proj-info-head">
-            <span class="proj-num">02 / 02</span>
+            <span class="proj-num">PROJECT 02 / 02</span>
+            <span class="div"></span>
             <span class="badge on-use">ON USE</span>
           </div>
-          <div class="title">Life Vest Deployment System</div>
-          <div class="cat">Systems · 2023</div>
-          <p class="desc">Developed in collaboration with <strong style="color:var(--fg);font-weight:500">AEROMEDIA</strong>. Field-tested on Spanish beaches for coastal maritime safety — rapid aerial deployment from drone platforms.</p>
-          <span class="readmore">Read case study →</span>
+          <div class="cat">Maritime Rescue Systems · 2023 → present</div>
+          <h3 class="title">Life Vest Deployment System</h3>
+          <p class="desc">Developed in collaboration with <strong>AEROMEDIA</strong>. Field-tested on the beaches of <strong>Fuengirola &amp; Mijas</strong> — rapid aerial deployment of inflatable life vests from drone platforms.</p>
+          <div class="proj-stats">
+            <div class="ps"><span class="pk">Range</span><span class="pv">800 m</span></div>
+            <div class="ps"><span class="pk">Airborne</span><span class="pv">10 s</span></div>
+            <div class="ps"><span class="pk">Coverage</span><span class="pv">Costa del Sol</span></div>
+          </div>
+          <span class="readmore">Read case study <span class="arr">→</span></span>
         </div>
       </a>
 
