@@ -355,14 +355,30 @@
   .contact-box{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
   .contact h2{margin-bottom:24px;font-size:clamp(40px,5vw,72px)}
   .contact .lead{margin-bottom:32px}
-  .contact-links{display:flex;flex-direction:column;gap:2px}
+  .contact-links{display:flex;flex-direction:column;gap:0}
   .contact-links a{
     display:flex;justify-content:space-between;align-items:center;
-    padding:22px 0;border-bottom:1px solid var(--line);font-size:18px;color:var(--fg);transition:padding .3s;
+    padding:22px 0;border-bottom:2px solid var(--line-strong);
+    font-size:18px;color:var(--fg);transition:padding .3s;
   }
-  .contact-links a:first-child{border-top:1px solid var(--line)}
+  .contact-links a:first-child{border-top:2px solid var(--line-strong)}
   .contact-links a:hover{padding-left:12px}
-  .contact-links a .k{color:var(--fg-dim);font-family:'Geist Mono',monospace;font-size:12px;letter-spacing:0.08em;text-transform:uppercase}
+  .contact-links a .k{
+    display:flex;align-items:center;gap:14px;
+    color:var(--fg-dim);font-family:'Geist Mono',monospace;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;
+  }
+  .contact-links a .ci{
+    width:22px;height:22px;display:inline-flex;align-items:center;justify-content:center;
+    flex-shrink:0;
+  }
+  .contact-links a .ci img,
+  .contact-links a .ci svg{
+    width:20px;height:20px;object-fit:contain;
+    filter:brightness(0) invert(0.55);opacity:0.9;
+    transition:filter .2s,opacity .2s;
+  }
+  .contact-links a:hover .ci img,
+  .contact-links a:hover .ci svg{filter:brightness(0) invert(0.95);opacity:1}
   .contact-links a .v{font-size:16px;display:flex;align-items:center;gap:10px}
   .contact-links a .v .arrow{transition:transform .3s;color:var(--fg-dim)}
   .contact-links a:hover .v .arrow{transform:translateX(4px);color:var(--fg)}
@@ -686,19 +702,31 @@
     </div>
     <div class="contact-links">
       <a href="mailto:contact@montyforge.com">
-        <span class="k">Email</span>
+        <span class="k">
+          <span class="ci"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" xmlns="http://www.w3.org/2000/svg"><rect x="2.5" y="5" width="19" height="14" rx="1.5"/><path d="M3 6.5l9 6.5 9-6.5"/></svg></span>
+          Email
+        </span>
         <span class="v">contact@montyforge.com <span class="arrow">→</span></span>
       </a>
       <a href="https://instagram.com/montyforge" target="_blank" rel="noopener">
-        <span class="k">Instagram</span>
+        <span class="k">
+          <span class="ci"><img src="https://cdn.simpleicons.org/instagram/ffffff" alt=""></span>
+          Instagram
+        </span>
         <span class="v">@montyforge <span class="arrow">→</span></span>
       </a>
       <a href="https://linkedin.com" target="_blank" rel="noopener">
-        <span class="k">LinkedIn</span>
+        <span class="k">
+          <span class="ci"><img src="https://cdn.simpleicons.org/linkedin/ffffff" alt=""></span>
+          LinkedIn
+        </span>
         <span class="v">Antonio Montero <span class="arrow">→</span></span>
       </a>
       <a href="#">
-        <span class="k">Location</span>
+        <span class="k">
+          <span class="ci"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" xmlns="http://www.w3.org/2000/svg"><path d="M12 22s7-7.5 7-13a7 7 0 1 0-14 0c0 5.5 7 13 7 13z"/><circle cx="12" cy="9" r="2.5"/></svg></span>
+          Location
+        </span>
         <span class="v">Stavanger, Norway <span class="arrow">→</span></span>
       </a>
     </div>
