@@ -235,6 +235,9 @@
     border:2px solid var(--line-strong);
     transition:border-color .4s ease,box-shadow .4s ease,transform .5s ease;
   }
+  /* Lifevest card hosts a 16:9 video — match aspect so object-fit:contain
+     does not letterbox. */
+  .proj:nth-child(2) .proj-media{aspect-ratio:16/9}
   .proj:hover .proj-media{
     border-color:rgba(245,245,245,0.3);
     box-shadow:0 30px 90px rgba(0,0,0,0.75),0 0 60px rgba(230,51,41,0.08);
@@ -663,7 +666,7 @@
       <a class="proj reveal" href="lifevest.html">
         <div class="proj-media">
           <span class="proj-num-big">02</span>
-          <video class="card-slide active" autoplay muted loop playsinline style="object-fit:cover">
+          <video class="card-slide active" autoplay muted loop playsinline style="object-fit:contain">
             <source src="assets/chaleco-video.mp4" type="video/mp4">
           </video>
         </div>
