@@ -355,30 +355,28 @@
   .contact-box{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
   .contact h2{margin-bottom:24px;font-size:clamp(40px,5vw,72px)}
   .contact .lead{margin-bottom:32px}
-  .contact-links{display:flex;flex-direction:column;gap:0}
+  .contact-links{display:flex;flex-direction:column;gap:14px}
   .contact-links a{
     display:flex;justify-content:space-between;align-items:center;
-    padding:22px 0;border-bottom:2px solid var(--line-strong);
-    font-size:18px;color:var(--fg);transition:padding .3s;
+    padding:20px 22px;
+    background:var(--bg-elev);border:2px solid var(--line-strong);
+    font-size:18px;color:var(--fg);
+    transition:background .25s,border-color .25s,transform .25s;
   }
-  .contact-links a:first-child{border-top:2px solid var(--line-strong)}
-  .contact-links a:hover{padding-left:12px}
+  .contact-links a:hover{
+    background:#1a1a1a;border-color:#2e2e2e;transform:translateX(4px);
+  }
   .contact-links a .k{
     display:flex;align-items:center;gap:14px;
     color:var(--fg-dim);font-family:'Geist Mono',monospace;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;
   }
   .contact-links a .ci{
     width:22px;height:22px;display:inline-flex;align-items:center;justify-content:center;
-    flex-shrink:0;
+    flex-shrink:0;color:var(--fg-dim);
+    transition:color .2s;
   }
-  .contact-links a .ci img,
-  .contact-links a .ci svg{
-    width:20px;height:20px;object-fit:contain;
-    filter:brightness(0) invert(0.55);opacity:0.9;
-    transition:filter .2s,opacity .2s;
-  }
-  .contact-links a:hover .ci img,
-  .contact-links a:hover .ci svg{filter:brightness(0) invert(0.95);opacity:1}
+  .contact-links a:hover .ci{color:var(--fg)}
+  .contact-links a .ci svg{width:20px;height:20px}
   .contact-links a .v{font-size:16px;display:flex;align-items:center;gap:10px}
   .contact-links a .v .arrow{transition:transform .3s;color:var(--fg-dim)}
   .contact-links a:hover .v .arrow{transform:translateX(4px);color:var(--fg)}
@@ -703,28 +701,28 @@
     <div class="contact-links">
       <a href="mailto:contact@montyforge.com">
         <span class="k">
-          <span class="ci"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" xmlns="http://www.w3.org/2000/svg"><rect x="2.5" y="5" width="19" height="14" rx="1.5"/><path d="M3 6.5l9 6.5 9-6.5"/></svg></span>
+          <span class="ci"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><rect x="2.5" y="5" width="19" height="14" rx="1.5"/><path d="M3 6.5l9 6.5 9-6.5"/></svg></span>
           Email
         </span>
         <span class="v">contact@montyforge.com <span class="arrow">→</span></span>
       </a>
       <a href="https://instagram.com/montyforge" target="_blank" rel="noopener">
         <span class="k">
-          <span class="ci"><img src="https://cdn.simpleicons.org/instagram/ffffff" alt=""></span>
+          <span class="ci"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="3" width="18" height="18" rx="4.5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.5" cy="6.5" r="0.9" fill="currentColor" stroke="none"/></svg></span>
           Instagram
         </span>
         <span class="v">@montyforge <span class="arrow">→</span></span>
       </a>
       <a href="https://linkedin.com" target="_blank" rel="noopener">
         <span class="k">
-          <span class="ci"><img src="https://cdn.simpleicons.org/linkedin/ffffff" alt=""></span>
+          <span class="ci"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M8 10.5v7"/><circle cx="8" cy="7.4" r="1.05" fill="currentColor" stroke="none"/><path d="M12 17.5v-7"/><path d="M12 13a3 3 0 0 1 6 0v4.5"/></svg></span>
           LinkedIn
         </span>
         <span class="v">Antonio Montero <span class="arrow">→</span></span>
       </a>
       <a href="#">
         <span class="k">
-          <span class="ci"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" xmlns="http://www.w3.org/2000/svg"><path d="M12 22s7-7.5 7-13a7 7 0 1 0-14 0c0 5.5 7 13 7 13z"/><circle cx="12" cy="9" r="2.5"/></svg></span>
+          <span class="ci"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d="M12 22s7-7.5 7-13a7 7 0 1 0-14 0c0 5.5 7 13 7 13z"/><circle cx="12" cy="9" r="2.5"/></svg></span>
           Location
         </span>
         <span class="v">Stavanger, Norway <span class="arrow">→</span></span>
