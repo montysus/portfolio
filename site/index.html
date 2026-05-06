@@ -178,10 +178,23 @@
   .btn:hover .arrow{transform:translateX(3px)}
 
   .hero-stats{
-    margin-top:72px;padding-top:36px;
+    position:relative;
+    margin-top:72px;padding:36px 32px 32px;
     border-top:2px solid var(--line-strong);
     display:grid;grid-template-columns:repeat(4,1fr);gap:24px;
+    background-color:var(--bg-elev);
+    background-image:
+      linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
+    background-size:60px 60px;
+    background-position:0 0, 0 0;
+    overflow:hidden;
   }
+  .hero-stats::before{
+    content:'';position:absolute;inset:0;pointer-events:none;
+    background:radial-gradient(ellipse 60% 90% at 0% 50%, rgba(230,51,41,0.06) 0%, transparent 60%);
+  }
+  .hero-stats .stat{position:relative;z-index:1}
   .hero-stats .stat .k{font-family:'Geist Mono',monospace;font-size:11px;color:var(--fg-faint);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:8px}
   .hero-stats .stat .v{font-size:22px;font-weight:500;color:var(--fg);letter-spacing:-0.015em}
 
@@ -381,7 +394,7 @@
   .reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease-out,transform .7s ease-out}
   .reveal.visible{opacity:1;transform:translateY(0)}
 
-  @media(prefers-reduced-motion:reduce){*,.proj,.reveal{transition:none !important;animation:none !important}.proj,.reveal{opacity:1 !important;transform:none !important}.hero-meta .live{animation:hero-live-blink 1.6s ease-in-out infinite !important}}
+  @media(prefers-reduced-motion:reduce){*,.proj,.reveal{transition:none !important;animation:none !important}.proj,.reveal{opacity:1 !important;transform:none !important}.hero-meta .live{animation:hero-live-blink 1.4s steps(1,end) infinite !important}.tools-strip-wrap{animation:tools-scroll 35s linear infinite !important}}
 
   /* ============ responsive ============ */
   @media(max-width:900px){
@@ -528,7 +541,7 @@
       <div class="stat"><div class="k">Discipline</div><div class="v">Autonomous systems</div></div>
       <div class="stat"><div class="k">Based</div><div class="v">Stavanger, NO</div></div>
       <div class="stat"><div class="k">Working with</div><div class="v">SDC · AEROMEDIA</div></div>
-      <div class="stat"><div class="k">Projects</div><div class="v">04 systems</div></div>
+      <div class="stat"><div class="k">Projects</div><div class="v">02 systems</div></div>
     </div>
   </div>
 </section>
