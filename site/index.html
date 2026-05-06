@@ -126,14 +126,15 @@
     font-family:'Geist Mono',monospace;font-size:12px;color:var(--fg-dim);margin-bottom:40px;
   }
   .hero-meta .live{
-    width:8px;height:8px;background:var(--accent);border-radius:50%;flex-shrink:0;
-    box-shadow:0 0 10px var(--accent),0 0 20px rgba(230,51,41,0.55);
-    animation:hero-live-blink 1.6s ease-in-out infinite;
+    width:9px;height:9px;background:var(--accent);border-radius:50%;flex-shrink:0;
+    box-shadow:0 0 10px var(--accent),0 0 22px rgba(230,51,41,0.6);
+    animation:hero-live-blink 1.4s steps(1,end) infinite;
   }
   .hero-meta .sep{width:24px;height:1px;background:var(--line-strong);flex-shrink:0}
   @keyframes hero-live-blink{
-    0%,100%{opacity:1;box-shadow:0 0 10px var(--accent),0 0 20px rgba(230,51,41,0.55)}
-    50%{opacity:0.25;box-shadow:0 0 4px rgba(230,51,41,0.4)}
+    0%,55%{opacity:1;background:var(--accent);box-shadow:0 0 10px var(--accent),0 0 24px rgba(230,51,41,0.7)}
+    60%,75%{opacity:0.15;background:rgba(230,51,41,0.3);box-shadow:none}
+    80%,100%{opacity:1;background:var(--accent);box-shadow:0 0 10px var(--accent),0 0 24px rgba(230,51,41,0.7)}
   }
   @media(max-width:760px){
     .hero-meta{flex-wrap:wrap;white-space:normal}
@@ -380,7 +381,7 @@
   .reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease-out,transform .7s ease-out}
   .reveal.visible{opacity:1;transform:translateY(0)}
 
-  @media(prefers-reduced-motion:reduce){*,.proj,.reveal{transition:none !important;animation:none !important}.proj,.reveal{opacity:1 !important;transform:none !important}}
+  @media(prefers-reduced-motion:reduce){*,.proj,.reveal{transition:none !important;animation:none !important}.proj,.reveal{opacity:1 !important;transform:none !important}.hero-meta .live{animation:hero-live-blink 1.6s ease-in-out infinite !important}}
 
   /* ============ responsive ============ */
   @media(max-width:900px){
