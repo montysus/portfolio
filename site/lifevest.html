@@ -4,7 +4,7 @@
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <title>Life Vest Deployment System — Montyforge</title>
-<meta name="description" content="Sistema de despliegue de chaleco salvavidas desde dron. Desarrollado con AEROMEDIA. Pioneer en Fuengirola, cubierto por Cuatro, Telecinco, COPE y Euronews.">
+<meta name="description" content="Sistema de despliegue de chaleco salvavidas desde dron en Fuengirola y Mijas. Desarrollado con AEROMEDIA. Cubierto por Cuatro, Telecinco, COPE y Canal Sur.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -98,10 +98,70 @@ p{color:var(--fg-dim);margin:0}
 .intro-text p{font-size:17px;line-height:1.65;margin-bottom:18px}
 .intro-text p strong{color:var(--fg);font-weight:500}
 
-/* RENDER SECTION */
-.render-section{padding:0;border-top:2px solid var(--line-strong);border-bottom:2px solid var(--line-strong);background:var(--bg-elev)}
-.render-wrap{max-width:1000px;margin:0 auto;padding:60px 48px;display:flex;align-items:center;justify-content:center}
-.render-wrap img{width:100%;max-width:800px;filter:drop-shadow(0 30px 80px rgba(230,51,41,0.18)) drop-shadow(0 0 120px rgba(230,51,41,0.08))}
+/* RENDER DETAIL — small technical figure, lives inside the intro stats column */
+.render-detail{
+  margin-top:24px;
+  background:#0e0e0e;border:1px solid var(--line-strong);
+  padding:20px;display:flex;flex-direction:column;gap:14px;
+}
+.render-detail .rd-label{
+  font-family:'Geist Mono',monospace;font-size:10px;letter-spacing:0.12em;
+  text-transform:uppercase;color:var(--fg-faint);
+  display:flex;align-items:center;gap:10px;
+}
+.render-detail .rd-label::before{
+  content:'';width:6px;height:6px;background:var(--accent);border-radius:50%;
+  box-shadow:0 0 6px var(--accent);
+}
+.render-detail .rd-img{
+  background:#0a0a0a;border:1px solid var(--line);
+  display:flex;align-items:center;justify-content:center;padding:12px;
+  position:relative;
+}
+.render-detail .rd-img img{
+  width:100%;max-width:320px;display:block;
+}
+/* tiny corner ticks for engineering-drawing feel */
+.render-detail .rd-img::before,
+.render-detail .rd-img::after{
+  content:'';position:absolute;width:14px;height:14px;
+  border:1px solid rgba(245,245,245,0.18);
+}
+.render-detail .rd-img::before{top:-1px;left:-1px;border-right:none;border-bottom:none}
+.render-detail .rd-img::after{bottom:-1px;right:-1px;border-left:none;border-top:none}
+.render-detail .rd-spec{
+  display:grid;grid-template-columns:1fr 1fr;gap:10px 16px;
+  font-family:'Geist Mono',monospace;font-size:10px;line-height:1.4;
+}
+.render-detail .rd-spec .k{color:var(--fg-faint);letter-spacing:0.06em;text-transform:uppercase;display:block}
+.render-detail .rd-spec .v{color:var(--fg);font-weight:500}
+
+/* NEWS GALLERY — Fuengirola/Mijas press images */
+.news-section{border-top:2px solid var(--line-strong);background:var(--bg-elev)}
+.news-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;margin-top:48px}
+.news-card{
+  background:#0e0e0e;border:1px solid var(--line-strong);overflow:hidden;
+  display:flex;flex-direction:column;transition:border-color .25s,transform .25s;
+}
+.news-card:hover{border-color:rgba(245,245,245,0.22);transform:translateY(-2px)}
+.news-card .ni-img{
+  aspect-ratio:16/10;overflow:hidden;background:#000;
+}
+.news-card .ni-img img{
+  width:100%;height:100%;object-fit:cover;display:block;
+  transition:transform .4s ease;
+}
+.news-card:hover .ni-img img{transform:scale(1.04)}
+.news-card .ni-info{padding:18px 20px;display:flex;flex-direction:column;gap:8px}
+.news-card .ni-source{font-family:'Geist Mono',monospace;font-size:10px;color:var(--fg-faint);letter-spacing:0.1em;text-transform:uppercase}
+.news-card .ni-title{font-size:14px;color:var(--fg);font-weight:500;line-height:1.4}
+.news-card .ni-link{
+  font-family:'Geist Mono',monospace;font-size:11px;color:var(--fg-dim);
+  display:inline-flex;align-items:center;gap:6px;padding-bottom:2px;margin-top:4px;
+  border-bottom:1px solid var(--line-strong);transition:all .25s;width:fit-content;
+}
+.news-card .ni-link:hover{color:var(--fg);border-color:var(--fg)}
+@media(max-width:860px){.news-grid{grid-template-columns:1fr}}
 
 /* IMPACT NUMBERS */
 .numbers-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border:1px solid var(--line-strong);margin-top:56px}
@@ -228,11 +288,11 @@ footer a:hover{color:var(--fg)}
       <span class="sep"></span>
       <span>Systems · 2017 – present</span>
       <span class="sep"></span>
-      <span>Fuengirola · Málaga · Costa del Sol</span>
+      <span>Fuengirola · Mijas · Costa del Sol</span>
     </div>
     <div class="badge-pill">ON USE</div>
     <h1>Life Vest<br>Deployment System</h1>
-    <p class="hero-sub">Aerial deployment of inflatable life vests from drone platforms — cutting maritime rescue response time from minutes to seconds. Covered by Cuatro, Telecinco, COPE and Euronews.</p>
+    <p class="hero-sub">Aerial deployment of inflatable life vests from drone platforms over the beaches of <strong>Fuengirola</strong> and <strong>Mijas</strong> — cutting maritime rescue response time from minutes to seconds. Covered by Cuatro, Telecinco, COPE and Canal Sur.</p>
   </div>
 </section>
 
@@ -240,15 +300,32 @@ footer a:hover{color:var(--fg)}
 <section class="border-top">
   <div class="container">
     <div class="intro-grid">
-      <div class="stats-card">
-        <div class="stat-row"><span class="k">Partner</span><span class="v">AEROMEDIA</span></div>
-        <div class="stat-row"><span class="k">Location</span><span class="v">Fuengirola, Málaga</span></div>
-        <div class="stat-row"><span class="k">Deployed since</span><span class="v">2017 — Pioneer in Spain</span></div>
-        <div class="stat-row"><span class="k">Drones active</span><span class="v">4 units, full coastline</span></div>
-        <div class="stat-row"><span class="k">Response time</span><span class="v">Airborne in 10 seconds</span></div>
-        <div class="stat-row"><span class="k">2024 missions</span><span class="v">2,600+ (Jun–Jul alone)</span></div>
-        <div class="stat-row"><span class="k">Drowning victims</span><span class="v">0 in Fuengirola</span></div>
-        <div class="stat-row"><span class="k">TV coverage</span><span class="v">Cuatro · Telecinco · COPE</span></div>
+      <div>
+        <div class="stats-card">
+          <div class="stat-row"><span class="k">Partner</span><span class="v">AEROMEDIA</span></div>
+          <div class="stat-row"><span class="k">Locations</span><span class="v">Fuengirola &amp; Mijas (Málaga)</span></div>
+          <div class="stat-row"><span class="k">Fuengirola since</span><span class="v">2017 — Pioneer in Spain</span></div>
+          <div class="stat-row"><span class="k">Mijas since</span><span class="v">2021 (SafeDron contract)</span></div>
+          <div class="stat-row"><span class="k">Drones active</span><span class="v">4 units, full coastline</span></div>
+          <div class="stat-row"><span class="k">Response time</span><span class="v">Airborne in 10 seconds</span></div>
+          <div class="stat-row"><span class="k">2025 interventions</span><span class="v">573 in July alone</span></div>
+          <div class="stat-row"><span class="k">Drowning victims</span><span class="v">0 in Fuengirola</span></div>
+          <div class="stat-row"><span class="k">TV coverage</span><span class="v">Cuatro · Telecinco · Canal Sur</span></div>
+        </div>
+
+        <!-- Small render detail card, engineering-drawing style -->
+        <figure class="render-detail">
+          <div class="rd-label">System render — AEROMEDIA AUXDRON LFG</div>
+          <div class="rd-img">
+            <img src="assets/lifevest-render.png" alt="AEROMEDIA AUXDRON LFG render — life vest deployment system" loading="lazy">
+          </div>
+          <div class="rd-spec">
+            <span><span class="k">Payload</span><span class="v">Inflatable vest</span></span>
+            <span><span class="k">Inflation</span><span class="v">2 s on water</span></span>
+            <span><span class="k">Range</span><span class="v">Up to 800 m</span></span>
+            <span><span class="k">Launch</span><span class="v">10 s airborne</span></span>
+          </div>
+        </figure>
       </div>
 
       <div class="intro-text">
@@ -257,18 +334,11 @@ footer a:hover{color:var(--fg)}
         <p style="margin-top:28px">Developed in collaboration with <strong>AEROMEDIA</strong>, this system deploys an inflatable life vest from a drone directly to a swimmer in distress — before a human lifeguard could physically reach them.</p>
         <p>Traditional rescue requires a lifeguard to swim out, which in rough surf can take 3–5 critical minutes. This system puts a flotation device in the hands of a drowning person in under 10 seconds of flight, at ranges up to 800 m offshore.</p>
         <p>Fuengirola has been a <strong>pioneer in Spain</strong> since 2017 — the first municipality on the Costa del Sol to deploy aerial drone rescue. Eight years later, it remains a national reference point. AEROMEDIA has operated the service continuously, logging over 2,600 missions in a single summer month, with <strong>zero drowning fatalities</strong> on Fuengirola beaches.</p>
-        <p>The system attracted national television coverage, with reports on <strong>Cuatro</strong> and <strong>Telecinco</strong> in August 2025, plus radio coverage on <strong>COPE</strong> and international reporting by <strong>Euronews</strong>.</p>
+        <p>The system attracted national television coverage in August 2025, with reports on <strong>Cuatro</strong> and <strong>Telecinco</strong>, plus radio coverage on <strong>COPE</strong> and a feature on <strong>Canal Sur</strong>. The same fleet operates in neighbouring <strong>Mijas</strong> since 2021 under the AEROMEDIA SafeDron contract.</p>
       </div>
     </div>
   </div>
 </section>
-
-<!-- RENDER -->
-<div class="render-section">
-  <div class="render-wrap">
-    <img src="assets/lifevest-render.png" alt="Life Vest Deployment System render" loading="lazy">
-  </div>
-</div>
 
 <!-- IMPACT NUMBERS -->
 <section class="border-top">
@@ -296,48 +366,72 @@ footer a:hover{color:var(--fg)}
   </div>
 </section>
 
-<!-- VIDEOS -->
+<!-- VIDEOS — 2025 Fuengirola broadcasts (Canal Sur + Fuengirola TV), self-hosted -->
 <section class="videos-section">
   <div class="container">
     <div class="sec-label">In the media</div>
     <h2>Watch the system<br>in action.</h2>
     <div class="videos-grid">
       <div class="video-card">
-        <iframe src="https://www.youtube.com/embed/fWiw5qMF-Jo" title="Euronews — Lifeguard drone saved a drowning 14-year-old in Spain" allowfullscreen loading="lazy"></iframe>
+        <video controls preload="metadata" playsinline poster="/montyforge/lifevest-videos/canalsur-poster.jpg">
+          <source src="/montyforge/lifevest-videos/canalsur-fuengirola-2025.mp4" type="video/mp4">
+        </video>
         <div class="vc-info">
-          <div class="vc-source">Euronews · 2022</div>
-          <div class="vc-title">'Lifeguard' drone saved a drowning 14-year-old on a beach in Spain by dropping a life vest</div>
+          <div class="vc-source">Canal Sur · 8 agosto 2025</div>
+          <div class="vc-title">Drones vigilando las playas de Fuengirola — pueden lanzar salvavidas para ayudar en los rescates acuáticos</div>
         </div>
       </div>
       <div class="video-card">
-        <iframe src="https://www.youtube.com/embed/pN7Tf6o5eXY" title="Drone Drops Lifejacket to Teen on Spanish Beach" allowfullscreen loading="lazy"></iframe>
+        <video controls preload="metadata" playsinline poster="/montyforge/lifevest-videos/fuengirolatv-poster.jpg">
+          <source src="/montyforge/lifevest-videos/fuengirolatv-drones-2025.mp4" type="video/mp4">
+        </video>
         <div class="vc-info">
-          <div class="vc-source">Reuters / International · 2022</div>
-          <div class="vc-title">Watch: Drone drops life jacket to teen struggling to stay afloat on Spanish beach</div>
+          <div class="vc-source">Fuengirola Televisión · 23 julio 2025</div>
+          <div class="vc-title">El Patio de Fuengirola — la mirada aérea del servicio de aerovigilancia con drones</div>
         </div>
       </div>
-      <div class="video-card">
-        <iframe src="https://www.youtube.com/embed/p_CAtrn7-wY" title="Dron lanza salvavidas playa Sagunto España" allowfullscreen loading="lazy"></iframe>
-        <div class="vc-info">
-          <div class="vc-source">Spanish media · 2022</div>
-          <div class="vc-title">Un dron lanza un salvavidas y evita que un niño de 14 años se ahogue en una playa de Sagunto</div>
+    </div>
+  </div>
+</section>
+
+<!-- NEWS GALLERY — press images from Fuengirola & Mijas coverage -->
+<section class="news-section">
+  <div class="container">
+    <div class="sec-label">From the press</div>
+    <h2>Drones de emergencias —<br>Fuengirola &amp; Mijas.</h2>
+    <div class="news-grid">
+      <a class="news-card" href="https://www.canalsur.es/noticias/andalucia/malaga/las-playas-de-fuengirola-las-mas-seguras-a-vista-de-dron/2188146.html" target="_blank" rel="noopener">
+        <div class="ni-img"><img src="/montyforge/lifevest-news/canalsur-dron.jpg" alt="Drone AEROMEDIA sobre la playa de Fuengirola — Canal Sur" loading="lazy"></div>
+        <div class="ni-info">
+          <div class="ni-source">Canal Sur · 2025</div>
+          <div class="ni-title">Las playas de Fuengirola, las más seguras a vista de dron</div>
+          <span class="ni-link">Ver noticia →</span>
         </div>
-      </div>
-      <div class="video-card" style="display:flex;flex-direction:column">
-        <div style="flex:1;background:#0e0e0e;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 32px;gap:16px;aspect-ratio:16/9">
-          <div style="font-family:'Geist Mono',monospace;font-size:10px;color:#555;letter-spacing:0.1em;text-transform:uppercase">Live stats — July 2025</div>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);width:100%;max-width:320px">
-            <div style="background:var(--bg-elev);padding:16px;text-align:center"><span style="display:block;font-size:28px;font-weight:700;letter-spacing:-0.03em;color:var(--fg)">91h</span><span style="font-family:'Geist Mono',monospace;font-size:9px;color:var(--fg-faint);text-transform:uppercase">Flight hours</span></div>
-            <div style="background:var(--bg-elev);padding:16px;text-align:center"><span style="display:block;font-size:28px;font-weight:700;letter-spacing:-0.03em;color:var(--fg)">573</span><span style="font-family:'Geist Mono',monospace;font-size:9px;color:var(--fg-faint);text-transform:uppercase">Interventions</span></div>
-            <div style="background:var(--bg-elev);padding:16px;text-align:center"><span style="display:block;font-size:28px;font-weight:700;letter-spacing:-0.03em;color:var(--accent)">6</span><span style="font-family:'Geist Mono',monospace;font-size:9px;color:var(--fg-faint);text-transform:uppercase">Rescues</span></div>
-            <div style="background:var(--bg-elev);padding:16px;text-align:center"><span style="display:block;font-size:28px;font-weight:700;letter-spacing:-0.03em;color:var(--fg)">4</span><span style="font-family:'Geist Mono',monospace;font-size:9px;color:var(--fg-faint);text-transform:uppercase">Active drones</span></div>
-          </div>
+      </a>
+      <a class="news-card" href="https://www.areacostadelsol.com/fuengirola/asi-funciona-el-servicio-de-drones-que-vigila-el-litoral-de-fuengirola-clave-en-seis-rescates-durante-el-verano/" target="_blank" rel="noopener">
+        <div class="ni-img"><img src="/montyforge/lifevest-news/area-socorrismo.jpg" alt="Cartel Drones de Emergencias del Ayuntamiento de Fuengirola" loading="lazy"></div>
+        <div class="ni-info">
+          <div class="ni-source">Área Costa del Sol · 2025</div>
+          <div class="ni-title">Así funciona el servicio de drones que vigila el litoral de Fuengirola — clave en seis rescates</div>
+          <span class="ni-link">Leer artículo →</span>
         </div>
-        <div class="vc-info">
-          <div class="vc-source">Ayuntamiento de Fuengirola · 2025</div>
-          <div class="vc-title">Operational data from the 2025 summer season — Fuengirola beach surveillance program</div>
+      </a>
+      <a class="news-card" href="https://www.fuengirola.es/el-servicio-de-aerovigilancia-con-drones-de-las-playas-de-fuengirola-realizo-seis-misiones-de-rescate-durante-el-pasado-mes-de-julio/" target="_blank" rel="noopener">
+        <div class="ni-img"><img src="/montyforge/lifevest-news/fuengirola-mula.jpg" alt="Servicio de aerovigilancia con drones — Ayuntamiento de Fuengirola" loading="lazy"></div>
+        <div class="ni-info">
+          <div class="ni-source">Ayuntamiento de Fuengirola · Jul 2025</div>
+          <div class="ni-title">El servicio de aerovigilancia con drones realizó seis misiones de rescate en julio</div>
+          <span class="ni-link">Informe oficial →</span>
         </div>
-      </div>
+      </a>
+      <a class="news-card" href="https://www.elespanol.com/malaga/mijas/20251115/vigilancia-drones-mensajes-varios-idiomas-nuevo-servicio-socorrismo-mijas/1003744015355_0.html" target="_blank" rel="noopener">
+        <div class="ni-img"><img src="/montyforge/lifevest-news/mijas-2025.jpg" alt="Servicio de socorrismo con drones en las playas de Mijas — El Español 2025" loading="lazy"></div>
+        <div class="ni-info">
+          <div class="ni-source">El Español · Nov 2025</div>
+          <div class="ni-title">Vigilancia con drones y mensajes en varios idiomas: el nuevo servicio de socorrismo en Mijas</div>
+          <span class="ni-link">Leer artículo →</span>
+        </div>
+      </a>
     </div>
   </div>
 </section>
@@ -363,11 +457,11 @@ footer a:hover{color:var(--fg)}
         <a href="https://www.telecinco.es/noticias/andalucia/20250807/evitar-ahogamientos-servicio-drones-playas-fuengirola-salvavidas_18_016319002.html" target="_blank" rel="noopener" class="cov-link">Read on Telecinco.es →</a>
       </div>
       <div class="cov-item">
-        <span class="cov-source">Euronews</span>
-        <span class="cov-date">25 julio 2022</span>
-        <span class="cov-headline">'Lifeguard' drone saved a drowning 14-year-old on a beach in Spain by dropping a life vest</span>
-        <p class="cov-desc">International coverage of a live rescue in Valencia where a drone operator deployed a life vest to a drowning teenager. The boy was hospitalised, given oxygen, and released after 24 hours.</p>
-        <a href="https://www.euronews.com/next/2022/07/25/lifeguard-drone-saved-a-drowning-14-year-old-on-a-beach-in-spain-by-dropping-a-life-vest" target="_blank" rel="noopener" class="cov-link">Read on Euronews.com →</a>
+        <span class="cov-source">Canal Sur</span>
+        <span class="cov-date">8 agosto 2025</span>
+        <span class="cov-headline">"Las playas de Fuengirola, las más seguras a vista de dron"</span>
+        <p class="cov-desc">Reportaje de Noticias 2 sobre la flota de cuatro drones AEROMEDIA que vigila el litoral de Fuengirola. Imágenes en directo del dron sobre la playa lanzando salvavidas durante una intervención.</p>
+        <a href="https://www.canalsur.es/noticias/andalucia/malaga/las-playas-de-fuengirola-las-mas-seguras-a-vista-de-dron/2188146.html" target="_blank" rel="noopener" class="cov-link">Ver en Canal Sur →</a>
       </div>
       <div class="cov-item">
         <span class="cov-source">COPE Radio</span>

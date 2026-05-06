@@ -101,20 +101,40 @@
 
   /* ============ PROJECT HERO ============ */
   .proj-hero{
-    position:relative;height:100vh;min-height:600px;max-height:900px;
-    overflow:hidden;display:flex;align-items:flex-end;
+    position:relative;height:100vh;min-height:640px;max-height:920px;
+    overflow:hidden;display:grid;grid-template-columns:1fr 1fr;align-items:center;
+    padding:120px 48px 60px;gap:48px;
+  }
+  .proj-hero-bg{
+    position:absolute;inset:0;z-index:0;overflow:hidden;
+  }
+  .proj-hero-bg::after{
+    content:'';position:absolute;inset:0;
+    background:radial-gradient(ellipse 60% 80% at 70% 50%, transparent 0%, rgba(10,10,10,0.55) 70%, rgba(10,10,10,0.92) 100%);
   }
   .proj-hero-img{
     position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;
-    filter:brightness(0.65);transition:transform 8s ease;
+    filter:brightness(0.45);transition:transform 12s ease;
   }
-  .proj-hero:hover .proj-hero-img{transform:scale(1.02)}
+  .proj-hero:hover .proj-hero-img{transform:scale(1.04)}
   .proj-hero-overlay{
     position:absolute;inset:0;
-    background:linear-gradient(to top, rgba(10,10,10,0.92) 0%, rgba(10,10,10,0.45) 40%, rgba(10,10,10,0.1) 70%, transparent 100%);
+    background:linear-gradient(to top, rgba(10,10,10,0.85) 0%, rgba(10,10,10,0.35) 35%, transparent 65%);
+  }
+  /* Right column: hero animation video */
+  .proj-hero-anim{
+    position:relative;z-index:2;display:flex;align-items:center;justify-content:center;
+  }
+  .proj-hero-anim video{
+    width:100%;max-width:720px;height:auto;display:block;
+    filter:drop-shadow(0 24px 60px rgba(0,0,0,0.7)) drop-shadow(0 0 90px rgba(230,51,41,0.08));
+  }
+  @media(max-width:1100px){
+    .proj-hero{grid-template-columns:1fr;padding:140px 24px 48px}
+    .proj-hero-anim{display:none}
   }
   .proj-hero-content{
-    position:relative;z-index:2;padding:0 48px 72px;width:100%;
+    position:relative;z-index:2;width:100%;
   }
   .proj-hero-meta{
     display:flex;align-items:center;gap:14px;flex-wrap:wrap;
@@ -133,7 +153,7 @@
   }
   .proj-hero-stats{
     margin-top:40px;padding-top:40px;border-top:2px solid rgba(245,245,245,0.12);
-    display:flex;gap:64px;flex-wrap:wrap;
+    display:flex;gap:48px;flex-wrap:wrap;align-items:center;
   }
   .proj-hero-stats .stat .k{
     font-family:'Geist Mono',monospace;font-size:10px;color:rgba(245,245,245,0.4);
@@ -144,7 +164,7 @@
     display:inline-flex;align-items:center;gap:8px;
     font-family:'Geist Mono',monospace;font-size:10px;letter-spacing:0.08em;
     color:var(--accent);border:1px solid rgba(230,51,41,0.5);padding:6px 14px;
-    background:rgba(230,51,41,0.08);align-self:flex-end;margin-left:auto;
+    background:rgba(230,51,41,0.08);
   }
   .proj-hero-stats .badge-stat::before{
     content:'';width:6px;height:6px;background:var(--accent);border-radius:50%;
@@ -253,6 +273,49 @@
   .lightbox .lb-counter{
     position:absolute;bottom:28px;left:50%;transform:translateX(-50%);
     font-family:'Geist Mono',monospace;font-size:11px;color:var(--fg-faint);letter-spacing:0.1em;
+  }
+
+  /* ============ ANIMATIONS ============ */
+  .anim-section{
+    padding:140px 48px;border-bottom:2px solid var(--line-strong);
+    background:linear-gradient(to bottom, var(--bg) 0%, #0c0c0c 100%);
+  }
+  .anim-head{margin-bottom:64px;max-width:760px}
+  .anim-head h2{margin-bottom:20px;font-size:clamp(32px,4vw,52px)}
+  .anim-head .anim-intro{font-size:17px;line-height:1.7;color:var(--fg-dim)}
+  .anim-grid{
+    display:grid;grid-template-columns:1fr 1fr;gap:24px;
+  }
+  .anim-card{
+    margin:0;background:var(--bg-elev);border:1px solid var(--line-strong);
+    overflow:hidden;display:flex;flex-direction:column;
+  }
+  .anim-card.anim-card-wide{grid-column:1 / -1}
+  .anim-frame{
+    position:relative;overflow:hidden;aspect-ratio:16/10;
+    background:radial-gradient(ellipse at center, #1a1a1a 0%, #0a0a0a 80%);
+    display:flex;align-items:center;justify-content:center;
+  }
+  .anim-card-wide .anim-frame{aspect-ratio:21/9}
+  .anim-frame video{
+    width:100%;height:100%;object-fit:contain;display:block;
+    filter:drop-shadow(0 18px 40px rgba(0,0,0,0.5));
+  }
+  .anim-card figcaption{
+    padding:20px 24px;border-top:1px solid var(--line-strong);
+    display:flex;flex-direction:column;gap:6px;
+  }
+  .anim-card .ac-k{
+    font-family:'Geist Mono',monospace;font-size:10px;color:var(--fg-faint);
+    letter-spacing:0.1em;text-transform:uppercase;
+  }
+  .anim-card .ac-t{font-size:16px;font-weight:500;color:var(--fg)}
+  .anim-card .ac-s{font-size:13px;color:var(--fg-dim)}
+
+  @media(max-width:900px){
+    .anim-section{padding:80px 20px}
+    .anim-grid{grid-template-columns:1fr;gap:16px}
+    .anim-card.anim-card-wide{grid-column:auto}
   }
 
   /* ============ SPECS ============ */
@@ -406,9 +469,11 @@
 
 <!-- PROJECT HERO -->
 <div class="proj-hero">
-  <img class="proj-hero-img" src="assets/anvil3-r2.jpg" alt="Anvil-III over North Sea oil platform"
-       onerror="this.src='assets/anvil3.PNG'">
-  <div class="proj-hero-overlay"></div>
+  <div class="proj-hero-bg">
+    <img class="proj-hero-img" src="assets/anvil3-r2.png" alt="Anvil-III over North Sea oil platform"
+         onerror="this.src='assets/anvil3.PNG'">
+    <div class="proj-hero-overlay"></div>
+  </div>
   <div class="proj-hero-content">
     <div class="proj-hero-meta">
       <span class="live"></span>
@@ -427,6 +492,12 @@
       <div class="stat"><div class="k">Year</div><div class="v">2026</div></div>
       <div class="badge-stat">IN DEVELOPMENT</div>
     </div>
+  </div>
+  <div class="proj-hero-anim">
+    <video autoplay muted loop playsinline poster="assets/anvil3-r2.png">
+      <source src="/montyforge/fusion-cycle-hq.webm" type="video/webm">
+      <source src="/montyforge/fusion-cycle-v11.mp4" type="video/mp4">
+    </video>
   </div>
 </div>
 
@@ -488,29 +559,106 @@
 <div class="gallery">
 
   <!-- Gallery Hero — full-width panoramic -->
-  <div class="gallery-hero">
-    <img src="assets/anvil3-r4.jpg" alt="Anvil-III operational render — fire background"
+  <div class="gallery-hero" data-idx="1">
+    <img src="assets/anvil3-r4.png" alt="Anvil-III operational render — fire background"
          onerror="this.src='assets/anvil3.PNG'">
-    <div class="num">02 / 04</div>
+    <div class="num">02 / 08</div>
     <div class="caption">Operational scenario · North Sea</div>
   </div>
 
-  <!-- 2-column grid -->
+  <!-- 2-column grid — renders -->
   <div class="gallery-grid">
-    <div class="gallery-cell" data-img="assets/anvil3-r1.jpg" data-idx="2">
-      <img src="assets/anvil3-r1.jpg" alt="Anvil-III underside view"
+    <div class="gallery-cell" data-idx="2">
+      <img src="assets/anvil3-r1.png" alt="Anvil-III underside view"
            onerror="this.src='assets/anvil3.PNG'">
-      <div class="num">03 / 04</div>
+      <div class="num">03 / 08</div>
       <div class="caption">Underside view · payload bay</div>
     </div>
-    <div class="gallery-cell" data-img="assets/anvil3-r3.jpg" data-idx="3">
-      <img src="assets/anvil3-r3.jpg" alt="Anvil-III mechanism detail"
+    <div class="gallery-cell" data-idx="3">
+      <img src="assets/anvil3-r3.png" alt="Anvil-III mechanism detail"
            onerror="this.src='assets/anvil3.PNG'">
-      <div class="num">04 / 04</div>
+      <div class="num">04 / 08</div>
       <div class="caption">Release mechanism · detail</div>
+    </div>
+    <div class="gallery-cell" data-idx="4">
+      <img src="assets/anvil3-r5.png" alt="Anvil-III alternate angle"
+           onerror="this.src='assets/anvil3.PNG'">
+      <div class="num">05 / 08</div>
+      <div class="caption">Alternate angle · approach</div>
+    </div>
+    <div class="gallery-cell" data-idx="5">
+      <img src="assets/anvil3-m1.png" alt="Anvil-III mechanism — locked state"
+           onerror="this.src='assets/anvil3.PNG'">
+      <div class="num">06 / 08</div>
+      <div class="caption">Mechanism · locked state</div>
+    </div>
+    <div class="gallery-cell" data-idx="6">
+      <img src="assets/anvil3-m2.png" alt="Anvil-III mechanism — actuated"
+           onerror="this.src='assets/anvil3.PNG'">
+      <div class="num">07 / 08</div>
+      <div class="caption">Mechanism · actuated</div>
+    </div>
+    <div class="gallery-cell" data-idx="7">
+      <img src="assets/anvil3-m3.png" alt="Anvil-III mechanism — exploded"
+           onerror="this.src='assets/anvil3.PNG'">
+      <div class="num">08 / 08</div>
+      <div class="caption">Mechanism · exploded view</div>
     </div>
   </div>
 </div>
+
+<!-- ============ ANIMATIONS / MOTION ============ -->
+<section class="anim-section">
+  <div class="container">
+    <div class="anim-head reveal">
+      <div class="label">Motion studies</div>
+      <h2>Choreography &amp; cycle.</h2>
+      <p class="anim-intro">Three-axis Fusion 360 motion studies validating the actuation sequence — clamp engage, hold, and release — against the bench-tested servo profile. These animations are the same motion data driving the firmware test rigs.</p>
+    </div>
+
+    <div class="anim-grid">
+      <figure class="anim-card anim-card-wide reveal">
+        <div class="anim-frame">
+          <video autoplay muted loop playsinline poster="assets/anvil3-r2.png">
+            <source src="/montyforge/fusion-cycle-hq.webm" type="video/webm">
+            <source src="/montyforge/fusion-cycle-v11.mp4" type="video/mp4">
+          </video>
+        </div>
+        <figcaption>
+          <div class="ac-k">Animation 01</div>
+          <div class="ac-t">Full release cycle — alpha render</div>
+          <div class="ac-s">Loop · 60 fps · transparent background</div>
+        </figcaption>
+      </figure>
+
+      <figure class="anim-card reveal">
+        <div class="anim-frame">
+          <video autoplay muted loop playsinline>
+            <source src="/montyforge/fusion-pistons-locked.mp4" type="video/mp4">
+          </video>
+        </div>
+        <figcaption>
+          <div class="ac-k">Animation 02</div>
+          <div class="ac-t">Pistons · locked engagement</div>
+          <div class="ac-s">Detail study · clamp geometry</div>
+        </figcaption>
+      </figure>
+
+      <figure class="anim-card reveal">
+        <div class="anim-frame">
+          <video autoplay muted loop playsinline>
+            <source src="/montyforge/fusion-choreography.mp4" type="video/mp4">
+          </video>
+        </div>
+        <figcaption>
+          <div class="ac-k">Animation 03</div>
+          <div class="ac-t">Choreography — actuation sequence</div>
+          <div class="ac-s">Timed release · servo profile preview</div>
+        </figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
 
 <!-- LIGHTBOX -->
 <div class="lightbox" id="lightbox" role="dialog" aria-modal="true">
@@ -714,10 +862,14 @@
 
     // All gallery images in order
     const images = [
-      { src: 'assets/anvil3-r2.jpg', caption: '01 / 04 — Hero render' },
-      { src: 'assets/anvil3-r4.jpg', caption: '02 / 04 — Operational scenario' },
-      { src: 'assets/anvil3-r1.jpg', caption: '03 / 04 — Underside view' },
-      { src: 'assets/anvil3-r3.jpg', caption: '04 / 04 — Mechanism detail' },
+      { src: 'assets/anvil3-r2.png', caption: '01 / 08 — Hero render' },
+      { src: 'assets/anvil3-r4.png', caption: '02 / 08 — Operational scenario' },
+      { src: 'assets/anvil3-r1.png', caption: '03 / 08 — Underside view' },
+      { src: 'assets/anvil3-r3.png', caption: '04 / 08 — Mechanism detail' },
+      { src: 'assets/anvil3-r5.png', caption: '05 / 08 — Alternate angle' },
+      { src: 'assets/anvil3-m1.png', caption: '06 / 08 — Mechanism · locked' },
+      { src: 'assets/anvil3-m2.png', caption: '07 / 08 — Mechanism · actuated' },
+      { src: 'assets/anvil3-m3.png', caption: '08 / 08 — Mechanism · exploded' },
     ];
     let current = 0;
 

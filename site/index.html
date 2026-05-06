@@ -28,7 +28,7 @@
     overflow-x:hidden;position:relative;
   }
 
-  /* ============ GLOBAL BACKGROUND ============ */
+  /* ============ GLOBAL BACKGROUND — engineering cutting mat ============ */
   .site-bg{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
   .site-bg .grid{
     position:absolute;inset:-5%;
@@ -39,13 +39,26 @@
     mask-image:radial-gradient(ellipse 80% 70% at 50% 40%, black 40%, transparent 95%);
     -webkit-mask-image:radial-gradient(ellipse 80% 70% at 50% 40%, black 40%, transparent 95%);
   }
-  .site-bg .ghost{position:absolute;border-radius:50%;filter:blur(80px);will-change:transform}
-  .site-bg .ghost.a{width:70vw;height:70vw;top:-15%;right:-15%;background:radial-gradient(circle,rgba(230,51,41,0.09),transparent 65%);animation:drift-a 45s ease-in-out infinite}
-  .site-bg .ghost.b{width:65vw;height:65vw;bottom:-20%;left:-20%;background:radial-gradient(circle,rgba(230,51,41,0.06),transparent 65%);animation:drift-b 58s ease-in-out infinite}
-  .site-bg .ghost.c{width:55vw;height:55vw;top:40%;left:25%;background:radial-gradient(circle,rgba(230,51,41,0.04),transparent 65%);animation:drift-c 70s ease-in-out infinite}
-  @keyframes drift-a{0%{transform:translate(0,0)}20%{transform:translate(-35%,50%)}40%{transform:translate(-70%,15%)}60%{transform:translate(-45%,-35%)}80%{transform:translate(-10%,25%)}100%{transform:translate(0,0)}}
-  @keyframes drift-b{0%{transform:translate(0,0)}25%{transform:translate(55%,-25%)}50%{transform:translate(80%,40%)}75%{transform:translate(25%,65%)}100%{transform:translate(0,0)}}
-  @keyframes drift-c{0%{transform:translate(0,0)}30%{transform:translate(-55%,-50%)}60%{transform:translate(45%,-25%)}80%{transform:translate(20%,40%)}100%{transform:translate(0,0)}}
+  /* Soft, small red ghosts — gentle movement, low opacity */
+  .site-bg .ghost{position:absolute;border-radius:50%;filter:blur(100px);will-change:transform,opacity;mix-blend-mode:screen;pointer-events:none}
+  .site-bg .ghost.g1{width:32vw;height:32vw;top:8%;left:12%;background:radial-gradient(circle,rgba(230,51,41,0.16),transparent 65%);animation:gd-1 22s ease-in-out infinite,gp-1 9s ease-in-out infinite}
+  .site-bg .ghost.g2{width:28vw;height:28vw;top:55%;right:10%;background:radial-gradient(circle,rgba(255,80,55,0.14),transparent 65%);animation:gd-2 26s ease-in-out infinite,gp-2 11s ease-in-out infinite}
+  .site-bg .ghost.g3{width:22vw;height:22vw;top:25%;right:25%;background:radial-gradient(circle,rgba(230,51,41,0.12),transparent 65%);animation:gd-3 18s ease-in-out infinite,gp-3 7s ease-in-out infinite}
+  .site-bg .ghost.g4{width:24vw;height:24vw;bottom:8%;left:25%;background:radial-gradient(circle,rgba(255,90,60,0.10),transparent 65%);animation:gd-4 28s ease-in-out infinite,gp-4 13s ease-in-out infinite}
+  .site-bg .ghost.g5{width:18vw;height:18vw;top:40%;left:45%;background:radial-gradient(circle,rgba(230,51,41,0.09),transparent 65%);animation:gd-5 20s ease-in-out infinite,gp-5 8s ease-in-out infinite}
+  .site-bg .ghost.g6{width:20vw;height:20vw;top:70%;left:55%;background:radial-gradient(circle,rgba(255,70,50,0.08),transparent 65%);animation:gd-6 24s ease-in-out infinite,gp-6 10s ease-in-out infinite}
+  @keyframes gd-1{0%{transform:translate(0,0)}33%{transform:translate(40%,30%)}66%{transform:translate(15%,55%)}100%{transform:translate(0,0)}}
+  @keyframes gd-2{0%{transform:translate(0,0)}33%{transform:translate(-35%,20%)}66%{transform:translate(-50%,-25%)}100%{transform:translate(0,0)}}
+  @keyframes gd-3{0%{transform:translate(0,0)}40%{transform:translate(30%,-30%)}70%{transform:translate(-25%,40%)}100%{transform:translate(0,0)}}
+  @keyframes gd-4{0%{transform:translate(0,0)}30%{transform:translate(50%,-25%)}65%{transform:translate(20%,-45%)}100%{transform:translate(0,0)}}
+  @keyframes gd-5{0%{transform:translate(0,0)}35%{transform:translate(-45%,-35%)}70%{transform:translate(35%,-20%)}100%{transform:translate(0,0)}}
+  @keyframes gd-6{0%{transform:translate(0,0)}40%{transform:translate(-30%,-50%)}75%{transform:translate(40%,25%)}100%{transform:translate(0,0)}}
+  @keyframes gp-1{0%,100%{opacity:0.6}50%{opacity:1}}
+  @keyframes gp-2{0%,100%{opacity:0.55}50%{opacity:0.95}}
+  @keyframes gp-3{0%,100%{opacity:0.5}50%{opacity:0.9}}
+  @keyframes gp-4{0%,100%{opacity:0.45}50%{opacity:0.85}}
+  @keyframes gp-5{0%,100%{opacity:0.4}50%{opacity:0.8}}
+  @keyframes gp-6{0%,100%{opacity:0.4}50%{opacity:0.75}}
   nav.top,section,footer{position:relative;z-index:2}
   @media(prefers-reduced-motion:reduce){.site-bg .ghost{animation:none}}
   a{color:inherit;text-decoration:none}
@@ -73,7 +86,7 @@
   .navlinks a.cta:hover{background:var(--fg);color:var(--bg);border-color:var(--fg)}
 
   /* ============ SECTIONS ============ */
-  section{padding:120px 48px;position:relative}
+  section{padding:90px 48px;position:relative}
   .container{max-width:1200px;margin:0 auto}
   .container-sm{max-width:860px;margin:0 auto}
 
@@ -83,13 +96,7 @@
   }
   .label::before{
     content:'';width:8px;height:8px;background:var(--fg);flex-shrink:0;
-    animation:label-sq-blink var(--sq-dur,1.8s) var(--sq-delay,0s) ease-in-out infinite;
-    box-shadow:0 0 6px rgba(245,245,245,0.9),0 0 14px rgba(245,245,245,0.5),0 0 28px rgba(245,245,245,0.2);
-  }
-  @keyframes label-sq-blink{
-    0%,30%{background:var(--fg);box-shadow:0 0 6px rgba(245,245,245,0.9),0 0 14px rgba(245,245,245,0.5),0 0 28px rgba(245,245,245,0.2)}
-    38%,62%{background:var(--accent);box-shadow:0 0 8px rgba(230,51,41,1),0 0 18px rgba(230,51,41,0.6),0 0 32px rgba(230,51,41,0.25)}
-    70%,100%{background:var(--fg);box-shadow:0 0 6px rgba(245,245,245,0.9),0 0 14px rgba(245,245,245,0.5),0 0 28px rgba(245,245,245,0.2)}
+    box-shadow:0 0 6px rgba(245,245,245,0.6),0 0 14px rgba(245,245,245,0.25);
   }
 
   h1,h2,h3,h4,h5{font-family:'Geist',sans-serif;letter-spacing:-0.025em;margin:0;font-weight:600;text-wrap:balance}
@@ -101,10 +108,19 @@
   .lead{font-size:19px;line-height:1.55;color:var(--fg-dim);max-width:620px}
 
   /* ============ HERO ============ */
-  .hero{min-height:100vh;padding-top:180px;padding-bottom:120px;display:flex;flex-direction:column;justify-content:center;position:relative;overflow:hidden}
+  .hero{min-height:auto;padding-top:160px;padding-bottom:90px;display:flex;flex-direction:column;justify-content:center;position:relative;overflow:hidden}
   .hero .container{width:100%;position:relative;z-index:2}
-  .hero-grid{display:grid;grid-template-columns:1.15fr 1fr;gap:60px;align-items:start}
+  .hero-grid{display:grid;grid-template-columns:minmax(0,0.9fr) minmax(0,1.3fr);gap:36px;align-items:center}
   .hero-left{min-width:0}
+  .hero-anim-wrap{
+    display:flex;align-items:center;justify-content:flex-end;
+    width:100%;min-width:0;
+    margin-right:-40px;  /* lets the bigger anim breathe past the container edge */
+  }
+  .hero-anim{
+    width:100%;max-width:1000px;display:block;height:auto;margin:0;
+    filter:drop-shadow(0 22px 50px rgba(0,0,0,0.6)) drop-shadow(0 0 80px rgba(230,51,41,0.08));
+  }
   .hero-meta{
     display:flex;align-items:center;gap:14px;flex-wrap:wrap;
     font-family:'Geist Mono',monospace;font-size:12px;color:var(--fg-dim);margin-bottom:40px;
@@ -115,15 +131,9 @@
   .hero h1{max-width:780px;margin-bottom:36px;font-size:clamp(38px,5.2vw,68px)}
   .hero h1 .accent{color:var(--fg-dim);font-weight:400}
   .hero-title{display:flex;flex-direction:column;align-items:flex-start;gap:12px}
-  .hero-logo{display:inline-flex;align-items:center;justify-content:center;margin-bottom:8px}
+  .hero-logo{display:inline-flex;align-items:center;justify-content:flex-start;margin-bottom:8px;margin-left:1px}
   .hero-logo img{
     height:clamp(68px,8vw,104px);width:auto;display:block;
-    animation:hero-logo-glow var(--sq-dur,2.2s) var(--sq-delay,0.7s) ease-in-out infinite;
-  }
-  @keyframes hero-logo-glow{
-    0%,30%{filter:drop-shadow(0 0 8px rgba(245,245,245,1)) drop-shadow(0 0 22px rgba(245,245,245,0.7)) drop-shadow(0 0 44px rgba(245,245,245,0.3))}
-    38%,62%{filter:drop-shadow(0 0 10px rgba(230,51,41,1)) drop-shadow(0 0 26px rgba(230,51,41,0.85)) drop-shadow(0 0 60px rgba(230,51,41,0.4))}
-    70%,100%{filter:drop-shadow(0 0 8px rgba(245,245,245,1)) drop-shadow(0 0 22px rgba(245,245,245,0.7)) drop-shadow(0 0 44px rgba(245,245,245,0.3))}
   }
 
   /* ============ HERO RENDER ============ */
@@ -164,12 +174,12 @@
   .hero-stats .stat .v{font-size:22px;font-weight:500;color:var(--fg);letter-spacing:-0.015em}
 
   /* ============ INTRO ============ */
-  .intro{padding:140px 48px;border-top:2px solid var(--line-strong)}
+  .intro{padding:100px 48px;border-top:2px solid var(--line-strong)}
   .intro h2{max-width:940px;color:var(--fg-dim);font-weight:400;font-size:clamp(28px,3.5vw,44px);line-height:1.3;letter-spacing:-0.02em}
   .intro h2 em{font-style:normal;color:var(--fg)}
 
   /* ============ FEATURED WORK ============ */
-  .work-head{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:80px;flex-wrap:wrap;gap:20px}
+  .work-head{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:60px;flex-wrap:wrap;gap:20px}
   .work-head h2{max-width:540px}
   .work-head .meta{font-family:'Geist Mono',monospace;font-size:12px;color:var(--fg-dim);text-align:right}
 
@@ -249,12 +259,12 @@
   .proj:hover .readmore{border-color:var(--fg)}
 
   /* ============ MANIFESTO ============ */
-  .manifesto{padding:160px 48px;border-top:2px solid var(--line-strong);border-bottom:2px solid var(--line-strong)}
+  .manifesto{padding:120px 48px;border-top:2px solid var(--line-strong);border-bottom:2px solid var(--line-strong)}
   .manifesto h2{font-size:clamp(32px,4.5vw,56px);line-height:1.15;font-weight:400;letter-spacing:-0.02em;color:var(--fg-dim);max-width:1100px}
   .manifesto h2 strong{color:var(--fg);font-weight:500}
 
   /* ============ CAPABILITIES ============ */
-  .caps{padding:120px 48px}
+  .caps{padding:90px 48px}
   .caps-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:2px solid var(--line-strong)}
   .cap{padding:40px;border-right:2px solid var(--line-strong);min-height:240px;display:flex;flex-direction:column}
   .cap:last-child{border-right:none}
@@ -262,8 +272,9 @@
   .cap h4{margin-bottom:14px}
   .cap p{font-size:14px;line-height:1.6;flex:1}
 
+
   /* ============ ABOUT ============ */
-  .about{padding:160px 48px;background:var(--bg-elev);border-top:2px solid var(--line-strong);border-bottom:2px solid var(--line-strong)}
+  .about{padding:110px 48px 70px;background:var(--bg-elev);border-top:2px solid var(--line-strong);border-bottom:2px solid var(--line-strong)}
   .about-grid{display:grid;grid-template-columns:1fr 1.4fr;gap:80px;align-items:start}
   .about-portrait{aspect-ratio:4/5;background:var(--bg);border:2px solid var(--line-strong);position:relative;overflow:hidden}
   .about-portrait .ph{
@@ -323,7 +334,7 @@
   .tool-item:hover svg{opacity:0.85}
 
   /* ============ CONTACT ============ */
-  .contact{padding:160px 48px}
+  .contact{padding:110px 48px}
   .contact-box{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
   .contact h2{margin-bottom:24px;font-size:clamp(40px,5vw,72px)}
   .contact .lead{margin-bottom:32px}
@@ -368,6 +379,7 @@
     .hero{padding-top:140px;padding-bottom:80px}
     .hero-grid{grid-template-columns:1fr;gap:40px}
     .hero-render{max-width:420px}
+    .hero-anim{max-width:480px;margin:0 auto}
     .hero-stats{grid-template-columns:repeat(2,1fr);gap:24px}
     .proj-info{padding:18px 18px 22px}
     .work-grid{grid-template-columns:1fr;gap:28px}
@@ -400,20 +412,29 @@
     to{transform:translateX(-50%)}
   }
   .tools-strip .tool-item{
+    flex:0 0 auto;width:130px;height:88px;
     display:flex;flex-direction:column;align-items:center;justify-content:center;
-    gap:8px;padding:18px 28px;min-width:90px;
+    gap:10px;padding:0;
     border-right:1px solid var(--line);
     color:var(--fg-faint);text-decoration:none;
     transition:background .2s,color .2s;
+    box-sizing:border-box;
   }
   .tools-strip .tool-item:hover{background:rgba(245,245,245,0.04);color:var(--fg-dim)}
-  .tools-strip .tool-item img{
-    width:26px;height:26px;object-fit:contain;
-    filter:brightness(0) invert(0.45);transition:filter .2s;
+  .tools-strip .tool-item .ti{
+    width:26px;height:26px;display:flex;align-items:center;justify-content:center;
+    flex-shrink:0;
   }
-  .tools-strip .tool-item:hover img{filter:brightness(0) invert(0.85)}
-  .tools-strip .tool-item svg{width:26px;height:26px;opacity:0.4;transition:opacity .2s}
-  .tools-strip .tool-item:hover svg{opacity:0.8}
+  /* Every icon (square mark or wordmark) fits inside a uniform 26x26 box,
+     centered with object-fit:contain. Same filter for identical mono-white tone. */
+  .tools-strip .tool-item img,
+  .tools-strip .tool-item svg{
+    max-width:26px;max-height:26px;width:auto;height:auto;object-fit:contain;
+    filter:brightness(0) invert(0.55);opacity:0.9;
+    transition:filter .2s,opacity .2s;
+  }
+  .tools-strip .tool-item:hover img,
+  .tools-strip .tool-item:hover svg{filter:brightness(0) invert(0.95);opacity:1}
   .tools-strip .tn{
     font-family:'Geist Mono',monospace;font-size:9px;letter-spacing:0.07em;
     text-transform:uppercase;text-align:center;line-height:1.2;
@@ -425,8 +446,13 @@
 
 <!-- GLOBAL BACKGROUND -->
 <div class="site-bg" aria-hidden="true">
-  <div class="ghost a"></div><div class="ghost b"></div><div class="ghost c"></div>
   <div class="grid"></div>
+  <div class="ghost g1"></div>
+  <div class="ghost g2"></div>
+  <div class="ghost g3"></div>
+  <div class="ghost g4"></div>
+  <div class="ghost g5"></div>
+  <div class="ghost g6"></div>
 </div>
 
 <!-- NAV -->
@@ -471,20 +497,18 @@
         </div>
       </div>
 
-      <!-- ANVIL-III RENDER SLIDER -->
-      <div class="hero-render-wrap" aria-hidden="true">
-        <div class="hero-slider" id="heroSlider">
-          <div class="hero-slider-track" id="heroTrack">
-            <img class="hero-render" src="assets/anvil3-m1.png" alt="Anvil-III render 1" onerror="this.src='assets/anvil3.PNG'">
-            <img class="hero-render" src="assets/anvil3-m2.png" alt="Anvil-III render 2" loading="lazy">
-            <img class="hero-render" src="assets/anvil3-m3.png" alt="Anvil-III render 3" loading="lazy">
-          </div>
-        </div>
-        <div class="hero-dots" id="heroDots">
-          <button class="hdot active" data-i="0" aria-label="Render 1"></button>
-          <button class="hdot" data-i="1" aria-label="Render 2"></button>
-          <button class="hdot" data-i="2" aria-label="Render 3"></button>
-        </div>
+      <div class="hero-anim-wrap" aria-hidden="true">
+        <!-- WebM (VP9 + alpha) for Chromium/Firefox; WebP fallback for Safari -->
+        <video class="hero-anim" autoplay muted loop playsinline preload="auto"
+               poster="/montyforge/anvil3-r1.png"
+               onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+          <source src="/montyforge/fusion-cycle-hq.webm" type="video/webm">
+          <source src="/montyforge/fusion-cycle-v11.mp4"        type="video/mp4">
+        </video>
+        <img class="hero-anim hero-anim-fallback"
+             src="/montyforge/fusion-cycle-v11-alpha.webp"
+             alt="Anvil-III modular release system — open/close cycle"
+             style="display:none" loading="eager" decoding="async">
       </div>
     </div>
 
@@ -579,17 +603,17 @@
     </div>
     <div class="caps-grid">
       <div class="cap">
-        <div class="idx">01 / DESIGN</div>
+        <div class="idx">01 — DESIGN</div>
         <h4>Mechatronic design</h4>
         <p>CAD, FEA, DFM. Payload mechanisms, frames, actuation &mdash; designed to be manufacturable, not just printable.</p>
       </div>
       <div class="cap">
-        <div class="idx">02 / CONTROL</div>
+        <div class="idx">02 — CONTROL</div>
         <h4>Flight &amp; motion control</h4>
         <p>PID tuning, state estimation, sensor fusion. ROS &amp; PX4 stacks. Real-time guarantees on embedded targets.</p>
       </div>
       <div class="cap">
-        <div class="idx">03 / AUTONOMY</div>
+        <div class="idx">03 — AUTONOMY</div>
         <h4>Perception &amp; planning</h4>
         <p>LiDAR/EO fusion, A* &amp; RRT planners, obstacle avoidance. On-device inference &mdash; no cloud round-trip.</p>
       </div>
@@ -627,10 +651,7 @@
 
 <!-- TOOLS STRIP -->
 <section class="tools-strip" aria-label="Tools and software">
-  <div class="tools-strip-wrap">
-    <a href="https://www.autodesk.com/products/fusion-360" target="_blank" rel="noopener" class="tool-item" title="Fusion 360"><img src="https://cdn.simpleicons.org/autodesk/ffffff" alt=""><span class="tn">Fusion 360</span></a><a href="https://www.autodesk.com/products/autocad" target="_blank" rel="noopener" class="tool-item" title="AutoCAD"><img src="https://cdn.simpleicons.org/autocad/ffffff" alt=""><span class="tn">AutoCAD</span></a><a href="https://isocpp.org" target="_blank" rel="noopener" class="tool-item" title="C++"><img src="https://cdn.simpleicons.org/cplusplus/ffffff" alt=""><span class="tn">C++</span></a><a href="https://python.org" target="_blank" rel="noopener" class="tool-item" title="Python"><img src="https://cdn.simpleicons.org/python/ffffff" alt=""><span class="tn">Python</span></a><a href="https://ros.org" target="_blank" rel="noopener" class="tool-item" title="ROS 2"><img src="https://cdn.simpleicons.org/ros/ffffff" alt=""><span class="tn">ROS 2</span></a><a href="https://px4.io" target="_blank" rel="noopener" class="tool-item" title="PX4"><svg viewBox="0 0 36 36" fill="none"><rect x="4" y="4" width="28" height="28" rx="4" stroke="currentColor" stroke-width="1.5"/><text x="50%" y="58%" text-anchor="middle" dominant-baseline="middle" font-family="monospace" font-size="11" font-weight="800" fill="currentColor">PX4</text></svg><span class="tn">PX4</span></a><a href="https://ardupilot.org" target="_blank" rel="noopener" class="tool-item" title="ArduPilot"><svg viewBox="0 0 36 36" fill="none"><line x1="18" y1="4" x2="18" y2="32" stroke="currentColor" stroke-width="1.5"/><line x1="4" y1="18" x2="32" y2="18" stroke="currentColor" stroke-width="1.5"/><circle cx="18" cy="18" r="6" stroke="currentColor" stroke-width="1.5"/><circle cx="18" cy="18" r="2" fill="currentColor"/></svg><span class="tn">ArduPilot</span></a><a href="https://mavlink.io" target="_blank" rel="noopener" class="tool-item" title="MAVLink"><svg viewBox="0 0 36 36" fill="none"><polyline points="4,26 10,10 16,20 22,8 28,18 32,14" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linejoin="round"/><circle cx="32" cy="14" r="2" fill="currentColor"/></svg><span class="tn">MAVLink</span></a><a href="https://gazebosim.org" target="_blank" rel="noopener" class="tool-item" title="Gazebo"><svg viewBox="0 0 36 36" fill="none"><polygon points="18,4 30,11 18,18 6,11" stroke="currentColor" stroke-width="1.5" fill="none"/><polygon points="6,11 18,18 18,32 6,25" stroke="currentColor" stroke-width="1.5" fill="none"/><polygon points="30,11 18,18 18,32 30,25" stroke="currentColor" stroke-width="1.5" fill="none"/></svg><span class="tn">Gazebo</span></a><a href="https://arduino.cc" target="_blank" rel="noopener" class="tool-item" title="Arduino"><img src="https://cdn.simpleicons.org/arduino/ffffff" alt=""><span class="tn">Arduino</span></a><a href="https://bambulab.com" target="_blank" rel="noopener" class="tool-item" title="Bambu Lab"><svg viewBox="0 0 36 36" fill="none"><text x="50%" y="58%" text-anchor="middle" dominant-baseline="middle" font-family="monospace" font-size="9" font-weight="700" fill="currentColor">BBL</text></svg><span class="tn">Bambu Lab</span></a><a href="https://betaflight.com" target="_blank" rel="noopener" class="tool-item" title="Betaflight"><img src="https://cdn.simpleicons.org/betaflight/ffffff" alt="" onerror="this.style.display='none'"><span class="tn">Betaflight</span></a><a href="https://www.mathworks.com/products/matlab.html" target="_blank" rel="noopener" class="tool-item" title="MATLAB"><svg viewBox="0 0 36 36" fill="none"><text x="50%" y="58%" text-anchor="middle" dominant-baseline="middle" font-family="monospace" font-size="8" font-weight="700" fill="currentColor">MATLAB</text></svg><span class="tn">MATLAB</span></a><a href="https://new.abb.com/products/robotics/robotstudio" target="_blank" rel="noopener" class="tool-item" title="RobotStudio"><svg viewBox="0 0 36 36" fill="none"><text x="50%" y="45%" text-anchor="middle" dominant-baseline="middle" font-family="monospace" font-size="11" font-weight="800" fill="currentColor">ABB</text><text x="50%" y="72%" text-anchor="middle" dominant-baseline="middle" font-family="monospace" font-size="7" fill="currentColor">STUDIO</text></svg><span class="tn">RobotStudio</span></a><a href="https://www.xilinx.com" target="_blank" rel="noopener" class="tool-item" title="Xilinx"><svg viewBox="0 0 36 36" fill="none"><text x="50%" y="58%" text-anchor="middle" dominant-baseline="middle" font-family="monospace" font-size="9" font-weight="700" fill="currentColor">XILINX</text></svg><span class="tn">Xilinx</span></a>
-    <a href="https://www.autodesk.com/products/fusion-360" target="_blank" rel="noopener" class="tool-item" title="Fusion 360"><img src="https://cdn.simpleicons.org/autodesk/ffffff" alt=""><span class="tn">Fusion 360</span></a><a href="https://www.autodesk.com/products/autocad" target="_blank" rel="noopener" class="tool-item" title="AutoCAD"><img src="https://cdn.simpleicons.org/autocad/ffffff" alt=""><span class="tn">AutoCAD</span></a><a href="https://isocpp.org" target="_blank" rel="noopener" class="tool-item" title="C++"><img src="https://cdn.simpleicons.org/cplusplus/ffffff" alt=""><span class="tn">C++</span></a><a href="https://python.org" target="_blank" rel="noopener" class="tool-item" title="Python"><img src="https://cdn.simpleicons.org/python/ffffff" alt=""><span class="tn">Python</span></a><a href="https://ros.org" target="_blank" rel="noopener" class="tool-item" title="ROS 2"><img src="https://cdn.simpleicons.org/ros/ffffff" alt=""><span class="tn">ROS 2</span></a><a href="https://px4.io" target="_blank" rel="noopener" class="tool-item" title="PX4"><svg viewBox="0 0 36 36" fill="none"><rect x="4" y="4" width="28" height="28" rx="4" stroke="currentColor" stroke-width="1.5"/><text x="50%" y="58%" text-anchor="middle" dominant-baseline="middle" font-family="monospace" font-size="11" font-weight="800" fill="currentColor">PX4</text></svg><span class="tn">PX4</span></a><a href="https://ardupilot.org" target="_blank" rel="noopener" class="tool-item" title="ArduPilot"><svg viewBox="0 0 36 36" fill="none"><line x1="18" y1="4" x2="18" y2="32" stroke="currentColor" stroke-width="1.5"/><line x1="4" y1="18" x2="32" y2="18" stroke="currentColor" stroke-width="1.5"/><circle cx="18" cy="18" r="6" stroke="currentColor" stroke-width="1.5"/><circle cx="18" cy="18" r="2" fill="currentColor"/></svg><span class="tn">ArduPilot</span></a><a href="https://mavlink.io" target="_blank" rel="noopener" class="tool-item" title="MAVLink"><svg viewBox="0 0 36 36" fill="none"><polyline points="4,26 10,10 16,20 22,8 28,18 32,14" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linejoin="round"/><circle cx="32" cy="14" r="2" fill="currentColor"/></svg><span class="tn">MAVLink</span></a><a href="https://gazebosim.org" target="_blank" rel="noopener" class="tool-item" title="Gazebo"><svg viewBox="0 0 36 36" fill="none"><polygon points="18,4 30,11 18,18 6,11" stroke="currentColor" stroke-width="1.5" fill="none"/><polygon points="6,11 18,18 18,32 6,25" stroke="currentColor" stroke-width="1.5" fill="none"/><polygon points="30,11 18,18 18,32 30,25" stroke="currentColor" stroke-width="1.5" fill="none"/></svg><span class="tn">Gazebo</span></a><a href="https://arduino.cc" target="_blank" rel="noopener" class="tool-item" title="Arduino"><img src="https://cdn.simpleicons.org/arduino/ffffff" alt=""><span class="tn">Arduino</span></a><a href="https://bambulab.com" target="_blank" rel="noopener" class="tool-item" title="Bambu Lab"><svg viewBox="0 0 36 36" fill="none"><text x="50%" y="58%" text-anchor="middle" dominant-baseline="middle" font-family="monospace" font-size="9" font-weight="700" fill="currentColor">BBL</text></svg><span class="tn">Bambu Lab</span></a><a href="https://betaflight.com" target="_blank" rel="noopener" class="tool-item" title="Betaflight"><img src="https://cdn.simpleicons.org/betaflight/ffffff" alt="" onerror="this.style.display='none'"><span class="tn">Betaflight</span></a><a href="https://www.mathworks.com/products/matlab.html" target="_blank" rel="noopener" class="tool-item" title="MATLAB"><svg viewBox="0 0 36 36" fill="none"><text x="50%" y="58%" text-anchor="middle" dominant-baseline="middle" font-family="monospace" font-size="8" font-weight="700" fill="currentColor">MATLAB</text></svg><span class="tn">MATLAB</span></a><a href="https://new.abb.com/products/robotics/robotstudio" target="_blank" rel="noopener" class="tool-item" title="RobotStudio"><svg viewBox="0 0 36 36" fill="none"><text x="50%" y="45%" text-anchor="middle" dominant-baseline="middle" font-family="monospace" font-size="11" font-weight="800" fill="currentColor">ABB</text><text x="50%" y="72%" text-anchor="middle" dominant-baseline="middle" font-family="monospace" font-size="7" fill="currentColor">STUDIO</text></svg><span class="tn">RobotStudio</span></a><a href="https://www.xilinx.com" target="_blank" rel="noopener" class="tool-item" title="Xilinx"><svg viewBox="0 0 36 36" fill="none"><text x="50%" y="58%" text-anchor="middle" dominant-baseline="middle" font-family="monospace" font-size="9" font-weight="700" fill="currentColor">XILINX</text></svg><span class="tn">Xilinx</span></a>
-  </div>
+  <div class="tools-strip-wrap" id="toolsWrap"></div>
 </section>
 
 <!-- CONTACT -->
@@ -689,17 +710,55 @@
   }, { threshold: 0.12, rootMargin: '0px 0px -50px 0px' });
   document.querySelectorAll('.reveal, .proj').forEach((el) => io.observe(el));
 
-  // Async label square blinking + hero logo blink
-  (function () {
-    const durations = [1.9, 2.6, 1.5, 3.1, 2.2, 1.7];
-    const delays    = [0,   0.6, 1.15, 0.35, 0.9, 1.55];
-    document.querySelectorAll('.label').forEach((el, i) => {
-      el.style.setProperty('--sq-dur',   durations[i % durations.length] + 's');
-      el.style.setProperty('--sq-delay', delays[i % delays.length] + 's');
-    });
-    // Hero logo uses same system
-    const hl = document.querySelector('.hero-logo img');
-    if (hl) { hl.style.setProperty('--sq-dur','2.3s'); hl.style.setProperty('--sq-delay','0.8s'); }
+  // Tools strip — render uniformly. Each icon is the OFFICIAL brand mark
+  // (simpleicons CDN where available, locally hosted official assets for niche
+  // ones — PX4, ArduPilot, MAVLink, Betaflight, MATLAB, ABB, Xilinx, Gazebo).
+  // All are pre-processed to white-on-transparent and dimmed to ~55% white via
+  // CSS filter, so every tool reads the same tone.
+  (function(){
+    const wrap = document.getElementById('toolsWrap');
+    if (!wrap) return;
+    const tools = [
+      ['Fusion 360',  'https://www.autodesk.com/products/fusion-360',       'https://cdn.simpleicons.org/autodesk/ffffff'],
+      ['AutoCAD',     'https://www.autodesk.com/products/autocad',          'https://cdn.simpleicons.org/autocad/ffffff'],
+      ['C++',         'https://isocpp.org',                                 'https://cdn.simpleicons.org/cplusplus/ffffff'],
+      ['Python',      'https://python.org',                                 'https://cdn.simpleicons.org/python/ffffff'],
+      ['ROS 2',       'https://ros.org',                                    'https://cdn.simpleicons.org/ros/ffffff'],
+      ['PX4',         'https://px4.io',                                     '/montyforge/icons/px4.png'],
+      ['ArduPilot',   'https://ardupilot.org',                              '/montyforge/icons/ardupilot.png'],
+      ['MAVLink',     'https://mavlink.io',                                 '/montyforge/icons/mavlink.png'],
+      ['Gazebo',      'https://gazebosim.org',                              '/montyforge/icons/gazebo.svg'],
+      ['Arduino',     'https://arduino.cc',                                 'https://cdn.simpleicons.org/arduino/ffffff'],
+      ['Bambu Lab',   'https://bambulab.com',                               'https://cdn.simpleicons.org/bambulab/ffffff'],
+      ['Betaflight',  'https://betaflight.com',                             '/montyforge/icons/betaflight.svg'],
+      ['MATLAB',      'https://www.mathworks.com/products/matlab.html',     '/montyforge/icons/matlab.png'],
+      ['RobotStudio', 'https://new.abb.com/products/robotics/robotstudio',  '/montyforge/icons/robotstudio.svg'],
+      ['Xilinx',      'https://www.xilinx.com',                             '/montyforge/icons/xilinx.svg']
+    ];
+    function render(t){
+      const a = document.createElement('a');
+      a.href = t[1]; a.target='_blank'; a.rel='noopener';
+      a.className='tool-item'; a.title=t[0];
+      const ti = document.createElement('span');
+      ti.className='ti';
+      const img = document.createElement('img');
+      img.alt=''; img.loading='eager';
+      img.src = t[2];
+      img.onerror = function(){
+        this.remove();
+        ti.innerHTML = '<svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="3"/></svg>';
+      };
+      ti.appendChild(img);
+      a.appendChild(ti);
+      const tn = document.createElement('span');
+      tn.className='tn'; tn.textContent=t[0];
+      a.appendChild(tn);
+      return a;
+    }
+    const frag = document.createDocumentFragment();
+    tools.forEach(t => frag.appendChild(render(t)));
+    tools.forEach(t => frag.appendChild(render(t)));
+    wrap.appendChild(frag);
   })();
 
 
