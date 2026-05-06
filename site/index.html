@@ -179,17 +179,19 @@
 
   .hero-stats{
     position:relative;
-    margin-top:72px;padding:40px 36px;
+    padding:40px 48px;
     border-top:2px solid var(--line-strong);border-bottom:2px solid var(--line-strong);
-    display:grid;grid-template-columns:repeat(4,1fr);gap:24px;
     background:var(--bg-elev);
+  }
+  .hero-stats-inner{
+    display:grid;grid-template-columns:repeat(4,1fr);gap:24px;
   }
   .hero-stats .stat{position:relative;z-index:1}
   .hero-stats .stat .k{font-family:'Geist Mono',monospace;font-size:11px;color:var(--fg-faint);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:8px}
   .hero-stats .stat .v{font-size:22px;font-weight:500;color:var(--fg);letter-spacing:-0.015em}
 
   /* ============ INTRO ============ */
-  .intro{padding:100px 48px;border-top:2px solid var(--line-strong)}
+  .intro{padding:100px 48px}
   .intro h2{max-width:940px;color:var(--fg-dim);font-weight:400;font-size:clamp(28px,3.5vw,44px);line-height:1.3;letter-spacing:-0.02em}
   .intro h2 em{font-style:normal;color:var(--fg)}
 
@@ -395,7 +397,8 @@
     .hero-grid{grid-template-columns:1fr;gap:40px}
     .hero-render{max-width:420px}
     .hero-anim{max-width:480px;margin:0 auto}
-    .hero-stats{grid-template-columns:repeat(2,1fr);gap:24px}
+    .hero-stats{padding:32px 20px}
+    .hero-stats-inner{grid-template-columns:repeat(2,1fr);gap:24px}
     .proj-info{padding:18px 18px 22px}
     .work-grid{grid-template-columns:1fr;gap:28px}
     .caps-grid{grid-template-columns:1fr}
@@ -527,12 +530,16 @@
       </div>
     </div>
 
-    <div class="hero-stats">
-      <div class="stat"><div class="k">Discipline</div><div class="v">Autonomous systems</div></div>
-      <div class="stat"><div class="k">Based</div><div class="v">Stavanger, NO</div></div>
-      <div class="stat"><div class="k">Working with</div><div class="v">SDC · AEROMEDIA</div></div>
-      <div class="stat"><div class="k">Projects</div><div class="v">02 systems</div></div>
-    </div>
+  </div>
+</section>
+
+<!-- HERO STATS — full-width separator between portada and About the practice -->
+<section class="hero-stats" aria-label="Practice meta">
+  <div class="container hero-stats-inner">
+    <div class="stat"><div class="k">Discipline</div><div class="v">Autonomous systems</div></div>
+    <div class="stat"><div class="k">Based</div><div class="v">Stavanger, NO</div></div>
+    <div class="stat"><div class="k">Working with</div><div class="v">SDC · AEROMEDIA</div></div>
+    <div class="stat"><div class="k">Projects</div><div class="v">02 systems</div></div>
   </div>
 </section>
 
