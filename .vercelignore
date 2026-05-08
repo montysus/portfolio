@@ -1,0 +1,31 @@
+# Specific large dev artifacts at project root only.
+# We do NOT use globs that would also match files inside public/.
+/fusion-cycle-v11-alpha.mov
+/fusion-cycle-final.gif
+/fusion-cycle-v11-alpha.webm
+/fusion-cycle-v11-alpha.webp
+/fusion-cycle-v11-alpha-clean.webm
+/fusion-cycle-hq.webm
+/fusion-pistons-locked.mp4
+/fusion-cycle-v11.mp4
+/fusion-choreography.mp4
+
+# session notes
+/SESSION_NOTES.md
+
+# untracked work-in-progress images at root
+/about-area-final.png
+/alpha-test.png
+/alpha-test-mov.png
+/alpha-test-webm2.png
+/alpha-test-webm3.png
+/anvil3-anims.jpeg
+/anvil3-anims2.jpeg
+/anvil3-gallery.jpeg
+/.tmp-cycle.webp
+
+# claude code worktrees with duplicated public assets
+/.claude/worktrees
+
+# fusion-tools sub-project (not part of web)
+/fusion-tools

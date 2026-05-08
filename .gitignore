@@ -43,7 +43,7 @@ next-dev-*.log
 next-dev-*.err.log
 *.tar
 
-# legacy static-site source: needed at build time for app/anvil3 + app/lifevest,
+# legacy static-site source: needed at build time for app/lifevest,
 # but the heavy assets are duplicated in public/montyforge — only ship the HTML.
 /site/assets/
 /site/.claude/

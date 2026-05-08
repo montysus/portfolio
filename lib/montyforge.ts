@@ -1,25 +1,20 @@
 export const asset = (name: string) => `/montyforge/${name}`;
 
-export const projects = [
-  {
-    href: "/anvil3",
-    number: "01 / 02",
-    status: "IN DEVELOPMENT",
-    title: "Modular Release System - Anvil-III",
-    category: "Autonomous Drone Systems · 2026",
-    description:
-      "Adaptive payload release mechanism for drones. 5 kg capacity, any payload shape, <100 ms deployment. Fielded with Scandinavian Drone Company for offshore resupply in the North Sea.",
-    media: [
-      "anvil3-r1.png",
-      "anvil3-r2.png",
-      "anvil3-r3.png",
-      "anvil3-r4.png",
-      "anvil3-r5.png",
-    ],
-  },
+type Project = {
+  href: string;
+  number: string;
+  status: string;
+  title: string;
+  category: string;
+  description: string;
+  media?: string[];
+  video?: string;
+};
+
+export const projects: Project[] = [
   {
     href: "/lifevest",
-    number: "02 / 02",
+    number: "01 / 01",
     status: "ON USE",
     title: "Life Vest Deployment System",
     category: "Systems · 2023",
