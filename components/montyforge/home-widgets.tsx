@@ -1,61 +1,11 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 
 import Image from "next/image";
 import Link from "next/link";
 
 import { asset, projects, tools } from "@/lib/montyforge";
-
-export function HeroSlider() {
-  const slides = ["anvil3-m1.png", "anvil3-m2.png", "anvil3-m3.png"];
-  const [current, setCurrent] = useState(0);
-
-  useEffect(() => {
-    const timer = window.setInterval(() => {
-      setCurrent((index) => (index + 1) % slides.length);
-    }, 4000);
-    return () => window.clearInterval(timer);
-  }, [slides.length]);
-
-  return (
-    <div className="relative hidden min-h-[560px] items-center justify-center lg:flex">
-      <div className="relative aspect-square w-full max-w-[560px] overflow-hidden">
-        <div
-          className="flex h-full transition-transform duration-700 ease-out"
-          style={{ transform: `translateX(-${current * 100}%)` }}
-        >
-          {slides.map((slide, index) => (
-            <div key={slide} className="relative h-full min-w-full">
-              <Image
-                src={asset(slide)}
-                alt={`Anvil-III render ${index + 1}`}
-                fill
-                priority={index === 0}
-                sizes="560px"
-                className="object-contain drop-shadow-[0_40px_90px_rgba(0,0,0,0.6)]"
-              />
-            </div>
-          ))}
-        </div>
-      </div>
-      <div className="absolute bottom-6 flex gap-2">
-        {slides.map((slide, index) => (
-          <button
-            key={`${slide}-dot`}
-            aria-label={`Render ${index + 1}`}
-            onClick={() => setCurrent(index)}
-            className={`h-1.5 transition-all ${
-              current === index
-                ? "w-9 bg-white"
-                : "w-4 bg-white/25 hover:bg-white/50"
-            }`}
-          />
-        ))}
-      </div>
-    </div>
-  );
-}
 
 export function ProjectCards() {
   return (
@@ -109,8 +59,7 @@ export function ProjectCards() {
               {project.description}
             </p>
             <span className="mt-7 inline-block text-sm text-[#f5f5f5] transition group-hover:translate-x-1">
-              {project.href === "/anvil3" ? "View project" : "Read case study"}{" "}
-              →
+              Read case study →
             </span>
           </div>
         </Link>

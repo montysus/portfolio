@@ -86,6 +86,39 @@ h2{font-size:clamp(32px,4.5vw,56px);line-height:1.05;letter-spacing:-0.025em;fon
 h3{font-size:20px;font-weight:500;letter-spacing:-0.015em;margin:0 0 10px}
 p{color:var(--fg-dim);margin:0}
 
+/* FEATURED PRESS — minimal Cuatro feature */
+.featured-press{border-top:2px solid var(--line-strong)}
+.featured-press-card{
+  display:flex;flex-direction:column;gap:24px;
+  padding:40px 0 12px;margin-top:32px;
+  border-top:1px solid var(--line);
+  position:relative;
+}
+.fp-source{
+  font-family:'Geist Mono',monospace;font-size:11px;letter-spacing:0.16em;
+  color:var(--fg-faint);text-transform:uppercase;
+}
+.fp-source .dot,.fp-cta::before,.fp-channel,.fp-meta{display:none}
+.fp-headline{
+  font-size:clamp(22px,2.2vw,30px);
+  font-weight:500;line-height:1.35;color:var(--fg);
+  letter-spacing:-0.02em;margin:0;max-width:720px;
+}
+.fp-byline{
+  font-family:'Geist Mono',monospace;font-size:11px;letter-spacing:0.12em;
+  color:var(--fg-faint);text-transform:uppercase;
+}
+.fp-cta{
+  display:inline-flex;align-items:center;gap:10px;
+  font-family:'Geist Mono',monospace;font-size:12px;letter-spacing:0.08em;
+  color:var(--fg-dim);width:fit-content;padding:0;
+  border-bottom:1px solid var(--line-strong);padding-bottom:4px;
+  transition:color .25s ease,border-color .25s ease;
+}
+.fp-cta:hover{color:var(--fg);border-color:var(--fg)}
+.fp-cta .arr{transition:transform .3s ease}
+.fp-cta:hover .arr{transform:translateX(4px)}
+
 /* INTRO GRID */
 .border-top{border-top:2px solid var(--line-strong)}
 .intro-grid{display:grid;grid-template-columns:320px 1fr;gap:80px;align-items:start}
@@ -170,15 +203,6 @@ p{color:var(--fg-dim);margin:0}
 .num-cell .big{font-size:clamp(34px,4vw,54px);font-weight:700;letter-spacing:-0.03em;color:var(--fg);display:block;margin-bottom:8px;line-height:1}
 .num-cell .label{font-family:'Geist Mono',monospace;font-size:10px;color:var(--fg-faint);letter-spacing:0.1em;text-transform:uppercase;line-height:1.4}
 
-/* VIDEO EMBEDS */
-.videos-section{border-top:2px solid var(--line-strong)}
-.videos-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:56px}
-.video-card{background:var(--bg-elev);border:1px solid var(--line-strong);overflow:hidden}
-.video-card iframe{width:100%;aspect-ratio:16/9;display:block;border:none}
-.video-card .vc-info{padding:18px 20px;border-top:1px solid var(--line)}
-.video-card .vc-source{font-family:'Geist Mono',monospace;font-size:10px;color:var(--fg-faint);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:6px}
-.video-card .vc-title{font-size:14px;color:var(--fg);font-weight:500;line-height:1.4}
-
 /* MEDIA COVERAGE */
 .coverage-section{border-top:2px solid var(--line-strong)}
 .coverage-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:1px solid var(--line-strong);margin-top:56px}
@@ -243,11 +267,11 @@ footer a:hover{color:var(--fg)}
   .navlinks a:not(.cta){display:none}
   section{padding:60px 20px}
   .hero-content{padding:60px 20px 52px}
+  .featured-press-card{grid-template-columns:1fr;gap:36px;padding:36px 24px}
   .intro-grid{grid-template-columns:1fr;gap:40px}
   .render-wrap{padding:40px 20px}
   .numbers-grid{grid-template-columns:1fr 1fr}
   .num-cell{border-bottom:1px solid var(--line-strong)}
-  .videos-grid{grid-template-columns:1fr}
   .coverage-grid{grid-template-columns:1fr}
   .cov-item{border-right:none;border-bottom:1px solid var(--line-strong)}
   .cov-item:last-child{border-bottom:none}
@@ -286,13 +310,29 @@ footer a:hover{color:var(--fg)}
     <div class="hero-meta">
       <span class="mono">02 / 02</span>
       <span class="sep"></span>
-      <span>Systems · 2017 – present</span>
+      <span>Systems · 2023 – present</span>
       <span class="sep"></span>
       <span>Fuengirola · Mijas · Costa del Sol</span>
     </div>
     <div class="badge-pill">ON USE</div>
     <h1>Life Vest<br>Deployment System</h1>
     <p class="hero-sub">Aerial deployment of inflatable life vests from drone platforms over the beaches of <strong>Fuengirola</strong> and <strong>Mijas</strong> — cutting maritime rescue response time from minutes to seconds. Covered by Cuatro, Telecinco, COPE and Canal Sur.</p>
+  </div>
+</section>
+
+<!-- FEATURED PRESS — Cuatro national TV feature -->
+<section class="featured-press">
+  <div class="container">
+    <div class="sec-label">As seen on TV</div>
+    <h2>National broadcast feature.</h2>
+    <article class="featured-press-card">
+      <div class="fp-source">Cuatro · Mediaset España · 7 agosto 2025</div>
+      <p class="fp-headline">National TV report on the drone life vest deployment system operating on the beaches of Fuengirola.</p>
+      <div class="fp-byline">Reporter: Patricia Palacios · Noticias Cuatro</div>
+      <a href="https://www.cuatro.com/noticias/sociedad/20250807/fuengirola-pionera-usar-drones-vigilar-playas-rescates_18_016320147.html" target="_blank" rel="noopener" class="fp-cta">
+        Watch the report on Cuatro.com <span class="arr">→</span>
+      </a>
+    </article>
   </div>
 </section>
 
@@ -304,12 +344,10 @@ footer a:hover{color:var(--fg)}
         <div class="stats-card">
           <div class="stat-row"><span class="k">Partner</span><span class="v">AEROMEDIA</span></div>
           <div class="stat-row"><span class="k">Locations</span><span class="v">Fuengirola &amp; Mijas (Málaga)</span></div>
-          <div class="stat-row"><span class="k">Fuengirola since</span><span class="v">2017 — Pioneer in Spain</span></div>
-          <div class="stat-row"><span class="k">Mijas since</span><span class="v">2021 (SafeDron contract)</span></div>
+          <div class="stat-row"><span class="k">Active since</span><span class="v">2023</span></div>
           <div class="stat-row"><span class="k">Drones active</span><span class="v">4 units, full coastline</span></div>
           <div class="stat-row"><span class="k">Response time</span><span class="v">Airborne in 10 seconds</span></div>
           <div class="stat-row"><span class="k">2025 interventions</span><span class="v">573 in July alone</span></div>
-          <div class="stat-row"><span class="k">Drowning victims</span><span class="v">0 in Fuengirola</span></div>
           <div class="stat-row"><span class="k">TV coverage</span><span class="v">Cuatro · Telecinco · Canal Sur</span></div>
         </div>
 
@@ -333,8 +371,8 @@ footer a:hover{color:var(--fg)}
         <h2>When seconds are the difference between life and death.</h2>
         <p style="margin-top:28px">Developed in collaboration with <strong>AEROMEDIA</strong>, this system deploys an inflatable life vest from a drone directly to a swimmer in distress — before a human lifeguard could physically reach them.</p>
         <p>Traditional rescue requires a lifeguard to swim out, which in rough surf can take 3–5 critical minutes. This system puts a flotation device in the hands of a drowning person in under 10 seconds of flight, at ranges up to 800 m offshore.</p>
-        <p>Fuengirola has been a <strong>pioneer in Spain</strong> since 2017 — the first municipality on the Costa del Sol to deploy aerial drone rescue. Eight years later, it remains a national reference point. AEROMEDIA has operated the service continuously, logging over 2,600 missions in a single summer month, with <strong>zero drowning fatalities</strong> on Fuengirola beaches.</p>
-        <p>The system attracted national television coverage in August 2025, with reports on <strong>Cuatro</strong> and <strong>Telecinco</strong>, plus radio coverage on <strong>COPE</strong> and a feature on <strong>Canal Sur</strong>. The same fleet operates in neighbouring <strong>Mijas</strong> since 2021 under the AEROMEDIA SafeDron contract.</p>
+        <p>Active in <strong>Fuengirola</strong> and <strong>Mijas</strong> since <strong>2023</strong> in collaboration with AEROMEDIA. The fleet covers the full coastline with four drones in continuous service through summer.</p>
+        <p>In summer 2025 the system drew national television coverage with reports on <strong>Cuatro</strong> and <strong>Telecinco</strong>, plus radio coverage on <strong>COPE</strong> and a feature on <strong>Canal Sur</strong> — recognising the operational role of drone-based rescue on the Costa del Sol.</p>
       </div>
     </div>
   </div>
@@ -344,7 +382,7 @@ footer a:hover{color:var(--fg)}
 <section class="border-top">
   <div class="container">
     <div class="sec-label">By the numbers</div>
-    <h2>Eight years of operation.<br>Zero drowning fatalities.</h2>
+    <h2>Active deployment.<br>Real outcomes.</h2>
     <div class="numbers-grid">
       <div class="num-cell">
         <span class="big">10s</span>
@@ -359,36 +397,8 @@ footer a:hover{color:var(--fg)}
         <span class="label">Interventions in July 2025</span>
       </div>
       <div class="num-cell">
-        <span class="big">0</span>
-        <span class="label">Drowning fatalities in Fuengirola</span>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- VIDEOS — 2025 Fuengirola broadcasts (Canal Sur + Fuengirola TV), self-hosted -->
-<section class="videos-section">
-  <div class="container">
-    <div class="sec-label">In the media</div>
-    <h2>Watch the system<br>in action.</h2>
-    <div class="videos-grid">
-      <div class="video-card">
-        <video controls preload="metadata" playsinline poster="/montyforge/lifevest-videos/canalsur-poster.jpg">
-          <source src="/montyforge/lifevest-videos/canalsur-fuengirola-2025.mp4" type="video/mp4">
-        </video>
-        <div class="vc-info">
-          <div class="vc-source">Canal Sur · 8 agosto 2025</div>
-          <div class="vc-title">Drones vigilando las playas de Fuengirola — pueden lanzar salvavidas para ayudar en los rescates acuáticos</div>
-        </div>
-      </div>
-      <div class="video-card">
-        <video controls preload="metadata" playsinline poster="/montyforge/lifevest-videos/fuengirolatv-poster.jpg">
-          <source src="/montyforge/lifevest-videos/fuengirolatv-drones-2025.mp4" type="video/mp4">
-        </video>
-        <div class="vc-info">
-          <div class="vc-source">Fuengirola Televisión · 23 julio 2025</div>
-          <div class="vc-title">El Patio de Fuengirola — la mirada aérea del servicio de aerovigilancia con drones</div>
-        </div>
+        <span class="big">800m</span>
+        <span class="label">Operational range offshore</span>
       </div>
     </div>
   </div>
@@ -445,8 +455,8 @@ footer a:hover{color:var(--fg)}
       <div class="cov-item">
         <span class="cov-source">Cuatro TV</span>
         <span class="cov-date">7 agosto 2025</span>
-        <span class="cov-headline">"Fuengirola, pionera en usar drones para vigilar las playas: salvan a seis personas en tan solo 15 días"</span>
-        <p class="cov-desc">Cuatro TV covered the system with reporter Patricia Palacios. The report highlighted how Fuengirola's drone fleet achieved six rescues in 15 days during summer 2025, with zero drowning fatalities.</p>
+        <span class="cov-headline">National TV report on drone-based life vest rescues operating on Costa del Sol beaches.</span>
+        <p class="cov-desc">Reporter Patricia Palacios covered the system in operation, including footage of the drone deploying inflatable vests during a live intervention.</p>
         <a href="https://www.cuatro.com/noticias/sociedad/20250807/fuengirola-pionera-usar-drones-vigilar-playas-rescates_18_016320147.html" target="_blank" rel="noopener" class="cov-link">Read on Cuatro.com →</a>
       </div>
       <div class="cov-item">
@@ -528,13 +538,9 @@ footer a:hover{color:var(--fg)}
   </div>
 </section>
 
-<!-- BACK / NEXT -->
+<!-- BACK -->
 <div class="proj-nav">
   <a href="index.html#portfolio" class="back-btn">← Back to portfolio</a>
-  <div class="next-wrap">
-    <div class="next-label">Next project</div>
-    <a href="anvil3.html" class="next-btn">Anvil-III Modular Release System →</a>
-  </div>
 </div>
 
 <!-- FOOTER -->

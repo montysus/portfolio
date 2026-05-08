@@ -91,7 +91,6 @@ export function MontyFooter() {
         title="Work"
         links={[
           ["Portfolio", "/#portfolio"],
-          ["Anvil-III", "/anvil3"],
           ["Life Vest System", "/lifevest"],
         ]}
       />

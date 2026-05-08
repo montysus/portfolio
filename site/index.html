@@ -33,8 +33,8 @@
   .site-bg .grid{
     position:absolute;inset:-5%;
     background-image:
-      linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px);
+      linear-gradient(rgba(255,255,255,0.07) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.07) 1px, transparent 1px);
     background-size:80px 80px;
     mask-image:radial-gradient(ellipse 80% 70% at 50% 40%, black 40%, transparent 95%);
     -webkit-mask-image:radial-gradient(ellipse 80% 70% at 50% 40%, black 40%, transparent 95%);
@@ -59,8 +59,29 @@
   @keyframes gp-4{0%,100%{opacity:0.45}50%{opacity:0.85}}
   @keyframes gp-5{0%,100%{opacity:0.4}50%{opacity:0.8}}
   @keyframes gp-6{0%,100%{opacity:0.4}50%{opacity:0.75}}
+  /* Random grid-area pulses — soft red tint over multiple grid cells.
+     The pulse re-draws the 80px lattice in red and fades it with a radial mask,
+     so grid lines glow within a soft area instead of a single hard cell. */
+  .site-bg .grid-pulses{position:absolute;inset:-5%;pointer-events:none;overflow:hidden}
+  .site-bg .grid-pulse{
+    position:absolute;width:400px;height:400px;
+    margin-left:-160px;margin-top:-160px;
+    background-image:
+      linear-gradient(rgba(150,20,20,0.32) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(150,20,20,0.32) 1px, transparent 1px);
+    background-size:80px 80px;
+    background-position:0 0;
+    -webkit-mask-image:radial-gradient(circle at 50% 50%, black 0%, rgba(0,0,0,0.55) 35%, transparent 75%);
+    mask-image:radial-gradient(circle at 50% 50%, black 0%, rgba(0,0,0,0.55) 35%, transparent 75%);
+    filter:drop-shadow(0 0 3px rgba(140,15,15,0.25));
+    opacity:0;
+    mix-blend-mode:screen;
+    transition:opacity 1.6s ease;
+    pointer-events:none;
+  }
+  .site-bg .grid-pulse.on{opacity:1}
   nav.top,section,footer{position:relative;z-index:2}
-  @media(prefers-reduced-motion:reduce){.site-bg .ghost{animation:none}}
+  @media(prefers-reduced-motion:reduce){.site-bg .ghost,.site-bg .grid-pulses{animation:none;display:none}}
   a{color:inherit;text-decoration:none}
   img{max-width:100%;display:block}
   ::selection{background:var(--fg);color:var(--bg)}
@@ -97,6 +118,11 @@
   .label::before{
     content:'';width:8px;height:8px;background:var(--fg);flex-shrink:0;
     box-shadow:0 0 6px rgba(245,245,245,0.6),0 0 14px rgba(245,245,245,0.25);
+    transition:background .35s ease,box-shadow .35s ease;
+  }
+  section:hover .label::before{
+    background:var(--accent);
+    box-shadow:0 0 10px var(--accent),0 0 24px rgba(230,51,41,0.7),0 0 40px rgba(230,51,41,0.35);
   }
 
   h1,h2,h3,h4,h5{font-family:'Geist',sans-serif;letter-spacing:-0.025em;margin:0;font-weight:600;text-wrap:balance}
@@ -181,13 +207,24 @@
     position:relative;
     padding:40px 48px;
     border-top:2px solid var(--line-strong);border-bottom:2px solid var(--line-strong);
-    background:var(--bg-elev);
+    background:var(--bg);
   }
   .hero-stats-inner{
     display:grid;grid-template-columns:repeat(4,1fr);gap:24px;
   }
-  .hero-stats .stat{position:relative;z-index:1}
-  .hero-stats .stat .k{font-family:'Geist Mono',monospace;font-size:11px;color:var(--fg-faint);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:8px}
+  .hero-stats .stat{position:relative;z-index:1;padding-bottom:8px}
+  .hero-stats .stat::after{
+    content:'';position:absolute;left:0;bottom:0;
+    width:0;height:1px;background:var(--accent);
+    transition:width .45s ease;
+  }
+  .hero-stats .stat:hover::after{width:36px}
+  .hero-stats .stat .k{
+    font-family:'Geist Mono',monospace;font-size:11px;color:var(--fg-faint);
+    letter-spacing:0.08em;text-transform:uppercase;margin-bottom:8px;
+    transition:color .35s ease;
+  }
+  .hero-stats .stat:hover .k{color:var(--accent)}
   .hero-stats .stat .v{font-size:22px;font-weight:500;color:var(--fg);letter-spacing:-0.015em}
 
   /* ============ INTRO ============ */
@@ -229,6 +266,39 @@
   .proj:nth-child(even) .proj-media{order:2}
   .proj:nth-child(even) .proj-info{order:1}
 
+  .proj-media-wrap{display:flex;flex-direction:column;gap:14px;justify-content:center}
+  .proj-media-label,.proj-media-caption{
+    display:flex;align-items:center;gap:14px;
+    font-family:'Geist Mono',monospace;font-size:10px;
+    letter-spacing:0.18em;color:var(--fg-faint);
+    text-transform:uppercase;
+  }
+  .proj-media-label .dot{
+    width:7px;height:7px;background:var(--accent);
+    box-shadow:0 0 6px var(--accent),0 0 14px rgba(230,51,41,0.55);
+    flex-shrink:0;animation:proj-live-pulse 1.6s ease-in-out infinite;
+  }
+  .proj-media-label .sep,.proj-media-caption .sep{
+    width:24px;height:1px;background:var(--line-strong);flex-shrink:0;
+  }
+  .proj-media-label .muted,.proj-media-caption .muted{color:var(--fg-faint)}
+  .proj-media-label .ts,.proj-media-caption .ts{
+    margin-left:auto;color:var(--fg-dim);font-weight:500;
+  }
+  .proj-media-caption{
+    padding-top:10px;
+  }
+  .proj-media-caption .track{
+    flex:1;height:2px;background:rgba(245,245,245,0.06);
+    position:relative;overflow:hidden;
+  }
+  .proj-media-caption .track-fill{
+    position:absolute;left:-30%;top:0;bottom:0;width:30%;
+    background:linear-gradient(90deg,transparent 0%,rgba(245,245,245,0.85) 50%,transparent 100%);
+    box-shadow:0 0 6px rgba(245,245,245,0.4);
+    animation:proj-track 4s linear infinite;
+  }
+  @keyframes proj-track{0%{left:-30%}100%{left:100%}}
   .proj-media{
     position:relative;aspect-ratio:4/3;overflow:hidden;
     background:linear-gradient(135deg,#181818 0%,#0d0d0d 100%);
@@ -237,7 +307,7 @@
   }
   /* Lifevest card hosts a 16:9 video — match aspect so object-fit:contain
      does not letterbox. */
-  .proj:nth-child(2) .proj-media{aspect-ratio:16/9}
+  .proj:nth-child(1) .proj-media{aspect-ratio:16/9}
   .proj:hover .proj-media{
     border-color:rgba(245,245,245,0.3);
     box-shadow:0 30px 90px rgba(0,0,0,0.75),0 0 60px rgba(230,51,41,0.08);
@@ -298,19 +368,30 @@
     color:var(--accent);width:fit-content;
   }
   .proj .badge::before{content:'';width:6px;height:6px;background:var(--accent);border-radius:50%;box-shadow:0 0 8px var(--accent);animation:proj-live-pulse 2s ease-in-out infinite}
-  .proj .badge.on-use{color:var(--fg-dim);border-color:rgba(245,245,245,0.22);background:rgba(245,245,245,0.05)}
-  .proj .badge.on-use::before{background:var(--fg-dim);box-shadow:none;animation:none}
+  .proj .badge.on-use{color:var(--accent);border-color:rgba(230,51,41,0.55);background:rgba(230,51,41,0.1)}
+  .proj .badge.on-use::before{background:var(--accent);box-shadow:0 0 8px var(--accent),0 0 16px rgba(230,51,41,0.55);animation:proj-live-pulse 1.6s ease-in-out infinite}
   @keyframes proj-live-pulse{0%,100%{opacity:1}50%{opacity:0.4}}
   .proj-stats{
     display:grid;grid-template-columns:repeat(3,auto);gap:32px;
     margin-top:14px;padding:18px 0;
     border-top:2px solid var(--line-strong);border-bottom:2px solid var(--line-strong);
   }
-  .proj-stats .ps{display:flex;flex-direction:column;gap:4px}
+  .proj-stats .ps{
+    position:relative;display:flex;flex-direction:column;gap:4px;
+    padding-bottom:6px;
+  }
+  .proj-stats .ps::after{
+    content:'';position:absolute;left:0;bottom:0;
+    width:0;height:1px;background:var(--accent);
+    transition:width .4s ease;
+  }
+  .proj-stats .ps:hover::after{width:28px}
   .proj-stats .ps .pk{
     font-family:'Geist Mono',monospace;font-size:10px;color:var(--fg-faint);
     letter-spacing:0.1em;text-transform:uppercase;
+    transition:color .3s ease;
   }
+  .proj-stats .ps:hover .pk{color:var(--accent)}
   .proj-stats .ps .pv{font-size:16px;color:var(--fg);font-weight:500;letter-spacing:-0.01em}
   .proj .readmore{
     font-family:'Geist Mono',monospace;font-size:13px;color:var(--fg);
@@ -338,22 +419,69 @@
 
   /* ============ CAPABILITIES ============ */
   .caps{padding:90px 48px}
-  .caps-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:2px solid var(--line-strong)}
-  .cap{padding:40px;border-right:2px solid var(--line-strong);min-height:240px;display:flex;flex-direction:column}
+  .caps-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:2px solid var(--line-strong);background:var(--bg)}
+  .cap{
+    position:relative;overflow:hidden;
+    padding:48px 40px 44px;
+    border-right:2px solid var(--line-strong);
+    min-height:280px;display:flex;flex-direction:column;
+    background:var(--bg);
+    transition:background .35s ease;
+  }
   .cap:last-child{border-right:none}
-  .cap .idx{font-family:'Geist Mono',monospace;font-size:11px;color:var(--fg-faint);letter-spacing:0.1em;margin-bottom:32px}
-  .cap h4{margin-bottom:14px}
-  .cap p{font-size:14px;line-height:1.6;flex:1}
+  .cap::before{
+    content:'';position:absolute;top:0;left:0;width:0;height:2px;
+    background:var(--accent);transition:width .5s ease;
+  }
+  .cap::after{
+    content:attr(data-num);
+    position:absolute;top:14px;right:18px;
+    font-family:'Geist Mono',monospace;font-weight:700;
+    font-size:clamp(72px,7vw,108px);line-height:1;
+    color:transparent;-webkit-text-stroke:1.5px rgba(245,245,245,0.08);
+    letter-spacing:-0.04em;pointer-events:none;
+    transition:color .5s ease,-webkit-text-stroke-color .5s ease;
+  }
+  .cap:hover{background:rgba(230,51,41,0.025)}
+  .cap:hover::before{width:100%}
+  .cap:hover::after{
+    color:rgba(230,51,41,0.12);
+    -webkit-text-stroke-color:rgba(230,51,41,0.45);
+  }
+  .cap .idx{
+    position:relative;z-index:1;
+    display:flex;align-items:center;gap:14px;
+    font-family:'Geist Mono',monospace;font-size:11px;
+    color:var(--fg-faint);letter-spacing:0.2em;
+    margin-bottom:40px;
+    transition:color .35s ease;
+  }
+  .cap .idx::before{
+    content:'';width:28px;height:1px;background:var(--line-strong);
+    transition:background .35s ease,width .35s ease;
+  }
+  .cap:hover .idx{color:var(--accent)}
+  .cap:hover .idx::before{background:var(--accent);width:42px}
+  .cap h4{
+    position:relative;z-index:1;
+    font-size:clamp(26px,2.4vw,34px);
+    font-weight:700;letter-spacing:-0.025em;line-height:1.05;
+    margin-bottom:18px;color:var(--fg);
+  }
+  .cap p{
+    position:relative;z-index:1;
+    font-size:14px;line-height:1.65;flex:1;
+  }
 
 
   /* ============ ABOUT ============ */
   .about{padding:110px 48px 70px;background:var(--bg-elev);border-top:2px solid var(--line-strong);border-bottom:2px solid var(--line-strong)}
   .about-grid{display:grid;grid-template-columns:1fr 1.4fr;gap:80px;align-items:start}
   .about-portrait{aspect-ratio:4/5;background:var(--bg);border:2px solid var(--line-strong);position:relative;overflow:hidden}
-  .about-portrait .ph{
-    position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
-    font-family:'Geist Mono',monospace;font-size:11px;color:var(--fg-faint);letter-spacing:0.1em;
-    background:repeating-linear-gradient(45deg,transparent 0 14px,rgba(255,255,255,0.02) 14px 15px);
+  .about-portrait img{
+    position:absolute;inset:0;width:100%;height:100%;
+    object-fit:cover;object-position:50% 0%;
+    filter:grayscale(1) contrast(1.05);
   }
   .about-portrait .tag{
     position:absolute;bottom:16px;left:16px;font-family:'Geist Mono',monospace;font-size:11px;color:var(--fg-dim);
@@ -366,7 +494,19 @@
     margin-top:40px;padding-top:40px;border-top:2px solid var(--line-strong);
     display:grid;grid-template-columns:repeat(2,1fr);gap:24px;max-width:580px;
   }
-  .about-meta .m .k{font-family:'Geist Mono',monospace;font-size:11px;color:var(--fg-faint);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:6px}
+  .about-meta .m{position:relative;padding-bottom:8px}
+  .about-meta .m::after{
+    content:'';position:absolute;left:0;bottom:0;
+    width:0;height:1px;background:var(--accent);
+    transition:width .45s ease;
+  }
+  .about-meta .m:hover::after{width:32px}
+  .about-meta .m .k{
+    font-family:'Geist Mono',monospace;font-size:11px;color:var(--fg-faint);
+    letter-spacing:0.08em;text-transform:uppercase;margin-bottom:6px;
+    transition:color .35s ease;
+  }
+  .about-meta .m:hover .k{color:var(--accent)}
   .about-meta .m .v{font-size:15px;color:var(--fg)}
 
   /* ============ TOOLS / SKILLS (inside About) ============ */
@@ -415,12 +555,12 @@
   .contact-links a{
     display:flex;justify-content:space-between;align-items:center;
     padding:20px 22px;
-    background:var(--bg-elev);border:2px solid var(--line-strong);
+    background:var(--bg);border:2px solid var(--line-strong);
     font-size:18px;color:var(--fg);
     transition:background .25s,border-color .25s,transform .25s;
   }
   .contact-links a:hover{
-    background:#1a1a1a;border-color:#2e2e2e;transform:translateX(4px);
+    background:var(--bg);border-color:rgba(230,51,41,0.45);transform:translateX(4px);
   }
   .contact-links a .k{
     display:flex;align-items:center;gap:14px;
@@ -431,7 +571,7 @@
     flex-shrink:0;color:var(--fg-dim);
     transition:color .2s;
   }
-  .contact-links a:hover .ci{color:var(--fg)}
+  .contact-links a:hover .ci{color:var(--accent)}
   .contact-links a .ci svg{width:20px;height:20px}
   .contact-links a .v{font-size:16px;display:flex;align-items:center;gap:10px}
   .contact-links a .v .arrow{transition:transform .3s;color:var(--fg-dim)}
@@ -543,6 +683,7 @@
   <div class="ghost g4"></div>
   <div class="ghost g5"></div>
   <div class="ghost g6"></div>
+  <div class="grid-pulses" id="gridPulses"></div>
 </div>
 
 <!-- NAV -->
@@ -570,7 +711,7 @@
           <span class="sep"></span>
           <span class="mono">INDEX / 00</span>
           <span class="sep"></span>
-          <span>Currently building · Anvil-III</span>
+          <span>Working on Anvil-III</span>
         </div>
 
         <h1 class="hero-title">
@@ -587,19 +728,6 @@
         </div>
       </div>
 
-      <div class="hero-anim-wrap" aria-hidden="true">
-        <!-- WebM (VP9 + alpha) for Chromium/Firefox; WebP fallback for Safari -->
-        <video class="hero-anim" autoplay muted loop playsinline preload="auto"
-               poster="/montyforge/anvil3-r1.png"
-               onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
-          <source src="/montyforge/fusion-cycle-hq.webm" type="video/webm">
-          <source src="/montyforge/fusion-cycle-v11.mp4"        type="video/mp4">
-        </video>
-        <img class="hero-anim hero-anim-fallback"
-             src="/montyforge/fusion-cycle-v11-alpha.webp"
-             alt="Anvil-III modular release system — open/close cycle"
-             style="display:none" loading="eager" decoding="async">
-      </div>
     </div>
 
   </div>
@@ -610,8 +738,8 @@
   <div class="container hero-stats-inner">
     <div class="stat"><div class="k">Discipline</div><div class="v">Autonomous systems</div></div>
     <div class="stat"><div class="k">Based</div><div class="v">Stavanger, NO</div></div>
-    <div class="stat"><div class="k">Working with</div><div class="v">SDC · AEROMEDIA</div></div>
-    <div class="stat"><div class="k">Projects</div><div class="v">02 systems</div></div>
+    <div class="stat"><div class="k">Working with</div><div class="v">AEROMEDIA</div></div>
+    <div class="stat"><div class="k">Projects</div><div class="v">01 system</div></div>
   </div>
 </section>
 
@@ -631,46 +759,34 @@
     <div class="label">Featured work</div>
     <div class="work-head">
       <h2>A portfolio of <br>fielded systems.</h2>
-      <div class="meta">02 projects · 2023 — 2026<br>Stavanger · Málaga · North Sea</div>
+      <div class="meta">01 project · 2023 — 2026<br>Málaga · Costa del Sol</div>
     </div>
 
     <div class="work-grid">
 
-      <!-- Project 01 — Anvil-III -->
-      <a class="proj reveal" href="anvil3.html">
-        <div class="proj-media" data-slides>
-          <span class="proj-num-big">01</span>
-          <img class="card-slide active" src="assets/anvil3-r2.png?v=3" alt="Anvil-III system render">
-        </div>
-        <div class="proj-info">
-          <div class="proj-info-head">
-            <span class="proj-num">PROJECT 01 / 02</span>
-            <span class="div"></span>
-            <span class="badge">IN DEVELOPMENT</span>
-          </div>
-          <div class="cat">Autonomous Drone Systems · 2026</div>
-          <h3 class="title">Modular Release System — Anvil-III</h3>
-          <p class="desc">Adaptive payload release mechanism for drones. <strong>5&nbsp;kg capacity</strong>, any payload shape, <strong>&lt;100&nbsp;ms</strong> deployment. Fielded with Scandinavian Drone Company for offshore resupply in the North Sea.</p>
-          <div class="proj-stats">
-            <div class="ps"><span class="pk">Payload</span><span class="pv">5 kg</span></div>
-            <div class="ps"><span class="pk">Deploy</span><span class="pv">&lt;100 ms</span></div>
-            <div class="ps"><span class="pk">Partner</span><span class="pv">SDC · North Sea</span></div>
-          </div>
-          <span class="readmore">View project <span class="arr">→</span></span>
-        </div>
-      </a>
-
-      <!-- Project 02 — Life Vest -->
+      <!-- Project 01 — Life Vest -->
       <a class="proj reveal" href="lifevest.html">
-        <div class="proj-media">
-          <span class="proj-num-big">02</span>
-          <video class="card-slide active" autoplay muted loop playsinline style="object-fit:contain">
-            <source src="assets/chaleco-video.mp4" type="video/mp4">
-          </video>
+        <div class="proj-media-wrap">
+          <div class="proj-media-label">
+            <span>FIELD FOOTAGE · CH 01</span>
+            <span class="sep"></span>
+            <span class="muted">REC · LOOP</span>
+            <span class="ts">CDS-2025</span>
+          </div>
+          <div class="proj-media">
+            <video class="card-slide active" autoplay muted loop playsinline style="object-fit:contain">
+              <source src="assets/chaleco-video.mp4" type="video/mp4">
+            </video>
+          </div>
+          <div class="proj-media-caption">
+            <span>Costa del Sol · Fuengirola &amp; Mijas</span>
+            <span class="track"><span class="track-fill"></span></span>
+            <span class="ts">DEMO · 00:08 / LOOP</span>
+          </div>
         </div>
         <div class="proj-info">
           <div class="proj-info-head">
-            <span class="proj-num">PROJECT 02 / 02</span>
+            <span class="proj-num">PROJECT 01 / 01</span>
             <span class="div"></span>
             <span class="badge on-use">ON USE</span>
           </div>
@@ -682,7 +798,7 @@
             <div class="ps"><span class="pk">Airborne</span><span class="pv">10 s</span></div>
             <div class="ps"><span class="pk">Coverage</span><span class="pv">Costa del Sol</span></div>
           </div>
-          <span class="readmore">Read case study <span class="arr">→</span></span>
+          <span class="readmore">See the project <span class="arr">→</span></span>
         </div>
       </a>
 
@@ -706,18 +822,18 @@
       <h2>Full-stack autonomy, <br>hardware to flight code.</h2>
     </div>
     <div class="caps-grid">
-      <div class="cap">
-        <div class="idx">01 — DESIGN</div>
+      <div class="cap" data-num="01">
+        <div class="idx">DESIGN</div>
         <h4>Mechatronic design</h4>
         <p>CAD, FEA, DFM. Payload mechanisms, frames, actuation &mdash; designed to be manufacturable, not just printable.</p>
       </div>
-      <div class="cap">
-        <div class="idx">02 — CONTROL</div>
+      <div class="cap" data-num="02">
+        <div class="idx">CONTROL</div>
         <h4>Flight &amp; motion control</h4>
         <p>PID tuning, state estimation, sensor fusion. ROS &amp; PX4 stacks. Real-time guarantees on embedded targets.</p>
       </div>
-      <div class="cap">
-        <div class="idx">03 — AUTONOMY</div>
+      <div class="cap" data-num="03">
+        <div class="idx">AUTONOMY</div>
         <h4>Perception &amp; planning</h4>
         <p>LiDAR/EO fusion, A* &amp; RRT planners, obstacle avoidance. On-device inference &mdash; no cloud round-trip.</p>
       </div>
@@ -730,20 +846,20 @@
   <div class="container">
     <div class="about-grid">
       <div class="about-portrait">
-        <div class="ph">[ portrait · antonio montero ]</div>
+        <img src="assets/antonio-portrait.png" alt="Antonio Montero" loading="lazy">
         <div class="tag">STAVANGER · 58.97°N</div>
       </div>
       <div class="about-content">
         <div class="label">About</div>
         <h2>Antonio Montero.</h2>
         <p><strong>Spanish robotics engineer, professional drone pilot.</strong> Moved to Norway to work on autonomous systems in one of the most demanding operating environments in the world.</p>
-        <p>Degree in Robotics and Control Systems. University was the theory; the real education came from personal projects, failed prototypes, and field iterations. Currently developing systems with Scandinavian Drone Company and deploying applications for offshore operations in the North Sea.</p>
+        <p>Degree in Robotics and Control Systems. University was the theory; the real education came from personal projects, failed prototypes, and field iterations.</p>
         <p>I don't sell vision decks. I ship systems &mdash; and I want to work with people who are building real things at the edge of what's possible.</p>
 
         <div class="about-meta">
           <div class="m"><div class="k">Background</div><div class="v">Robotics &amp; control</div></div>
           <div class="m"><div class="k">Now</div><div class="v">Stavanger, Norway</div></div>
-          <div class="m"><div class="k">Partners</div><div class="v">SDC · AEROMEDIA</div></div>
+          <div class="m"><div class="k">Partners</div><div class="v">AEROMEDIA</div></div>
           <div class="m"><div class="k">Open to</div><div class="v">Collab · investment</div></div>
         </div>
 
@@ -808,7 +924,7 @@
     </div>
     <p>Autonomous systems engineering practice. Drones, robotics, control systems. Real problems &mdash; real solutions.</p>
   </div>
-  <div><h6>Work</h6><a href="#portfolio">Portfolio</a><a href="anvil3.html">Anvil-III</a><a href="lifevest.html">Life Vest System</a></div>
+  <div><h6>Work</h6><a href="#portfolio">Portfolio</a><a href="lifevest.html">Life Vest System</a></div>
   <div><h6>About</h6><a href="#about">Antonio Montero</a><a href="#contact">Get in touch</a><a href="mailto:contact@montyforge.com">Email direct</a></div>
   <div><h6>Connect</h6><a href="mailto:contact@montyforge.com">contact@montyforge.com</a><a href="https://instagram.com/montyforge" target="_blank" rel="noopener">@montyforge</a><a href="https://linkedin.com/in/antonio-montero" target="_blank" rel="noopener">LinkedIn</a></div>
   <div class="foot-bottom">
@@ -818,6 +934,40 @@
 </footer>
 
 <script>
+  // Random grid-cell pulses — small red glows that fade in/out at random grid intersections.
+  (function gridPulses(){
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const root = document.getElementById('gridPulses');
+    if (!root) return;
+    const CELL = 80;
+    const MAX = 7;
+    function randomCellPos(){
+      const w = root.clientWidth, h = root.clientHeight;
+      const cols = Math.max(1, Math.floor(w / CELL));
+      const rows = Math.max(1, Math.floor(h / CELL));
+      const c = Math.floor(Math.random() * cols);
+      const r = Math.floor(Math.random() * rows);
+      return [c * CELL, r * CELL];
+    }
+    function spawn(){
+      if (root.childElementCount >= MAX) return;
+      const p = document.createElement('div');
+      p.className = 'grid-pulse';
+      const [x, y] = randomCellPos();
+      p.style.left = x + 'px';
+      p.style.top = y + 'px';
+      root.appendChild(p);
+      requestAnimationFrame(() => p.classList.add('on'));
+      const lifeMs = 1800 + Math.random() * 2200;
+      setTimeout(() => {
+        p.classList.remove('on');
+        setTimeout(() => p.remove(), 1500);
+      }, lifeMs);
+    }
+    for (let i = 0; i < 4; i++) setTimeout(spawn, i * 500);
+    setInterval(() => { if (Math.random() > 0.15) spawn(); }, 700);
+  })();
+
   // Scroll reveal
   const io = new IntersectionObserver((entries) => {
     entries.forEach((e) => {
