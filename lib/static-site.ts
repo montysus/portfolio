@@ -32,6 +32,8 @@ function rewriteStaticPaths(value: string) {
     .replaceAll("href='index.html#", "href='/#")
     .replaceAll('href="index.html"', 'href="/"')
     .replaceAll("href='index.html'", "href='/'")
+    .replaceAll('href="anvil3.html"', 'href="/anvil3"')
+    .replaceAll("href='anvil3.html'", "href='/anvil3'")
     .replaceAll('href="lifevest.html"', 'href="/lifevest"')
     .replaceAll("href='lifevest.html'", "href='/lifevest'")
     .replaceAll('src="assets/', 'src="/montyforge/')

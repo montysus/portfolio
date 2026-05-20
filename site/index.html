@@ -305,9 +305,9 @@
     border:2px solid var(--line-strong);
     transition:border-color .4s ease,box-shadow .4s ease,transform .5s ease;
   }
-  /* Lifevest card hosts a 16:9 video — match aspect so object-fit:contain
-     does not letterbox. */
-  .proj:nth-child(1) .proj-media{aspect-ratio:16/9}
+  /* Cards that host a 16:9 video override the default 4:3 aspect so
+     object-fit:contain does not letterbox. */
+  .proj.proj-video .proj-media{aspect-ratio:16/9}
   .proj:hover .proj-media{
     border-color:rgba(245,245,245,0.3);
     box-shadow:0 30px 90px rgba(0,0,0,0.75),0 0 60px rgba(230,51,41,0.08);
@@ -315,7 +315,6 @@
   }
   .proj-media::before{
     content:'';position:absolute;inset:0;z-index:1;pointer-events:none;
-    background:radial-gradient(ellipse 70% 70% at 50% 50%,transparent 50%,rgba(0,0,0,0.4) 100%);
   }
   .proj-media::after{
     content:'OPEN PROJECT  \2192';
@@ -759,13 +758,49 @@
     <div class="label">Featured work</div>
     <div class="work-head">
       <h2>A portfolio of <br>fielded systems.</h2>
-      <div class="meta">01 project · 2023 — 2026<br>Málaga · Costa del Sol</div>
+      <div class="meta">02 projects · 2023 — 2026<br>Stavanger · Costa del Sol</div>
     </div>
 
     <div class="work-grid">
 
-      <!-- Project 01 — Life Vest -->
-      <a class="proj reveal" href="lifevest.html">
+      <!-- Project 01 — Anvil-III -->
+      <a class="proj reveal" href="anvil3.html">
+        <div class="proj-media-wrap">
+          <div class="proj-media-label">
+            <span>CAD RENDER · CH 02</span>
+            <span class="sep"></span>
+            <span class="muted">MODEL · STATIC</span>
+            <span class="ts">MF-2026</span>
+          </div>
+          <div class="proj-media">
+            <img class="card-slide active" src="assets/anvil3-r2.png?v=3" alt="Anvil-III system render" style="object-fit:cover">
+          </div>
+          <div class="proj-media-caption">
+            <span>Stavanger · North Sea operations</span>
+            <span class="track"><span class="track-fill"></span></span>
+            <span class="ts">RENDER · ANVIL-III</span>
+          </div>
+        </div>
+        <div class="proj-info">
+          <div class="proj-info-head">
+            <span class="proj-num">PROJECT 01 / 02</span>
+            <span class="div"></span>
+            <span class="badge">IN DEVELOPMENT</span>
+          </div>
+          <div class="cat">Autonomous Drone Systems · 2026</div>
+          <h3 class="title">Modular Release System — Anvil-III</h3>
+          <p class="desc">Adaptive payload release mechanism for drones. <strong>5&nbsp;kg capacity</strong>, any payload shape, <strong>&lt;100&nbsp;ms</strong> deployment. Fielded with Scandinavian Drone Company for offshore resupply in the North Sea.</p>
+          <div class="proj-stats">
+            <div class="ps"><span class="pk">Payload</span><span class="pv">5 kg</span></div>
+            <div class="ps"><span class="pk">Deploy</span><span class="pv">&lt;100 ms</span></div>
+            <div class="ps"><span class="pk">Partner</span><span class="pv">SDC · North Sea</span></div>
+          </div>
+          <span class="readmore">View project <span class="arr">→</span></span>
+        </div>
+      </a>
+
+      <!-- Project 02 — Life Vest -->
+      <a class="proj proj-video reveal" href="lifevest.html">
         <div class="proj-media-wrap">
           <div class="proj-media-label">
             <span>FIELD FOOTAGE · CH 01</span>
@@ -786,7 +821,7 @@
         </div>
         <div class="proj-info">
           <div class="proj-info-head">
-            <span class="proj-num">PROJECT 01 / 01</span>
+            <span class="proj-num">PROJECT 02 / 02</span>
             <span class="div"></span>
             <span class="badge on-use">ON USE</span>
           </div>
@@ -924,7 +959,7 @@
     </div>
     <p>Autonomous systems engineering practice. Drones, robotics, control systems. Real problems &mdash; real solutions.</p>
   </div>
-  <div><h6>Work</h6><a href="#portfolio">Portfolio</a><a href="lifevest.html">Life Vest System</a></div>
+  <div><h6>Work</h6><a href="#portfolio">Portfolio</a><a href="anvil3.html">Anvil-III</a><a href="lifevest.html">Life Vest System</a></div>
   <div><h6>About</h6><a href="#about">Antonio Montero</a><a href="#contact">Get in touch</a><a href="mailto:contact@montyforge.com">Email direct</a></div>
   <div><h6>Connect</h6><a href="mailto:contact@montyforge.com">contact@montyforge.com</a><a href="https://instagram.com/montyforge" target="_blank" rel="noopener">@montyforge</a><a href="https://linkedin.com/in/antonio-montero" target="_blank" rel="noopener">LinkedIn</a></div>
   <div class="foot-bottom">
