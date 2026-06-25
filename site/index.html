@@ -88,12 +88,12 @@
   }
   .label::before{
     content:'';width:8px;height:8px;background:var(--fg);flex-shrink:0;
-    box-shadow:0 0 6px rgba(245,245,245,0.6),0 0 14px rgba(245,245,245,0.25);
+    box-shadow:none;
     transition:background .35s ease,box-shadow .35s ease;
   }
   section:hover .label::before{
     background:var(--accent);
-    box-shadow:0 0 10px var(--accent),0 0 24px rgba(230,51,41,0.7),0 0 40px rgba(230,51,41,0.35);
+    box-shadow:none;
   }
 
   h1,h2,h3,h4,h5{font-family:'Geist',sans-serif;letter-spacing:-0.025em;margin:0;font-weight:600;text-wrap:balance}
@@ -116,7 +116,7 @@
   }
   .hero-anim{
     width:100%;max-width:1000px;display:block;height:auto;margin:0;
-    filter:drop-shadow(0 22px 50px rgba(0,0,0,0.6)) drop-shadow(0 0 80px rgba(230,51,41,0.08));
+    filter:none;
   }
   .hero-meta{
     display:flex;align-items:center;gap:14px;flex-wrap:nowrap;white-space:nowrap;
@@ -124,14 +124,14 @@
   }
   .hero-meta .live{
     width:9px;height:9px;background:var(--accent);border-radius:50%;flex-shrink:0;
-    box-shadow:0 0 10px var(--accent),0 0 22px rgba(230,51,41,0.6);
+    box-shadow:none;
     animation:hero-live-blink 1.4s steps(1,end) infinite;
   }
   .hero-meta .sep{width:24px;height:1px;background:var(--line-strong);flex-shrink:0}
   @keyframes hero-live-blink{
-    0%,55%{opacity:1;background:var(--accent);box-shadow:0 0 10px var(--accent),0 0 24px rgba(230,51,41,0.7)}
+    0%,55%{opacity:1;background:var(--accent);box-shadow:none}
     60%,75%{opacity:0.15;background:rgba(230,51,41,0.3);box-shadow:none}
-    80%,100%{opacity:1;background:var(--accent);box-shadow:0 0 10px var(--accent),0 0 24px rgba(230,51,41,0.7)}
+    80%,100%{opacity:1;background:var(--accent);box-shadow:none}
   }
   @media(max-width:760px){
     .hero-meta{flex-wrap:wrap;white-space:normal}
@@ -153,7 +153,7 @@
   .hero-render{
     width:100%;max-width:600px;display:block;
     mix-blend-mode:screen;
-    filter:drop-shadow(0 24px 80px rgba(230,51,41,0.18)) drop-shadow(0 0 140px rgba(230,51,41,0.08));
+    filter:none;
     animation:render-float 5s ease-in-out infinite;
   }
   @keyframes render-float{
@@ -197,7 +197,7 @@
   .hero-stats{
     position:relative;
     padding:40px 48px;
-    border-top:2px solid var(--line-strong);border-bottom:2px solid var(--line-strong);
+    border-top:1px solid var(--line-strong);border-bottom:1px solid var(--line-strong);
     background:var(--bg);
   }
   .hero-stats-inner{
@@ -226,15 +226,15 @@
   /* ============ FEATURED WORK ============ */
   #portfolio{
     padding:60px 0 100px;
-    border-top:2px solid var(--line-strong);
-    border-bottom:2px solid var(--line-strong);
-    background:linear-gradient(180deg,var(--bg) 0%,#080808 100%);
+    border-top:1px solid var(--line-strong);
+    border-bottom:1px solid var(--line-strong);
+    background:#080808;
   }
   #portfolio > .container{padding:0 48px}
   .work-head{
     display:flex;justify-content:space-between;align-items:flex-end;
     margin-bottom:64px;flex-wrap:wrap;gap:32px;
-    padding-bottom:32px;border-bottom:2px solid var(--line-strong);
+    padding-bottom:32px;border-bottom:1px solid var(--line-strong);
   }
   .work-head h2{
     font-size:clamp(48px,7vw,96px);line-height:0.98;letter-spacing:-0.04em;
@@ -266,7 +266,7 @@
   }
   .proj-media-label .dot{
     width:7px;height:7px;background:var(--accent);
-    box-shadow:0 0 6px var(--accent),0 0 14px rgba(230,51,41,0.55);
+    box-shadow:none;
     flex-shrink:0;animation:proj-live-pulse 1.6s ease-in-out infinite;
   }
   .proj-media-label .sep,.proj-media-caption .sep{
@@ -286,14 +286,14 @@
   .proj-media-caption .track-fill{
     position:absolute;left:-30%;top:0;bottom:0;width:30%;
     background:linear-gradient(90deg,transparent 0%,rgba(245,245,245,0.85) 50%,transparent 100%);
-    box-shadow:0 0 6px rgba(245,245,245,0.4);
+    box-shadow:none;
     animation:proj-track 4s linear infinite;
   }
   @keyframes proj-track{0%{left:-30%}100%{left:100%}}
   .proj-media{
     position:relative;aspect-ratio:4/3;overflow:hidden;
-    background:linear-gradient(135deg,#181818 0%,#0d0d0d 100%);
-    border:2px solid var(--line-strong);
+    background:#151515;
+    border:1px solid var(--line-strong);
     transition:border-color .4s ease,box-shadow .4s ease,transform .5s ease;
   }
   /* Cards that host a 16:9 video override the default 4:3 aspect so
@@ -301,7 +301,7 @@
   .proj.proj-video .proj-media{aspect-ratio:16/9}
   .proj:hover .proj-media{
     border-color:rgba(245,245,245,0.3);
-    box-shadow:0 30px 90px rgba(0,0,0,0.75),0 0 60px rgba(230,51,41,0.08);
+    box-shadow:none;
     transform:translateY(-4px);
   }
   .proj-media::before{
@@ -357,14 +357,14 @@
     background:rgba(230,51,41,0.08);letter-spacing:0.08em;
     color:var(--accent);width:fit-content;
   }
-  .proj .badge::before{content:'';width:6px;height:6px;background:var(--accent);border-radius:50%;box-shadow:0 0 8px var(--accent);animation:proj-live-pulse 2s ease-in-out infinite}
+  .proj .badge::before{content:'';width:6px;height:6px;background:var(--accent);border-radius:50%;box-shadow:none;animation:proj-live-pulse 2s ease-in-out infinite}
   .proj .badge.on-use{color:var(--accent);border-color:rgba(230,51,41,0.55);background:rgba(230,51,41,0.1)}
-  .proj .badge.on-use::before{background:var(--accent);box-shadow:0 0 8px var(--accent),0 0 16px rgba(230,51,41,0.55);animation:proj-live-pulse 1.6s ease-in-out infinite}
+  .proj .badge.on-use::before{background:var(--accent);box-shadow:none;animation:proj-live-pulse 1.6s ease-in-out infinite}
   @keyframes proj-live-pulse{0%,100%{opacity:1}50%{opacity:0.4}}
   .proj-stats{
     display:grid;grid-template-columns:repeat(3,auto);gap:32px;
     margin-top:14px;padding:18px 0;
-    border-top:2px solid var(--line-strong);border-bottom:2px solid var(--line-strong);
+    border-top:1px solid var(--line-strong);border-bottom:1px solid var(--line-strong);
   }
   .proj-stats .ps{
     position:relative;display:flex;flex-direction:column;gap:4px;
@@ -403,17 +403,17 @@
   }
 
   /* ============ MANIFESTO ============ */
-  .manifesto{padding:120px 48px;border-top:2px solid var(--line-strong);border-bottom:2px solid var(--line-strong)}
+  .manifesto{padding:120px 48px;border-top:1px solid var(--line-strong);border-bottom:1px solid var(--line-strong)}
   .manifesto h2{font-size:clamp(32px,4.5vw,56px);line-height:1.15;font-weight:400;letter-spacing:-0.02em;color:var(--fg-dim);max-width:1100px}
   .manifesto h2 strong{color:var(--fg);font-weight:500}
 
   /* ============ CAPABILITIES ============ */
   .caps{padding:90px 48px}
-  .caps-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:2px solid var(--line-strong);background:var(--bg)}
+  .caps-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:1px solid var(--line-strong);background:var(--bg)}
   .cap{
     position:relative;overflow:hidden;
     padding:48px 40px 44px;
-    border-right:2px solid var(--line-strong);
+    border-right:1px solid var(--line-strong);
     min-height:280px;display:flex;flex-direction:column;
     background:var(--bg);
     transition:background .35s ease;
@@ -465,9 +465,9 @@
 
 
   /* ============ ABOUT ============ */
-  .about{padding:110px 48px 70px;background:var(--bg-elev);border-top:2px solid var(--line-strong);border-bottom:2px solid var(--line-strong)}
+  .about{padding:110px 48px 70px;background:var(--bg-elev);border-top:1px solid var(--line-strong);border-bottom:1px solid var(--line-strong)}
   .about-grid{display:grid;grid-template-columns:1fr 1.4fr;gap:80px;align-items:start}
-  .about-portrait{aspect-ratio:4/5;background:var(--bg);border:2px solid var(--line-strong);position:relative;overflow:hidden}
+  .about-portrait{aspect-ratio:4/5;background:var(--bg);border:1px solid var(--line-strong);position:relative;overflow:hidden}
   .about-portrait img{
     position:absolute;inset:0;width:100%;height:100%;
     object-fit:cover;object-position:50% 0%;
@@ -481,7 +481,7 @@
   .about-content p{font-size:17px;line-height:1.65;color:var(--fg-dim);margin-bottom:20px;max-width:580px}
   .about-content p strong{color:var(--fg);font-weight:500}
   .about-meta{
-    margin-top:40px;padding-top:40px;border-top:2px solid var(--line-strong);
+    margin-top:40px;padding-top:40px;border-top:1px solid var(--line-strong);
     display:grid;grid-template-columns:repeat(2,1fr);gap:24px;max-width:580px;
   }
   .about-meta .m{position:relative;padding-bottom:8px}
@@ -500,7 +500,7 @@
   .about-meta .m .v{font-size:15px;color:var(--fg)}
 
   /* ============ TOOLS / SKILLS (inside About) ============ */
-  .about-tools{margin-top:56px;padding-top:48px;border-top:2px solid var(--line-strong);max-width:820px}
+  .about-tools{margin-top:56px;padding-top:48px;border-top:1px solid var(--line-strong);max-width:820px}
   .about-tools .tl{
     font-family:'Geist Mono',monospace;font-size:11px;color:var(--fg-faint);
     letter-spacing:0.12em;text-transform:uppercase;margin-bottom:32px;
@@ -508,12 +508,12 @@
   .tools-grid{
     display:grid;
     grid-template-columns:repeat(5,1fr);
-    gap:0;border:2px solid var(--line-strong);
+    gap:0;border:1px solid var(--line-strong);
   }
   .tool-item{
     display:flex;flex-direction:column;align-items:center;justify-content:center;
-    gap:10px;padding:20px 12px;border-right:2px solid var(--line-strong);
-    border-bottom:2px solid var(--line-strong);
+    gap:10px;padding:20px 12px;border-right:1px solid var(--line-strong);
+    border-bottom:1px solid var(--line-strong);
     text-decoration:none;color:var(--fg-faint);
     transition:background .2s,color .2s;
     min-height:90px;
@@ -545,7 +545,7 @@
   .contact-links a{
     display:flex;justify-content:space-between;align-items:center;
     padding:20px 22px;
-    background:var(--bg);border:2px solid var(--line-strong);
+    background:var(--bg);border:1px solid var(--line-strong);
     font-size:18px;color:var(--fg);
     transition:background .25s,border-color .25s,transform .25s;
   }
@@ -569,7 +569,7 @@
 
   /* ============ FOOTER ============ */
   footer{
-    padding:60px 48px 40px;border-top:2px solid var(--line-strong);
+    padding:60px 48px 40px;border-top:1px solid var(--line-strong);
     display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;background:var(--bg);
   }
   footer h6{font-family:'Geist Mono',monospace;font-size:11px;color:var(--fg-faint);letter-spacing:0.1em;text-transform:uppercase;margin:0 0 16px;font-weight:500}
@@ -602,7 +602,7 @@
     .proj-info{padding:18px 18px 22px}
     .work-grid{grid-template-columns:1fr;gap:28px}
     .caps-grid{grid-template-columns:1fr}
-    .cap{border-right:none;border-bottom:2px solid var(--line-strong)}
+    .cap{border-right:none;border-bottom:1px solid var(--line-strong)}
     .cap:last-child{border-bottom:none}
     .about-grid{grid-template-columns:1fr;gap:40px}
     .contact-box{grid-template-columns:1fr;gap:40px}
@@ -610,7 +610,7 @@
     .foot-bottom{flex-direction:column;gap:12px}
     .brand .wordmark{display:none}
     .tools-grid{grid-template-columns:repeat(3,1fr)}
-    .tool-item:nth-child(5n){border-right:2px solid var(--line-strong)}
+    .tool-item:nth-child(5n){border-right:1px solid var(--line-strong)}
     .tool-item:nth-child(3n){border-right:none}
   }
 
@@ -692,8 +692,6 @@
         <div class="hero-meta">
           <span class="live"></span>
           <span>Stavanger · Norway</span>
-          <span class="sep"></span>
-          <span class="mono">INDEX / 00</span>
         </div>
 
         <h1 class="hero-title">
@@ -759,27 +757,14 @@
       <!-- Project 01 — Life Vest -->
       <a class="proj proj-video reveal" href="lifevest.html">
         <div class="proj-media-wrap">
-          <div class="proj-media-label">
-            <span>FIELD FOOTAGE · CH 01</span>
-            <span class="sep"></span>
-            <span class="muted">REC · LOOP</span>
-            <span class="ts">CDS 2025</span>
-          </div>
           <div class="proj-media">
             <video class="card-slide active" autoplay muted loop playsinline style="object-fit:contain">
               <source src="assets/chaleco-video.mp4" type="video/mp4">
             </video>
           </div>
-          <div class="proj-media-caption">
-            <span>Costa del Sol · Fuengirola &amp; Mijas</span>
-            <span class="track"><span class="track-fill"></span></span>
-            <span class="ts">DEMO · 00:08 / LOOP</span>
-          </div>
         </div>
         <div class="proj-info">
           <div class="proj-info-head">
-            <span class="proj-num">PROJECT 01 / 01</span>
-            <span class="div"></span>
             <span class="badge on-use">ON USE</span>
           </div>
           <div class="cat">Maritime Rescue Systems · 2023 → present</div>
