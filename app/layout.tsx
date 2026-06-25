@@ -20,7 +20,7 @@ const geistMono = localFont({
 export const metadata: Metadata = {
   metadataBase: new URL("https://monty.bio"),
   title: {
-    default: "Montyforge | Autonomous Systems Engineering",
+    default: "Montyforge",
     template: "%s | Montyforge",
   },
   description:
