@@ -40,13 +40,10 @@
     -webkit-mask-image:radial-gradient(ellipse 80% 70% at 50% 40%, black 40%, transparent 95%);
   }
   /* Soft, small red ghosts — gentle movement, low opacity */
-  .site-bg .ghost{position:absolute;border-radius:50%;filter:blur(100px);will-change:transform,opacity;mix-blend-mode:screen;pointer-events:none}
+  .site-bg .ghost{position:absolute;border-radius:50%;filter:blur(75px);will-change:transform,opacity;mix-blend-mode:screen;pointer-events:none}
   .site-bg .ghost.g1{width:32vw;height:32vw;top:8%;left:12%;background:radial-gradient(circle,rgba(230,51,41,0.16),transparent 65%);animation:gd-1 22s ease-in-out infinite,gp-1 9s ease-in-out infinite}
   .site-bg .ghost.g2{width:28vw;height:28vw;top:55%;right:10%;background:radial-gradient(circle,rgba(255,80,55,0.14),transparent 65%);animation:gd-2 26s ease-in-out infinite,gp-2 11s ease-in-out infinite}
   .site-bg .ghost.g3{width:22vw;height:22vw;top:25%;right:25%;background:radial-gradient(circle,rgba(230,51,41,0.12),transparent 65%);animation:gd-3 18s ease-in-out infinite,gp-3 7s ease-in-out infinite}
-  .site-bg .ghost.g4{width:24vw;height:24vw;bottom:8%;left:25%;background:radial-gradient(circle,rgba(255,90,60,0.10),transparent 65%);animation:gd-4 28s ease-in-out infinite,gp-4 13s ease-in-out infinite}
-  .site-bg .ghost.g5{width:18vw;height:18vw;top:40%;left:45%;background:radial-gradient(circle,rgba(230,51,41,0.09),transparent 65%);animation:gd-5 20s ease-in-out infinite,gp-5 8s ease-in-out infinite}
-  .site-bg .ghost.g6{width:20vw;height:20vw;top:70%;left:55%;background:radial-gradient(circle,rgba(255,70,50,0.08),transparent 65%);animation:gd-6 24s ease-in-out infinite,gp-6 10s ease-in-out infinite}
   @keyframes gd-1{0%{transform:translate(0,0)}33%{transform:translate(40%,30%)}66%{transform:translate(15%,55%)}100%{transform:translate(0,0)}}
   @keyframes gd-2{0%{transform:translate(0,0)}33%{transform:translate(-35%,20%)}66%{transform:translate(-50%,-25%)}100%{transform:translate(0,0)}}
   @keyframes gd-3{0%{transform:translate(0,0)}40%{transform:translate(30%,-30%)}70%{transform:translate(-25%,40%)}100%{transform:translate(0,0)}}
@@ -136,7 +133,7 @@
   /* ============ HERO ============ */
   .hero{min-height:auto;padding-top:160px;padding-bottom:90px;display:flex;flex-direction:column;justify-content:center;position:relative;overflow:hidden}
   .hero .container{width:100%;position:relative;z-index:2}
-  .hero-grid{display:grid;grid-template-columns:minmax(0,0.9fr) minmax(0,1.3fr);gap:36px;align-items:center}
+  .hero-grid{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,0.92fr);gap:44px;align-items:center}
   .hero-left{min-width:0}
   .hero-anim-wrap{
     display:flex;align-items:center;justify-content:flex-end;
@@ -192,6 +189,46 @@
 
   .hero-sub{font-size:18px;line-height:1.55;color:var(--fg-dim);max-width:560px;margin-bottom:48px}
   .hero-ctas{display:flex;gap:14px;flex-wrap:wrap}
+
+  /* HERO — active program card (right column) */
+  .hero-right{min-width:0}
+  .prog-card{
+    position:relative;overflow:hidden;
+    border:2px solid var(--line-strong);
+    background:linear-gradient(158deg,#171717,#0d0d0d);
+    padding:22px 22px 18px;
+    display:flex;flex-direction:column;gap:24px;
+  }
+  .prog-card::before{
+    content:'';position:absolute;inset:0;pointer-events:none;
+    background:
+      linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+    background-size:30px 30px;
+    -webkit-mask-image:radial-gradient(125% 90% at 100% 0%, black, transparent 62%);
+    mask-image:radial-gradient(125% 90% at 100% 0%, black, transparent 62%);
+  }
+  .prog-head{display:flex;align-items:center;gap:10px;position:relative;z-index:1}
+  .prog-dot{
+    width:8px;height:8px;border-radius:50%;background:var(--accent);flex-shrink:0;
+    box-shadow:0 0 8px var(--accent),0 0 18px rgba(230,51,41,0.55);
+    animation:hero-live-blink 1.4s steps(1,end) infinite;
+  }
+  .prog-label{font-family:'Geist Mono',monospace;font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:var(--fg-dim)}
+  .prog-id{margin-left:auto;font-size:11px;color:var(--fg-faint);letter-spacing:0.05em}
+  .prog-body{position:relative;z-index:1}
+  .prog-kicker{font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:var(--accent);margin-bottom:12px}
+  .prog-title{font-size:clamp(34px,3.6vw,50px);line-height:0.98;font-weight:600;letter-spacing:-0.01em;color:var(--fg);margin:0 0 14px}
+  .prog-desc{font-size:15px;line-height:1.55;color:var(--fg-dim);max-width:34ch;margin:0}
+  .prog-foot{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-top:16px;border-top:1px solid var(--line);position:relative;z-index:1}
+  .prog-tag{
+    display:inline-flex;align-items:center;gap:7px;
+    font-family:'Geist Mono',monospace;font-size:11px;letter-spacing:0.05em;text-transform:uppercase;
+    color:var(--accent);border:1px solid rgba(230,51,41,0.45);background:rgba(230,51,41,0.08);
+    padding:5px 11px;
+  }
+  .prog-tag::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--accent);box-shadow:0 0 8px var(--accent)}
+  .prog-meta{font-size:11px;color:var(--fg-faint);letter-spacing:0.05em}
   .btn{
     display:inline-flex;align-items:center;gap:10px;padding:14px 28px;font-size:14px;font-weight:500;
     border:1px solid var(--line-strong);background:transparent;color:var(--fg);cursor:pointer;
@@ -679,9 +716,6 @@
   <div class="ghost g1"></div>
   <div class="ghost g2"></div>
   <div class="ghost g3"></div>
-  <div class="ghost g4"></div>
-  <div class="ghost g5"></div>
-  <div class="ghost g6"></div>
   <div class="grid-pulses" id="gridPulses"></div>
 </div>
 
@@ -724,6 +758,25 @@
           <a href="#contact" class="btn">Get in touch</a>
         </div>
       </div>
+
+      <aside class="hero-right" aria-label="Active program">
+        <div class="prog-card">
+          <div class="prog-head">
+            <span class="prog-dot"></span>
+            <span class="prog-label">Active program</span>
+            <span class="prog-id mono">NADG / 01</span>
+          </div>
+          <div class="prog-body">
+            <div class="prog-kicker mono">Currently developing</div>
+            <h2 class="prog-title">Anvil III</h2>
+            <p class="prog-desc">Autonomous payload system in active development under the wing of NADG.</p>
+          </div>
+          <div class="prog-foot">
+            <span class="prog-tag">In development</span>
+            <span class="prog-meta mono">Est. 2026</span>
+          </div>
+        </div>
+      </aside>
 
     </div>
 
@@ -937,7 +990,7 @@
     const root = document.getElementById('gridPulses');
     if (!root) return;
     const CELL = 80;
-    const MAX = 7;
+    const MAX = 4;
     function randomCellPos(){
       const w = root.clientWidth, h = root.clientHeight;
       const cols = Math.max(1, Math.floor(w / CELL));
@@ -961,8 +1014,8 @@
         setTimeout(() => p.remove(), 1500);
       }, lifeMs);
     }
-    for (let i = 0; i < 4; i++) setTimeout(spawn, i * 500);
-    setInterval(() => { if (Math.random() > 0.15) spawn(); }, 700);
+    for (let i = 0; i < 2; i++) setTimeout(spawn, i * 600);
+    setInterval(() => { if (Math.random() > 0.3) spawn(); }, 1200);
   })();
 
   // Scroll reveal
