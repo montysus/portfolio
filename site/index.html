@@ -305,9 +305,9 @@
     border:2px solid var(--line-strong);
     transition:border-color .4s ease,box-shadow .4s ease,transform .5s ease;
   }
-  /* Lifevest card hosts a 16:9 video — match aspect so object-fit:contain
-     does not letterbox. */
-  .proj:nth-child(1) .proj-media{aspect-ratio:16/9}
+  /* Cards that host a 16:9 video override the default 4:3 aspect so
+     object-fit:contain does not letterbox. */
+  .proj.proj-video .proj-media{aspect-ratio:16/9}
   .proj:hover .proj-media{
     border-color:rgba(245,245,245,0.3);
     box-shadow:0 30px 90px rgba(0,0,0,0.75),0 0 60px rgba(230,51,41,0.08);
@@ -315,7 +315,6 @@
   }
   .proj-media::before{
     content:'';position:absolute;inset:0;z-index:1;pointer-events:none;
-    background:radial-gradient(ellipse 70% 70% at 50% 50%,transparent 50%,rgba(0,0,0,0.4) 100%);
   }
   .proj-media::after{
     content:'OPEN PROJECT  \2192';
@@ -329,7 +328,7 @@
   .proj:hover .proj-media::after{opacity:1;transform:translateY(0)}
   .proj-media img,.proj-media video{
     position:absolute;inset:0;width:100%;height:100%;
-    object-fit:cover;display:block;transition:transform 1.2s ease;
+    object-fit:cover;display:block;filter:brightness(1.12) contrast(1.04);transition:transform 1.2s ease;
   }
   .proj:hover .proj-media img,.proj:hover .proj-media video{transform:scale(1.05)}
   .proj-num-big{
@@ -710,8 +709,6 @@
           <span>Stavanger · Norway</span>
           <span class="sep"></span>
           <span class="mono">INDEX / 00</span>
-          <span class="sep"></span>
-          <span>Working on Anvil-III</span>
         </div>
 
         <h1 class="hero-title">
@@ -759,13 +756,13 @@
     <div class="label">Featured work</div>
     <div class="work-head">
       <h2>A portfolio of <br>fielded systems.</h2>
-      <div class="meta">01 project · 2023 — 2026<br>Málaga · Costa del Sol</div>
+      <div class="meta">01 project · 2023 — present<br>Costa del Sol</div>
     </div>
 
     <div class="work-grid">
 
       <!-- Project 01 — Life Vest -->
-      <a class="proj reveal" href="lifevest.html">
+      <a class="proj proj-video reveal" href="lifevest.html">
         <div class="proj-media-wrap">
           <div class="proj-media-label">
             <span>FIELD FOOTAGE · CH 01</span>
