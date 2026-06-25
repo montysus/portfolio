@@ -409,13 +409,15 @@
   .manifesto h2 strong{color:var(--fg);font-weight:500}
 
   /* Hazard-tape divider: thick diagonal gray/white stripes scrolling left */
-  .hazard{
-    height:48px;
+  .hazard{height:48px;overflow:hidden}
+  .hazard-strip{
+    height:100%;width:calc(100% + 96px);
     background:repeating-linear-gradient(-45deg,#ececec 0 22px,#404040 22px 44px);
     animation:hazard-move 1s linear infinite;
+    will-change:transform;
   }
-  @keyframes hazard-move{from{background-position:0 0}to{background-position:-62.2254px 0}}
-  @media(prefers-reduced-motion:reduce){.hazard{animation:none}}
+  @keyframes hazard-move{from{transform:translateX(0)}to{transform:translateX(-62.2254px)}}
+  @media(prefers-reduced-motion:reduce){.hazard-strip{animation:none}}
 
   /* ============ CAPABILITIES ============ */
   .caps{padding:90px 48px}
@@ -769,7 +771,7 @@
   </div>
 </section>
 
-<div class="hazard" aria-hidden="true"></div>
+<div class="hazard" aria-hidden="true"><div class="hazard-strip"></div></div>
 
 <!-- CAPABILITIES -->
 <section class="caps">
