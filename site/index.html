@@ -39,46 +39,20 @@
     mask-image:radial-gradient(ellipse 80% 70% at 50% 40%, black 40%, transparent 95%);
     -webkit-mask-image:radial-gradient(ellipse 80% 70% at 50% 40%, black 40%, transparent 95%);
   }
-  /* Soft, small red ghosts — gentle movement, low opacity */
-  .site-bg .ghost{position:absolute;border-radius:50%;filter:blur(75px);will-change:transform,opacity;mix-blend-mode:screen;pointer-events:none}
-  .site-bg .ghost.g1{width:32vw;height:32vw;top:8%;left:12%;background:radial-gradient(circle,rgba(230,51,41,0.16),transparent 65%);animation:gd-1 22s ease-in-out infinite,gp-1 9s ease-in-out infinite}
-  .site-bg .ghost.g2{width:28vw;height:28vw;top:55%;right:10%;background:radial-gradient(circle,rgba(255,80,55,0.14),transparent 65%);animation:gd-2 26s ease-in-out infinite,gp-2 11s ease-in-out infinite}
-  .site-bg .ghost.g3{width:22vw;height:22vw;top:25%;right:25%;background:radial-gradient(circle,rgba(230,51,41,0.12),transparent 65%);animation:gd-3 18s ease-in-out infinite,gp-3 7s ease-in-out infinite}
-  @keyframes gd-1{0%{transform:translate(0,0)}33%{transform:translate(40%,30%)}66%{transform:translate(15%,55%)}100%{transform:translate(0,0)}}
-  @keyframes gd-2{0%{transform:translate(0,0)}33%{transform:translate(-35%,20%)}66%{transform:translate(-50%,-25%)}100%{transform:translate(0,0)}}
-  @keyframes gd-3{0%{transform:translate(0,0)}40%{transform:translate(30%,-30%)}70%{transform:translate(-25%,40%)}100%{transform:translate(0,0)}}
-  @keyframes gd-4{0%{transform:translate(0,0)}30%{transform:translate(50%,-25%)}65%{transform:translate(20%,-45%)}100%{transform:translate(0,0)}}
-  @keyframes gd-5{0%{transform:translate(0,0)}35%{transform:translate(-45%,-35%)}70%{transform:translate(35%,-20%)}100%{transform:translate(0,0)}}
-  @keyframes gd-6{0%{transform:translate(0,0)}40%{transform:translate(-30%,-50%)}75%{transform:translate(40%,25%)}100%{transform:translate(0,0)}}
-  @keyframes gp-1{0%,100%{opacity:0.6}50%{opacity:1}}
-  @keyframes gp-2{0%,100%{opacity:0.55}50%{opacity:0.95}}
-  @keyframes gp-3{0%,100%{opacity:0.5}50%{opacity:0.9}}
-  @keyframes gp-4{0%,100%{opacity:0.45}50%{opacity:0.85}}
-  @keyframes gp-5{0%,100%{opacity:0.4}50%{opacity:0.8}}
-  @keyframes gp-6{0%,100%{opacity:0.4}50%{opacity:0.75}}
-  /* Random grid-area pulses — soft red tint over multiple grid cells.
-     The pulse re-draws the 80px lattice in red and fades it with a radial mask,
-     so grid lines glow within a soft area instead of a single hard cell. */
-  .site-bg .grid-pulses{position:absolute;inset:-5%;pointer-events:none;overflow:hidden}
-  .site-bg .grid-pulse{
-    position:absolute;width:400px;height:400px;
-    margin-left:-160px;margin-top:-160px;
+  /* Red grid highlight that tracks the cursor (replaces the red ghosts + random pulses) */
+  .site-bg .grid-cursor{
+    position:absolute;inset:-5%;pointer-events:none;
     background-image:
-      linear-gradient(rgba(150,20,20,0.32) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(150,20,20,0.32) 1px, transparent 1px);
+      linear-gradient(rgba(230,51,41,0.6) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(230,51,41,0.6) 1px, transparent 1px);
     background-size:80px 80px;
-    background-position:0 0;
-    -webkit-mask-image:radial-gradient(circle at 50% 50%, black 0%, rgba(0,0,0,0.55) 35%, transparent 75%);
-    mask-image:radial-gradient(circle at 50% 50%, black 0%, rgba(0,0,0,0.55) 35%, transparent 75%);
-    filter:drop-shadow(0 0 3px rgba(140,15,15,0.25));
-    opacity:0;
-    mix-blend-mode:screen;
-    transition:opacity 1.6s ease;
-    pointer-events:none;
+    -webkit-mask-image:radial-gradient(circle 150px at calc(var(--mx,-9999px) + 5vw) calc(var(--my,-9999px) + 5vh), #000 0%, rgba(0,0,0,0.35) 45%, transparent 72%);
+    mask-image:radial-gradient(circle 150px at calc(var(--mx,-9999px) + 5vw) calc(var(--my,-9999px) + 5vh), #000 0%, rgba(0,0,0,0.35) 45%, transparent 72%);
+    opacity:0;transition:opacity .35s ease;
   }
-  .site-bg .grid-pulse.on{opacity:1}
+  .site-bg .grid-cursor.on{opacity:1}
   nav.top,section,footer{position:relative;z-index:2}
-  @media(prefers-reduced-motion:reduce){.site-bg .ghost,.site-bg .grid-pulses{animation:none;display:none}}
+  @media(prefers-reduced-motion:reduce){.site-bg .grid-cursor{display:none}}
   a{color:inherit;text-decoration:none}
   img{max-width:100%;display:block}
   ::selection{background:var(--fg);color:var(--bg)}
@@ -193,31 +167,22 @@
   /* HERO — Anvil III program "rubber stamp" (right column) */
   .hero-right{min-width:0;display:flex;justify-content:center;align-items:center;padding:16px 0}
   .stamp{
-    position:relative;color:var(--accent);opacity:0.9;
-    padding:5px;border:1.5px solid currentColor;border-radius:3px;
-    transform:rotate(-5deg);
-    transition:transform .55s cubic-bezier(.2,.8,.2,1),opacity .4s;
+    position:relative;color:var(--accent);opacity:0.85;
+    border:1.5px solid currentColor;
+    padding:18px 30px;
+    transform:rotate(-4deg);
+    transition:transform .5s cubic-bezier(.2,.8,.2,1),opacity .4s;
     -webkit-user-select:none;user-select:none;
   }
-  .stamp:hover{transform:rotate(-1.5deg) scale(1.015);opacity:1}
-  .stamp::after{
-    content:'';position:absolute;inset:-2px;border-radius:4px;pointer-events:none;
-    box-shadow:0 0 22px rgba(230,51,41,0.18);
-  }
+  .stamp:hover{transform:rotate(0deg);opacity:1}
   .stamp-inner{
-    border:2.5px solid currentColor;border-radius:2px;
-    padding:22px 30px 18px;
-    display:flex;flex-direction:column;align-items:center;text-align:center;gap:11px;
+    display:flex;flex-direction:column;align-items:center;text-align:center;gap:7px;
     font-family:'Geist Mono',monospace;text-transform:uppercase;
   }
-  .stamp-top{display:flex;align-items:center;gap:9px;font-size:11px;letter-spacing:0.24em;font-weight:600}
-  .stamp-star{font-size:9px;opacity:0.85}
-  .stamp-rule{width:80%;height:1.5px;background:currentColor;opacity:0.6}
-  .stamp-title{font-size:clamp(42px,4.6vw,60px);font-weight:700;letter-spacing:0.03em;line-height:0.9;margin:1px 0}
-  .stamp-sub{font-size:10px;letter-spacing:0.26em;opacity:0.8}
-  .stamp-org{font-size:19px;font-weight:700;letter-spacing:0.1em}
-  .stamp-bottom{font-size:9.5px;letter-spacing:0.16em;opacity:0.75;margin-top:1px}
-  @media(max-width:880px){.stamp{transform:rotate(-3deg)}.stamp:hover{transform:rotate(-1deg) scale(1.01)}}
+  .stamp-kicker{font-size:10px;letter-spacing:0.3em;opacity:0.85}
+  .stamp-title{font-size:clamp(38px,4.2vw,54px);font-weight:700;letter-spacing:0.04em;line-height:0.9;margin:2px 0}
+  .stamp-sub{font-size:9.5px;letter-spacing:0.2em;opacity:0.8}
+  @media(max-width:880px){.stamp{transform:rotate(-3deg)}.stamp:hover{transform:rotate(0deg)}}
   .btn{
     display:inline-flex;align-items:center;gap:10px;padding:14px 28px;font-size:14px;font-weight:500;
     border:1px solid var(--line-strong);background:transparent;color:var(--fg);cursor:pointer;
@@ -702,10 +667,7 @@
 <!-- GLOBAL BACKGROUND -->
 <div class="site-bg" aria-hidden="true">
   <div class="grid"></div>
-  <div class="ghost g1"></div>
-  <div class="ghost g2"></div>
-  <div class="ghost g3"></div>
-  <div class="grid-pulses" id="gridPulses"></div>
+  <div class="grid-cursor" id="gridCursor"></div>
 </div>
 
 <!-- NAV -->
@@ -751,13 +713,9 @@
       <aside class="hero-right" aria-label="Anvil III program">
         <div class="stamp">
           <div class="stamp-inner">
-            <div class="stamp-top"><span class="stamp-star">★</span><span>Active program</span><span class="stamp-star">★</span></div>
-            <div class="stamp-rule"></div>
+            <div class="stamp-kicker">Active program</div>
             <div class="stamp-title">Anvil III</div>
-            <div class="stamp-sub">Under the wing of</div>
-            <div class="stamp-org">NADG/ESTA</div>
-            <div class="stamp-rule"></div>
-            <div class="stamp-bottom">In development · Est. 2026</div>
+            <div class="stamp-sub">Under the wing of NADG/ESTA</div>
           </div>
         </div>
       </aside>
@@ -968,38 +926,23 @@
 </footer>
 
 <script>
-  // Random grid-cell pulses — small red glows that fade in/out at random grid intersections.
-  (function gridPulses(){
+  // Red grid highlight that follows the cursor.
+  (function gridCursor(){
     if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    const root = document.getElementById('gridPulses');
-    if (!root) return;
-    const CELL = 80;
-    const MAX = 4;
-    function randomCellPos(){
-      const w = root.clientWidth, h = root.clientHeight;
-      const cols = Math.max(1, Math.floor(w / CELL));
-      const rows = Math.max(1, Math.floor(h / CELL));
-      const c = Math.floor(Math.random() * cols);
-      const r = Math.floor(Math.random() * rows);
-      return [c * CELL, r * CELL];
-    }
-    function spawn(){
-      if (root.childElementCount >= MAX) return;
-      const p = document.createElement('div');
-      p.className = 'grid-pulse';
-      const [x, y] = randomCellPos();
-      p.style.left = x + 'px';
-      p.style.top = y + 'px';
-      root.appendChild(p);
-      requestAnimationFrame(() => p.classList.add('on'));
-      const lifeMs = 1800 + Math.random() * 2200;
-      setTimeout(() => {
-        p.classList.remove('on');
-        setTimeout(() => p.remove(), 1500);
-      }, lifeMs);
-    }
-    for (let i = 0; i < 2; i++) setTimeout(spawn, i * 600);
-    setInterval(() => { if (Math.random() > 0.3) spawn(); }, 1200);
+    const layer = document.getElementById('gridCursor');
+    if (!layer) return;
+    let raf = 0, x = 0, y = 0;
+    window.addEventListener('pointermove', (e) => {
+      x = e.clientX; y = e.clientY;
+      if (raf) return;
+      raf = requestAnimationFrame(() => {
+        raf = 0;
+        layer.style.setProperty('--mx', x + 'px');
+        layer.style.setProperty('--my', y + 'px');
+        layer.classList.add('on');
+      });
+    }, { passive: true });
+    document.addEventListener('mouseleave', () => layer.classList.remove('on'));
   })();
 
   // Scroll reveal
