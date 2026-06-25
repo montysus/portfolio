@@ -170,19 +170,19 @@
     position:relative;color:var(--accent);opacity:0.85;
     background:#000;
     border:1.5px solid currentColor;
-    padding:18px 30px;
+    padding:26px 44px;
     transform:rotate(-4deg);
     transition:transform .5s cubic-bezier(.2,.8,.2,1),opacity .4s;
     -webkit-user-select:none;user-select:none;
   }
   .stamp:hover{transform:rotate(0deg);opacity:1}
   .stamp-inner{
-    display:flex;flex-direction:column;align-items:center;text-align:center;gap:7px;
+    display:flex;flex-direction:column;align-items:center;text-align:center;gap:11px;
     font-family:'Geist Mono',monospace;text-transform:uppercase;
   }
-  .stamp-kicker{font-size:10px;letter-spacing:0.22em;opacity:0.85;white-space:nowrap}
-  .stamp-title{font-size:clamp(38px,4.2vw,54px);font-weight:700;letter-spacing:0.04em;line-height:0.9;margin:2px 0}
-  .stamp-sub{font-size:9.5px;letter-spacing:0.2em;opacity:0.8}
+  .stamp-kicker{font-size:13px;letter-spacing:0.2em;opacity:0.85;white-space:nowrap}
+  .stamp-title{font-size:clamp(44px,4.8vw,62px);font-weight:700;letter-spacing:0.04em;line-height:0.9;margin:3px 0}
+  .stamp-sub{font-size:12.5px;letter-spacing:0.13em;opacity:0.8}
   @media(max-width:880px){.stamp{transform:rotate(-3deg)}.stamp:hover{transform:rotate(0deg)}}
   .btn{
     display:inline-flex;align-items:center;gap:10px;padding:14px 28px;font-size:14px;font-weight:500;
@@ -410,41 +410,13 @@
 
   /* ============ CAPABILITIES ============ */
   .caps{padding:90px 48px}
-  .caps-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:1px solid var(--line-strong);background:var(--bg)}
-  .cap{
-    position:relative;overflow:hidden;
-    padding:48px 40px 44px;
-    border-right:1px solid var(--line-strong);
-    min-height:280px;display:flex;flex-direction:column;
-    background:var(--bg);
-    transition:background .35s ease;
-  }
-  .cap:last-child{border-right:none}
-  .cap::before{
-    content:'';position:absolute;top:0;left:0;width:0;height:2px;
-    background:var(--accent);transition:width .5s ease;
-  }
-  .cap::after{
-    content:attr(data-num);
-    position:absolute;top:14px;right:18px;
-    font-family:'Geist Mono',monospace;font-weight:700;
-    font-size:clamp(72px,7vw,108px);line-height:1;
-    color:transparent;-webkit-text-stroke:1.5px rgba(245,245,245,0.08);
-    letter-spacing:-0.04em;pointer-events:none;
-    transition:color .5s ease,-webkit-text-stroke-color .5s ease;
-  }
-  .cap:hover{background:rgba(230,51,41,0.025)}
-  .cap:hover::before{width:100%}
-  .cap:hover::after{
-    color:rgba(230,51,41,0.12);
-    -webkit-text-stroke-color:rgba(230,51,41,0.45);
-  }
+  .caps-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:56px}
+  .cap{position:relative;display:flex;flex-direction:column}
   .cap .idx{
-    position:relative;z-index:1;
     display:flex;align-items:center;gap:14px;
     font-family:'Geist Mono',monospace;font-size:11px;
     color:var(--fg-faint);letter-spacing:0.2em;
-    margin-bottom:40px;
+    margin-bottom:26px;
     transition:color .35s ease;
   }
   .cap .idx::before{
@@ -454,15 +426,11 @@
   .cap:hover .idx{color:var(--accent)}
   .cap:hover .idx::before{background:var(--accent);width:42px}
   .cap h4{
-    position:relative;z-index:1;
     font-size:clamp(26px,2.4vw,34px);
     font-weight:700;letter-spacing:-0.025em;line-height:1.05;
     margin-bottom:18px;color:var(--fg);
   }
-  .cap p{
-    position:relative;z-index:1;
-    font-size:14px;line-height:1.65;flex:1;
-  }
+  .cap p{font-size:14px;line-height:1.65}
 
 
   /* ============ ABOUT ============ */
