@@ -18,7 +18,7 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://monty.bio"),
+  metadataBase: new URL("https://www.montyforge.com"),
   title: {
     default: "Montyforge",
     template: "%s | Montyforge",
@@ -26,13 +26,13 @@ export const metadata: Metadata = {
   description:
     "Autonomous systems engineering practice by Antonio Montero. Drones, robotics, control systems, and fielded mechatronic systems.",
   alternates: {
-    canonical: "https://monty.bio",
+    canonical: "https://www.montyforge.com",
   },
   openGraph: {
     title: "Montyforge | Autonomous Systems Engineering",
     description:
       "Drones, robotics, control systems, and fielded mechatronic systems by Antonio Montero.",
-    url: "https://monty.bio",
+    url: "https://www.montyforge.com",
     siteName: "Montyforge",
     locale: "en_US",
     type: "website",
