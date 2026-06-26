@@ -59,9 +59,9 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Montyforge | Autonomous Systems Engineering",
   },
-  // verification: {
-  //   google: "Fyg64Q58kWDqARPWRbdy4uCuy8ENcCPHLITkRgRzyW4",
-  // },
+  verification: {
+    google: "53W47-31sREb9OsxJLHH2_cTluxxNM7wfV6DsXwviBA",
+  },
   authors: [
     {
       name: "Antonio Montero",
