@@ -167,28 +167,53 @@
   /* HERO — Anvil III program "rubber stamp" (right column) */
   .hero-right{min-width:0;display:flex;justify-content:center;align-items:center;padding:16px 0}
   .stamp{
-    position:relative;color:var(--accent);opacity:0.85;
+    position:relative;color:var(--accent);opacity:0.92;
     background:#000;
     border:1.5px solid currentColor;
     padding:26px 44px;
     transform:rotate(-4deg);
-    transition:transform .5s cubic-bezier(.2,.8,.2,1),opacity .4s;
-    -webkit-user-select:none;user-select:none;
+    transition:transform .5s cubic-bezier(.2,.8,.2,1),opacity .4s,box-shadow .4s;
+    -webkit-user-select:none;user-select:none;cursor:pointer;
   }
-  .stamp:hover{transform:rotate(0deg);opacity:1}
+  .stamp:hover{transform:rotate(0deg);opacity:1;box-shadow:0 0 30px rgba(230,51,41,.22)}
+  .stamp:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
   .stamp-inner{
     display:flex;flex-direction:column;align-items:center;text-align:center;gap:11px;
     font-family:'Geist Mono',monospace;text-transform:uppercase;
   }
   .stamp-kicker{font-size:13px;letter-spacing:0.2em;opacity:0.85;white-space:nowrap}
-  .stamp-title{font-size:clamp(44px,4.8vw,62px);font-weight:700;letter-spacing:0.04em;line-height:0.9;margin:3px 0}
+  .stamp-title{font-size:clamp(44px,4.8vw,62px);font-weight:700;letter-spacing:0.04em;line-height:0.9;margin:3px 0;
+    color:#ff3b30;text-shadow:0 1px 0 rgba(0,0,0,.55),0 0 22px rgba(230,51,41,.5)}
   .stamp-sub{font-size:12.5px;letter-spacing:0.13em;opacity:0.8}
   .stamp-partners{display:flex;flex-wrap:wrap;justify-content:center;gap:16px;margin-top:6px}
   .partner{display:flex;flex-direction:column;align-items:center;gap:8px;max-width:130px}
   .partner-logo{background:#fff;border-radius:8px;padding:8px 12px;height:40px;display:flex;align-items:center;justify-content:center}
   .partner-logo img{height:100%;width:auto;max-width:106px;object-fit:contain;display:block}
   .partner figcaption{font-size:9.5px;letter-spacing:0.07em;line-height:1.3;opacity:0.85}
+  .stamp-cta{margin-top:11px;font-size:10.5px;letter-spacing:0.2em;opacity:0.72;display:inline-flex;align-items:center;gap:7px;transition:opacity .3s}
+  .stamp:hover .stamp-cta{opacity:1}
+  .stamp-cta::before{content:"";width:5px;height:5px;border-radius:50%;background:var(--accent);box-shadow:0 0 8px var(--accent);animation:intelPulse 1.7s ease-in-out infinite}
+  @keyframes intelPulse{0%,100%{opacity:.35}50%{opacity:1}}
   @media(max-width:880px){.stamp{transform:rotate(-3deg)}.stamp:hover{transform:rotate(0deg)}}
+
+  /* Anvil III — intel modal */
+  .intel-modal{position:fixed;inset:0;z-index:200;display:none;align-items:center;justify-content:center;padding:24px}
+  .intel-modal.open{display:flex}
+  .intel-backdrop{position:absolute;inset:0;background:rgba(0,0,0,.78);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+  .intel-card{position:relative;width:min(460px,100%);max-height:90vh;overflow:auto;background:#0c0c0c;border:1.5px solid var(--accent);
+    box-shadow:0 0 0 1px rgba(230,51,41,.25),0 30px 80px rgba(0,0,0,.7);padding:26px 26px 22px;
+    font-family:'Geist Mono',monospace;animation:intelIn .28s cubic-bezier(.2,.8,.2,1)}
+  @keyframes intelIn{from{opacity:0;transform:translateY(12px) scale(.98)}to{opacity:1;transform:none}}
+  .intel-x{position:absolute;top:8px;right:12px;background:none;border:none;color:var(--fg-dim);font-size:26px;line-height:1;cursor:pointer;transition:color .2s}
+  .intel-x:hover{color:var(--fg)}
+  .intel-tag{font-size:10.5px;letter-spacing:0.22em;text-transform:uppercase;color:var(--accent)}
+  .intel-title{font-size:34px;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;color:#ff3b30;margin:6px 0 16px;text-shadow:0 0 22px rgba(230,51,41,.45)}
+  .intel-media{position:relative;border:1px solid var(--line-strong);background:#191c22;overflow:hidden;border-radius:2px}
+  .intel-media img{display:block;width:100%;height:auto}
+  .intel-media::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(0deg,rgba(0,0,0,.16) 0 2px,transparent 2px 4px);pointer-events:none}
+  .intel-redacted{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%) rotate(-8deg);font-size:12.5px;letter-spacing:0.3em;text-transform:uppercase;color:#fff;background:rgba(230,51,41,.92);padding:5px 14px;white-space:nowrap;box-shadow:0 4px 18px rgba(0,0,0,.5)}
+  .intel-desc{font-size:12.5px;line-height:1.65;color:var(--fg-dim);letter-spacing:0.02em;margin:16px 0 0}
+  .intel-foot{margin-top:14px;padding-top:12px;border-top:1px solid var(--line);font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--fg-faint)}
   .btn{
     display:inline-flex;align-items:center;gap:10px;padding:14px 28px;font-size:14px;font-weight:500;
     border:1px solid var(--line-strong);background:transparent;color:var(--fg);cursor:pointer;
@@ -683,7 +708,7 @@
       </div>
 
       <aside class="hero-right" aria-label="Anvil III program">
-        <div class="stamp">
+        <div class="stamp" id="anvilStamp" role="button" tabindex="0" aria-haspopup="dialog" aria-label="Open the Anvil III brief">
           <div class="stamp-inner">
             <div class="stamp-kicker">Project in development</div>
             <div class="stamp-title">Anvil III</div>
@@ -698,9 +723,25 @@
                 <figcaption>European Simulation<br>&amp; Training Academy</figcaption>
               </figure>
             </div>
+            <div class="stamp-cta">View brief</div>
           </div>
         </div>
       </aside>
+
+      <div class="intel-modal" id="anvilIntel" aria-hidden="true">
+        <div class="intel-backdrop" data-intel-close></div>
+        <div class="intel-card" role="dialog" aria-modal="true" aria-labelledby="anvilIntelTitle">
+          <button class="intel-x" type="button" data-intel-close aria-label="Close">&times;</button>
+          <div class="intel-tag">Classified &middot; In development</div>
+          <h3 class="intel-title" id="anvilIntelTitle">Anvil III</h3>
+          <div class="intel-media">
+            <img src="/montyforge/anvil3-teaser.png" alt="Anvil III release mechanism — detail withheld">
+            <span class="intel-redacted">Detail redacted</span>
+          </div>
+          <p class="intel-desc">A compact electromechanical payload-release system carried under a UAV &mdash; built to grip, fly and release on command, then return for the next run. Full geometry, actuation and specs are withheld while the program is in development.</p>
+          <div class="intel-foot">Montyforge &middot; Anvil III program</div>
+        </div>
+      </div>
 
     </div>
 
@@ -1025,6 +1066,18 @@
     media.addEventListener('touchend',  function(e){ var dx=e.changedTouches[0].clientX-startX; if(Math.abs(dx)>40){ e.preventDefault(); show(dx<0?cur+1:cur-1); } });
   });
 
+  // Anvil III intel modal
+  (function(){
+    var stamp = document.getElementById('anvilStamp');
+    var modal = document.getElementById('anvilIntel');
+    if(!stamp || !modal) return;
+    function open(){ modal.classList.add('open'); modal.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden'; }
+    function close(){ modal.classList.remove('open'); modal.setAttribute('aria-hidden','true'); document.body.style.overflow=''; }
+    stamp.addEventListener('click', open);
+    stamp.addEventListener('keydown', function(e){ if(e.key==='Enter' || e.key===' '){ e.preventDefault(); open(); } });
+    modal.querySelectorAll('[data-intel-close]').forEach(function(el){ el.addEventListener('click', close); });
+    document.addEventListener('keydown', function(e){ if(e.key==='Escape' && modal.classList.contains('open')) close(); });
+  })();
 
 </script>
 </body>
