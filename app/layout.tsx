@@ -29,7 +29,7 @@ export const metadata: Metadata = {
     canonical: "https://www.montyforge.com",
   },
   openGraph: {
-    title: "Montyforge | Autonomous Systems Engineering",
+    title: "Montyforge",
     description:
       "Drones, robotics, control systems, and fielded mechatronic systems by Antonio Montero.",
     url: "https://www.montyforge.com",
@@ -57,7 +57,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Montyforge | Autonomous Systems Engineering",
+    title: "Montyforge",
   },
   verification: {
     google: "53W47-31sREb9OsxJLHH2_cTluxxNM7wfV6DsXwviBA",
