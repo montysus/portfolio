@@ -35,13 +35,13 @@
   .site-bg .grid-cursor{
     position:absolute;inset:-5%;pointer-events:none;
     background-image:
-      url(/montyforge/grid-mark.png),
+      url(/montyforge/grid-marks.png),
       linear-gradient(rgba(230,51,41,0.6) 1px, transparent 1px),
       linear-gradient(90deg, rgba(230,51,41,0.6) 1px, transparent 1px);
-    background-size:80px 80px;
+    background-size:1600px 1600px,80px 80px,80px 80px;
     background-position:0 0;
-    -webkit-mask-image:radial-gradient(circle 150px at calc(var(--mx,-9999px) + 5vw) calc(var(--my,-9999px) + 5vh), #000 0%, rgba(0,0,0,0.35) 45%, transparent 72%);
-    mask-image:radial-gradient(circle 150px at calc(var(--mx,-9999px) + 5vw) calc(var(--my,-9999px) + 5vh), #000 0%, rgba(0,0,0,0.35) 45%, transparent 72%);
+    -webkit-mask-image:radial-gradient(circle 280px at calc(var(--mx,-9999px) + 5vw) calc(var(--my,-9999px) + 5vh), #000 0%, rgba(0,0,0,0.35) 45%, transparent 72%);
+    mask-image:radial-gradient(circle 280px at calc(var(--mx,-9999px) + 5vw) calc(var(--my,-9999px) + 5vh), #000 0%, rgba(0,0,0,0.35) 45%, transparent 72%);
     opacity:0;transition:opacity .35s ease;
   }
   .site-bg .grid-cursor.on{opacity:1}
