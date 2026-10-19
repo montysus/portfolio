@@ -107,7 +107,7 @@ export function MontyFooter() {
         links={[
           ["contact@montyforge.com", "mailto:contact@montyforge.com"],
           ["@montyforge", "https://instagram.com/montyforge"],
-          ["LinkedIn", "https://linkedin.com/in/antonio-montero"],
+          ["LinkedIn", "https://www.linkedin.com/in/montysub"],
         ]}
       />
       <div className="border-t border-white/10 pt-6 font-mono text-[10px] uppercase tracking-[0.14em] text-[#666] md:col-span-4 md:flex md:justify-between">
