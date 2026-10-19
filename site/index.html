@@ -217,6 +217,10 @@
   .intel-title{font-size:34px;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;color:#e63329;margin:6px 0 16px}
   .intel-media{position:relative;border:1px solid var(--line-strong);background:#191c22;overflow:hidden;border-radius:2px}
   .intel-media img{display:block;width:100%;height:auto}
+  .intel-modal{padding:96px 24px 24px}
+  .intel-card--wide{width:min(840px,100%);max-height:calc(100vh - 120px)}
+  .intel-slides{display:grid;gap:10px}
+  .intel-slides img{display:block;width:100%;height:auto;border:1px solid var(--line-strong);border-radius:2px;background:#fff}
   .intel-redacted{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%) rotate(-8deg);font-size:12.5px;letter-spacing:0.3em;text-transform:uppercase;color:#fff;background:rgba(230,51,41,.92);padding:5px 14px;white-space:nowrap;box-shadow:0 4px 18px rgba(0,0,0,.5)}
   .intel-desc{font-size:12.5px;line-height:1.65;color:var(--fg-dim);letter-spacing:0.02em;margin:16px 0 0}
   .intel-foot{margin-top:14px;padding-top:12px;border-top:1px solid var(--line);font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--fg-faint)}
@@ -736,13 +740,13 @@
 
       <div class="intel-modal" id="anvilIntel" aria-hidden="true">
         <div class="intel-backdrop" data-intel-close></div>
-        <div class="intel-card" role="dialog" aria-modal="true" aria-labelledby="anvilIntelTitle">
+        <div class="intel-card intel-card--wide" role="dialog" aria-modal="true" aria-labelledby="anvilIntelTitle">
           <button class="intel-x" type="button" data-intel-close aria-label="Close">&times;</button>
           <div class="intel-tag">Classified &middot; In development</div>
           <h3 class="intel-title" id="anvilIntelTitle">Anvil III</h3>
-          <div class="intel-media">
-            <img src="/montyforge/anvil3-teaser.png" alt="Anvil III release mechanism — detail withheld">
-            <span class="intel-redacted">Detail redacted</span>
+          <div class="intel-slides">
+            <img src="/montyforge/anvil3-slide-1.jpg" alt="Anvil III: multipurpose modular drone release system, overview and specifications" loading="lazy">
+            <img src="/montyforge/anvil3-slide-2.jpg" alt="Anvil III configured for defense, oil and gas, and on the Talon rail" loading="lazy">
           </div>
           <p class="intel-desc">A compact electromechanical payload-release system carried under a UAV &mdash; built to grip, fly and release on command, then return for the next run. Full geometry, actuation and specs are withheld while the program is in development.</p>
           <div class="intel-foot">Montyforge &middot; Anvil III program</div>
