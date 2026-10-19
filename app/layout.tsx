@@ -24,7 +24,7 @@ export const metadata: Metadata = {
     template: "%s | Montyforge",
   },
   description:
-    "Autonomous systems engineering practice by Antonio Montero. Drones, robotics, control systems, and fielded mechatronic systems.",
+    "Portfolio of Antonio Montero, robotics engineer and professional drone pilot. Drones, robotics, control systems, and field-tested mechatronic projects.",
   alternates: {
     canonical: "https://www.montyforge.com",
   },

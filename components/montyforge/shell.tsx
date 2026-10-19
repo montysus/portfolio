@@ -83,8 +83,8 @@ export function MontyFooter() {
           </span>
         </div>
         <p className="max-w-sm leading-relaxed">
-          Autonomous systems engineering practice. Drones, robotics, control
-          systems. Real problems, real solutions.
+          Portfolio of Antonio Montero. Drones, robotics, control systems.
+          Real problems, real solutions.
         </p>
       </div>
       <FooterLinks
