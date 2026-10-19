@@ -286,6 +286,18 @@
   }
 
   .work-grid{display:flex;flex-direction:column;gap:120px}
+  /* Small Anvil III entry under the featured project; opens the same brief as the hero stamp */
+  .proj-mini{display:flex;align-items:center;gap:18px;flex-wrap:wrap;width:100%;margin-top:56px;padding:16px 20px;
+    background:transparent;border:1px solid var(--line-strong);color:var(--fg-dim);cursor:pointer;text-align:left;
+    font-family:'Geist Mono',monospace;font-size:12.5px;letter-spacing:0.04em;transition:border-color .25s,background .25s}
+  .proj-mini:hover,.proj-mini:focus-visible{border-color:rgba(230,51,41,0.55);background:rgba(230,51,41,0.06);outline:none}
+  .proj-mini .pm-badge{display:inline-flex;align-items:center;gap:8px;font-size:10.5px;letter-spacing:0.18em;text-transform:uppercase;color:var(--accent)}
+  .proj-mini .pm-badge::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--accent)}
+  .proj-mini .pm-title{font-size:14px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--fg)}
+  .proj-mini .pm-desc{flex:1;min-width:220px}
+  .proj-mini .pm-cta{display:inline-flex;align-items:center;gap:8px;font-size:10.5px;letter-spacing:0.2em;text-transform:uppercase;color:var(--fg)}
+  .proj-mini .pm-cta .arr{transition:transform .3s ease}
+  .proj-mini:hover .pm-cta .arr{transform:translateX(4px)}
   .proj{
     display:grid;grid-template-columns:1.45fr 1fr;gap:64px;align-items:center;
     cursor:pointer;text-decoration:none;color:inherit;position:relative;
@@ -799,6 +811,14 @@
       </a>
 
     </div>
+
+    <!-- Project 02 — Anvil III (in development): opens the same brief as the hero stamp -->
+    <button class="proj-mini" type="button" data-anvil-open aria-haspopup="dialog">
+      <span class="pm-badge">In development</span>
+      <span class="pm-title">Anvil III</span>
+      <span class="pm-desc">Payload release system for the Rotron Talon DT-300 · NADG / ESTA</span>
+      <span class="pm-cta">View brief <span class="arr">→</span></span>
+    </button>
   </div>
 </section>
 
@@ -850,7 +870,7 @@
         <h2>Antonio Montero.</h2>
         <p><strong>Spanish robotics engineer, professional drone pilot.</strong> Moved to Norway to work on autonomous systems in one of the most demanding operating environments in the world.</p>
         <p>Degree in Robotics and Control Systems. University was the theory; the real education came from personal projects, failed prototypes, and field iterations.</p>
-        <p>I don't sell vision decks. I ship systems, and I want to work with people who are building real things at the edge of what's possible.</p>
+        <p>I ship systems, and I want to work with people who are building real things at the edge of what's possible.</p>
 
         <div class="about-meta">
           <div class="m"><div class="k">Background</div><div class="v">Robotics &amp; control</div></div>
@@ -1084,6 +1104,7 @@
     function open(){ modal.classList.add('open'); modal.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden'; }
     function close(){ modal.classList.remove('open'); modal.setAttribute('aria-hidden','true'); document.body.style.overflow=''; }
     stamp.addEventListener('click', open);
+    document.querySelectorAll('[data-anvil-open]').forEach(function(el){ el.addEventListener('click', open); });
     stamp.addEventListener('keydown', function(e){ if(e.key==='Enter' || e.key===' '){ e.preventDefault(); open(); } });
     modal.querySelectorAll('[data-intel-close]').forEach(function(el){ el.addEventListener('click', close); });
     document.addEventListener('keydown', function(e){ if(e.key==='Escape' && modal.classList.contains('open')) close(); });
